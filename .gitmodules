@@ -1,0 +1,21 @@
+[submodule "third_party/cmsis/core"]
+	path = third_party/cmsis/core
+	url = https://github.com/ARM-software/CMSIS_5.git
+[submodule "third_party/cmsis/device/st/f3"]
+	path = third_party/cmsis/device/st/f3
+	url = https://github.com/STMicroelectronics/cmsis_device_f3
+[submodule "third_party/hal/st/f3"]
+	path = third_party/hal/st/f3
+	url = https://github.com/STMicroelectronics/stm32f3xx_hal_driver
+[submodule "third_party/microtbx"]
+	path = third_party/microtbx
+	url = https://github.com/feaser/microtbx.git
+[submodule "third_party/freertos"]
+	path = third_party/freertos
+	url = https://github.com/FreeRTOS/FreeRTOS-Kernel.git
+[submodule "third_party/freertos_addons"]
+	path = third_party/freertos_addons
+	url = https://github.com/michaelbecker/freertos-addons.git
+[submodule "third_party/tinyusb"]
+	path = third_party/tinyusb
+	url = https://github.com/hathach/tinyusb.git
