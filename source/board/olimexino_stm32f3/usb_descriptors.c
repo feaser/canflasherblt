@@ -28,15 +28,15 @@
 #include "stm32f3xx.h"
 
 
-#define USB_VID   0x16D0  // MCS Electronics
-#define USB_PID   0x1268  // Virtual COM Port
+#define USB_VID   0x1D50  // OpenMoko
+#define USB_PID   0x60AC  // OpenBLT Bootloader
 #define USB_BCD   0x0200
 
 
 //--------------------------------------------------------------------+
 // Unique ID string
 //--------------------------------------------------------------------+
-// Length of the unique ID in bytes. On the STM32G4, the unique
+// Length of the unique ID in bytes. On the STM32F3, the unique
 // identifier is 96 bits.
 #define UID_STR_BYTE_LEN          (96U/8U)
 
@@ -91,12 +91,9 @@ tusb_desc_device_t const desc_device =
   .bLength            = sizeof(tusb_desc_device_t),
   .bDescriptorType    = TUSB_DESC_DEVICE,
   .bcdUSB             = USB_BCD,
-
-  // Use Interface Association Descriptor (IAD) for CDC
-  // As required by USB Specs IAD's subclass must be common class (2) and protocol must be IAD (1)
-  .bDeviceClass       = TUSB_CLASS_MISC,
-  .bDeviceSubClass    = MISC_SUBCLASS_COMMON,
-  .bDeviceProtocol    = MISC_PROTOCOL_IAD,
+  .bDeviceClass       = 0x00,
+  .bDeviceSubClass    = 0x00,
+  .bDeviceProtocol    = 0x00,
 
   .bMaxPacketSize0    = CFG_TUD_ENDPOINT0_SIZE,
 
@@ -124,16 +121,14 @@ uint8_t const * tud_descriptor_device_cb(void)
 
 enum
 {
-  ITF_NUM_CDC = 0,
-  ITF_NUM_CDC_DATA,
+  ITF_NUM_VENDOR,
   ITF_NUM_TOTAL
 };
 
-#define EPNUM_CDC_NOTIF   0x81
-#define EPNUM_CDC_OUT     0x02
-#define EPNUM_CDC_IN      0x82
+#define CONFIG_TOTAL_LEN    (TUD_CONFIG_DESC_LEN + TUD_VENDOR_DESC_LEN)
 
-#define CONFIG_TOTAL_LEN    (TUD_CONFIG_DESC_LEN + TUD_CDC_DESC_LEN)
+#define EPNUM_VENDOR_OUT   0x01
+#define EPNUM_VENDOR_IN    0x81
 
 // full speed configuration
 uint8_t const desc_fs_configuration[] =
@@ -141,8 +136,8 @@ uint8_t const desc_fs_configuration[] =
   // Config number, interface count, string index, total length, attribute, power in mA
   TUD_CONFIG_DESCRIPTOR(1, ITF_NUM_TOTAL, 0, CONFIG_TOTAL_LEN, 0x00, 150),
 
-  // Interface number, string index, EP notification address and size, EP data address (out, in) and size.
-  TUD_CDC_DESCRIPTOR(ITF_NUM_CDC, 4, EPNUM_CDC_NOTIF, 8, EPNUM_CDC_OUT, EPNUM_CDC_IN, 64),
+  // Interface number, string index, EP Out & EP In address, EP size
+  TUD_VENDOR_DESCRIPTOR(ITF_NUM_VENDOR, 0, EPNUM_VENDOR_OUT, EPNUM_VENDOR_IN, 64),
 };
 
 #if TUD_OPT_HIGH_SPEED
@@ -155,7 +150,7 @@ uint8_t const desc_hs_configuration[] =
   TUD_CONFIG_DESCRIPTOR(1, ITF_NUM_TOTAL, 0, CONFIG_TOTAL_LEN, 0x00, 150),
 
   // Interface number, string index, EP notification address and size, EP data address (out, in) and size.
-  TUD_CDC_DESCRIPTOR(ITF_NUM_CDC, 4, EPNUM_CDC_NOTIF, 8, EPNUM_CDC_OUT, EPNUM_CDC_IN, 512),
+  TUD_VENDOR_DESCRIPTOR(ITF_NUM_VENDOR, 0, EPNUM_VENDOR_OUT, EPNUM_VENDOR_IN, 512),
 };
 
 // other speed configuration
@@ -168,9 +163,9 @@ tusb_desc_device_qualifier_t const desc_device_qualifier =
   .bDescriptorType    = TUSB_DESC_DEVICE_QUALIFIER,
   .bcdUSB             = USB_BCD,
 
-  .bDeviceClass       = TUSB_CLASS_MISC,
-  .bDeviceSubClass    = MISC_SUBCLASS_COMMON,
-  .bDeviceProtocol    = MISC_PROTOCOL_IAD,
+  .bDeviceClass       = 0x00,
+  .bDeviceSubClass    = 0x00,
+  .bDeviceProtocol    = 0x00,
 
   .bMaxPacketSize0    = CFG_TUD_ENDPOINT0_SIZE,
   .bNumConfigurations = 0x01,
@@ -230,10 +225,9 @@ uint8_t const * tud_descriptor_configuration_cb(uint8_t index)
 char const* string_desc_arr [] =
 {
   (const char[]) { 0x09, 0x04 }, // 0: is supported language is English (0x0409)
-  "STMicroelectronics",          // 1: Manufacturer
-  "Virtual COM Port",            // 2: Product
+  "OpenBLT User",                // 1: Manufacturer
+  "WinUSB Bulk Device",          // 2: Product
   uniqueIdStr,                   // 3: Serials, use chip ID
-  "STM32 CDC-ACM UART",          // 4: CDC Interface
 };
 
 static uint16_t _desc_str[32];

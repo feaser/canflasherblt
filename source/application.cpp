@@ -51,6 +51,10 @@ Application::Application(Board& t_Board)
   : cpp_freertos::Thread("AppThread", configMINIMAL_STACK_SIZE, 6),
     m_Board(t_Board)
 {
+  // Set the USB data received event handler to the onUsbDataReceived() method.
+  m_Board.usbDevice().onDataReceived = std::bind(&Application::onUsbDataReceived, 
+                                                 this, std::placeholders::_1,
+                                                 std::placeholders::_2);
   // Start the thread.
   Start();
 }
@@ -70,6 +74,23 @@ void Application::Run()
     Delay(toggleTicks);
     // Toggle the LED.
     m_Board.statusLed().toggle();
+  }
+}
+
+
+///**************************************************************************************
+/// \brief     Event handler that gets called when new data was received on from the USB
+///            host.
+///
+///**************************************************************************************
+void Application::onUsbDataReceived(uint8_t const t_Data[], uint32_t t_Len)
+{
+  // Was this the XCP Connect command with connect parameter 0?
+  if ((t_Data[0] == 2U) && (t_Data[1] == 0xFFU) && (t_Data[2] == 0x00U) && (t_Len == 3U))
+  {
+    // Send the XCP Connect response.
+    uint8_t connectRes[] = { 8, 0xFF, 0x10, 0x00, 0x08, 0x08, 0x00, 0x01, 0x01 };
+    m_Board.usbDevice().transmit(connectRes, sizeof(connectRes)/sizeof(connectRes[0]));
   }
 }
 

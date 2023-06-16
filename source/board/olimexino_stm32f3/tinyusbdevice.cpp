@@ -110,6 +110,43 @@ TinyUsbDevice::~TinyUsbDevice()
 
 
 ///**************************************************************************************
+/// \brief     Submits data for transmission on the USB bulk endpoint.
+/// \param     t_Data Byte array with data to transmit.
+/// \param     t_Len Number of bytes from the array to transmit.
+/// \return    TBX_OK if successful, TBX_ERROR otherwise.
+///
+///**************************************************************************************
+uint8_t TinyUsbDevice::transmit(uint8_t const t_Data[], uint32_t t_Len)
+{
+  uint8_t result = TBX_ERROR;
+
+  // Verify the parameters.
+  TBX_ASSERT((t_Data != nullptr) && (t_Len > 0));
+
+  // Only continue with valid parameters.
+  if ((t_Data != nullptr) && (t_Len > 0))
+  {
+    // Store the data in the transmit FIFO.
+    if (tud_vendor_write(t_Data, t_Len) == t_Len)
+    {
+      // Request transmission start of the data currently stored in the transmit
+      // FIFO. No need to check the return value, because worst case the endpoint
+      // is already busy with a transfer. That's okay, because the data was already
+      // successfully stored in the transmit FIFO, meaning that it will go out
+      // eventually, since TinyUSB checks at the end of an endpoint transfer if data
+      // is still left in the transmit FIFO. If so, it automatically starts the next
+      // endpoint transfer.
+      (void)tud_vendor_flush();
+      // Update the result.
+      result = TBX_OK;
+    }
+  }
+  /* Give the result back to the caller. */
+  return result;
+}
+
+
+///**************************************************************************************
 /// \brief     Runs the TinyUSB device task.
 ///
 ///**************************************************************************************
@@ -146,6 +183,18 @@ void TinyUsbDevice::processCallback(CallbackId t_CallbackId)
   // Filter on the ID of the callback.
   switch (t_CallbackId)
   {
+    case RXNEWDATA:
+    {
+      // Retrieve the newly received data from the USB endpoint.
+      uint32_t rxCount = tud_vendor_read(m_RxBuf.data(), m_RxBuf.size());
+      // Only trigger the event handler if it was assigned and the data size is not zero.
+      if ((onDataReceived) && (rxCount > 0))
+      {
+        onDataReceived(m_RxBuf.data(), rxCount);
+      }
+    }
+    break;
+
     case MOUNTED:
     {
       // Trigger the event handler, if assigned.
@@ -201,6 +250,27 @@ extern "C"
 //***************************************************************************************
 //           T I N Y U S B   C A L L B A C K   F U N C T I O N S
 //***************************************************************************************
+///**************************************************************************************
+/// \brief     TinyUSB device callback function that gets called upon reception of new
+///            data on the bulk endpoint.
+/// \param     itf The USB interface number that triggered the event.
+///
+///**************************************************************************************
+void tud_vendor_rx_cb(uint8_t itf)
+{
+  // Current implementation only supports one USB interface (number 0).
+  if (itf == 0)
+  {
+    // Only continue if an instance of TinyUsbDevice was actually created.
+    if (TinyUsbDevice::s_InstancePtr != nullptr)
+    {
+      // Call the instance's method for processing the callback.
+      TinyUsbDevice::s_InstancePtr->processCallback(TinyUsbDevice::RXNEWDATA);
+    }
+  }
+}
+
+
 ///**************************************************************************************
 /// \brief     TinyUSB device callback function that gets called when the device is
 ///            mounted on the host.

@@ -39,6 +39,7 @@
 //***************************************************************************************
 // Include files
 //***************************************************************************************
+#include <cstdint>
 #include <functional>
 
 
@@ -51,7 +52,10 @@ class UsbDevice
 public:
   // Destructor.
   virtual ~UsbDevice() { }
+  // Methods.
+  virtual uint8_t transmit(uint8_t const t_Data[], uint32_t t_Len) = 0;  
   // Events.
+  std::function<void(uint8_t const t_Data[], uint32_t t_Len)> onDataReceived;
   std::function<void()> onMounted;
   std::function<void()> onUnmounted;
   std::function<void()> onSuspend;

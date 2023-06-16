@@ -53,12 +53,14 @@ public:
   // Constructors and destructor.
   explicit Application(Board& t_Board);
   virtual ~Application() { }
-  // Methods.
-  void Run() override;
 
 private:
   // Members.
   Board& m_Board;
+  // Methods.
+  void Run() override;
+  // Event handlers.
+  void onUsbDataReceived(uint8_t const t_Data[], uint32_t t_Len);
 
   // Flag the class as non-copyable.
   Application(const Application&) = delete;
