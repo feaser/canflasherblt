@@ -39,12 +39,6 @@
 #include "stm32f3xx_ll_utils.h"
 
 
-//***************************************************************************************
-// Function prototypes
-//***************************************************************************************
-extern "C" void BoardAssertHandler(const char * const file, uint32_t line);
-
-
 ///**************************************************************************************
 /// \brief     Board support package constructor.
 /// \details   Note that this class builds on the concept of polymorphing to create an
@@ -67,6 +61,8 @@ HardwareBoard::HardwareBoard()
   TbxAssertSetHandler(BoardAssertHandler);  
   // Initialize the microcontroller.
   mcuInit();
+  // Create the status LED object on the heap.
+  m_StatusLed = std::make_unique<StatusLed>();
 }
 
 

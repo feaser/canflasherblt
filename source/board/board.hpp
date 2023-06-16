@@ -37,6 +37,12 @@
 #define BOARD_HPP
 
 //***************************************************************************************
+// Include files
+//***************************************************************************************
+#include "led.hpp"
+
+
+//***************************************************************************************
 // Class definitions
 //***************************************************************************************
 /// \brief   Abstract board support package class that represents the hardware
@@ -49,6 +55,8 @@ class Board
 public:
   // Destructor.
   virtual ~Board() { }
+  // Methods.
+  virtual Led& statusLed() = 0;
 
 protected:
   // Flag the class as abstract.

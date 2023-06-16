@@ -1,6 +1,6 @@
 ///**************************************************************************************
-/// \file         hardwareboard.hpp
-/// \brief        Hardware specific board support package header file.
+/// \file         statusled.cpp
+/// \brief        Status LED source file.
 /// \internal
 ///--------------------------------------------------------------------------------------
 ///                          C O P Y R I G H T
@@ -33,56 +33,62 @@
 ///
 /// \endinternal
 ///**************************************************************************************
-#ifndef HARDWAREBOARD_HPP
-#define HARDWAREBOARD_HPP
 
 //***************************************************************************************
 // Include files
 //***************************************************************************************
-#include <memory>
-#include "board.hpp"
 #include "statusled.hpp"
+#include "stm32f3xx_ll_gpio.h"
 
 
-//***************************************************************************************
-// Function prototypes
-//***************************************************************************************
-extern "C" void BoardAssertHandler(const char * const file, uint32_t line);
-
-
-//***************************************************************************************
-// Class definitions
-//***************************************************************************************
-/// \brief   Board support package class that represents the hardware abstraction layer.
-///          It implements the getters of the abstract class that it derives from.
-/// \details Note that the getters actually return a reference to the hardware specific
-///          object, thereby realizing the mapping between hardware independent parts and
-///          hardware dependent parts. For example: m_StatusLed is of type StatusLed but
-///          the statusLed() getter returns the reference of the generic hardware
-///          abstracted type Led.
-class HardwareBoard : public Board
+///**************************************************************************************
+/// \brief     Status LED constructor. 
+///
+///**************************************************************************************
+StatusLed::StatusLed()
+  : Led()
 {
-public:
-  // Constructors and destructor.
-  HardwareBoard();
-  virtual ~HardwareBoard() { }
-  // Getters and setters.
-  Led& statusLed() override { return *m_StatusLed; }
+  LL_GPIO_InitTypeDef GPIO_InitStruct{ };
 
-private:
-  // Members.
-  std::unique_ptr<StatusLed> m_StatusLed{nullptr};
-  // Methods.
-  void mcuInit();
-  void setupSystemClock();
-  static void assertHandler(const char * const file, uint32_t line);  
-  // Friends.
-  friend void BoardAssertHandler(const char * const file, uint32_t line);
+  // Configure GPIO pin PA5 as a digital output and turn the LED off.
+  LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_5);
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_5;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+}
 
-  // Flag the class as non-copyable.
-  HardwareBoard(const HardwareBoard&) = delete;
-  const HardwareBoard& operator=(const HardwareBoard&) = delete;
-};
 
-#endif // HARDWAREBOARD_HPP
-//********************************** end of hardwareboard.hpp ***************************
+///**************************************************************************************
+/// \brief     Status LED destructor.
+///
+///**************************************************************************************
+StatusLed::~StatusLed()
+{
+  // Make sure the LED is off.
+  off();
+}
+
+
+///**************************************************************************************
+/// \brief     Sets the state of the LED.
+/// \param     t_State TBX_ON if the LED should be turned on, TBX_OFF for off.
+///
+///**************************************************************************************
+void StatusLed::set(uint8_t t_State)
+{
+  // Should the LED be turned on?
+  if (t_State == TBX_ON)
+  {
+    LL_GPIO_SetOutputPin(GPIOA, LL_GPIO_PIN_5);
+  }
+  // Turn the LED off.
+  else
+  {
+    LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_5);
+  }
+}
+
+//********************************** end of statusled.cpp *******************************

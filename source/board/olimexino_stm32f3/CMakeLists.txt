@@ -12,6 +12,7 @@ set(PROJECT_SOURCES
     "${CMAKE_CURRENT_LIST_DIR}/sysmem.c"
     "${CMAKE_CURRENT_LIST_DIR}/main.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/hardwareboard.cpp"
+    "${CMAKE_CURRENT_LIST_DIR}/statusled.cpp"
 )
 
 # Configure project include paths.

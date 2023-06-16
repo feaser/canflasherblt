@@ -51,4 +51,23 @@ Application::Application(Board& t_Board)
 {
 }
 
+
+///**************************************************************************************
+/// \brief     Application task function.
+///
+///**************************************************************************************
+void Application::run()
+{
+  volatile uint32_t count;
+
+  for (;;)
+  {
+    for (count = 0U; count < 1440000UL; count++)
+    {
+      ;
+    }
+    m_Board.statusLed().toggle();
+  }
+}
+
 //********************************** end of application.cpp *****************************

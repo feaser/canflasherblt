@@ -1,6 +1,6 @@
 ///**************************************************************************************
-/// \file         hardwareboard.hpp
-/// \brief        Hardware specific board support package header file.
+/// \file         statusled.hpp
+/// \brief        Status LED header file.
 /// \internal
 ///--------------------------------------------------------------------------------------
 ///                          C O P Y R I G H T
@@ -33,56 +33,34 @@
 ///
 /// \endinternal
 ///**************************************************************************************
-#ifndef HARDWAREBOARD_HPP
-#define HARDWAREBOARD_HPP
+#ifndef STATUSLED_HPP
+#define STATUSLED_HPP
 
 //***************************************************************************************
 // Include files
 //***************************************************************************************
-#include <memory>
-#include "board.hpp"
-#include "statusled.hpp"
-
-
-//***************************************************************************************
-// Function prototypes
-//***************************************************************************************
-extern "C" void BoardAssertHandler(const char * const file, uint32_t line);
+#include "led.hpp"
 
 
 //***************************************************************************************
 // Class definitions
 //***************************************************************************************
-/// \brief   Board support package class that represents the hardware abstraction layer.
-///          It implements the getters of the abstract class that it derives from.
-/// \details Note that the getters actually return a reference to the hardware specific
-///          object, thereby realizing the mapping between hardware independent parts and
-///          hardware dependent parts. For example: m_StatusLed is of type StatusLed but
-///          the statusLed() getter returns the reference of the generic hardware
-///          abstracted type Led.
-class HardwareBoard : public Board
+/// \brief Status LED class.
+class StatusLed : public Led
 {
 public:
   // Constructors and destructor.
-  HardwareBoard();
-  virtual ~HardwareBoard() { }
-  // Getters and setters.
-  Led& statusLed() override { return *m_StatusLed; }
+  explicit StatusLed();
+  virtual ~StatusLed();
 
 private:
-  // Members.
-  std::unique_ptr<StatusLed> m_StatusLed{nullptr};
-  // Methods.
-  void mcuInit();
-  void setupSystemClock();
-  static void assertHandler(const char * const file, uint32_t line);  
-  // Friends.
-  friend void BoardAssertHandler(const char * const file, uint32_t line);
+  // Getters and setters.
+  void set(uint8_t t_State) override;
 
   // Flag the class as non-copyable.
-  HardwareBoard(const HardwareBoard&) = delete;
-  const HardwareBoard& operator=(const HardwareBoard&) = delete;
+  StatusLed(const StatusLed&) = delete;
+  const StatusLed& operator=(const StatusLed&) = delete;
 };
 
-#endif // HARDWAREBOARD_HPP
-//********************************** end of hardwareboard.hpp ***************************
+#endif // STATUSLED_HPP
+//********************************** end of statusled.hpp *******************************

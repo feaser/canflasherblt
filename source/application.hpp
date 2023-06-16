@@ -52,6 +52,8 @@ public:
   // Constructors and destructor.
   explicit Application(Board& t_Board);
   virtual ~Application() { }
+  // Methods.
+  void run();
 
 private:
   // Members.

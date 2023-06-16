@@ -60,12 +60,10 @@ int main(void)
   // hardware abstraction. The application class is completely hardware independent
   // and can be reused on different boards. Whenever it does need hardware access,
   // it does so, by accessing its board member.
-  Application application(board);
-  
-  while (1 == 1)
-  {
-    ;
-  }
+  Application app(board);
+
+  // Start running the application.
+  app.run();
 
   // Program should never get here.
   TBX_ASSERT(TBX_FALSE);
