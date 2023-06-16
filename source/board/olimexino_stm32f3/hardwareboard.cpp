@@ -40,6 +40,7 @@
 #include "microtbx.h"
 #include "hardwareboard.hpp"
 #include "thread.hpp"
+#include "critical.hpp"
 #include "stm32f3xx_ll_bus.h"
 #include "stm32f3xx_ll_gpio.h"
 #include "stm32f3xx_ll_rcc.h"
@@ -84,8 +85,8 @@ HardwareBoard::HardwareBoard()
 ///**************************************************************************************
 void HardwareBoard::assertHandler(const char * const file, uint32_t line)
 {
-  /* Disable interrupts. */
-  __disable_irq();
+  /* Disable the interrupts. */
+  cpp_freertos::CriticalSection::DisableInterrupts();
 
   /* Hang the program by entering an infinite loop. The values for file and line can
    * then be inspected with the debugger to locate the source of the run-time assertion.
