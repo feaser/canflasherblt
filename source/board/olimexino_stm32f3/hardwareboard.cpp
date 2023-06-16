@@ -39,6 +39,7 @@
 //***************************************************************************************
 #include "microtbx.h"
 #include "hardwareboard.hpp"
+#include "thread.hpp"
 #include "stm32f3xx_ll_bus.h"
 #include "stm32f3xx_ll_gpio.h"
 #include "stm32f3xx_ll_rcc.h"
@@ -134,6 +135,9 @@ void HardwareBoard::mcuInit()
   LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOF);
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_USB);
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_CAN);
+#if ( configGENERATE_RUN_TIME_STATS == 1 )
+  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM2);
+#endif  
 
   // Set interrupt group priority. Needs to be NVIC_PRIORITYGROUP_4 for FreeRTOS.
   NVIC_SetPriorityGrouping(0x00000003U);

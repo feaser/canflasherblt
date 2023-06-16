@@ -39,6 +39,31 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+/****************************************************************************************
+* Include files
+****************************************************************************************/
+#include "stm32f3xx.h"
+
+
+/****************************************************************************************
+* Macro definitions
+****************************************************************************************/
+#if ( configGENERATE_RUN_TIME_STATS == 1 )
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS()      vRunTimeStatsConfigureTimer()
+#define portGET_RUN_TIME_COUNTER_VALUE()	            uxRunTimeStatsGetTimerCounter()
+#endif
+
+
+/****************************************************************************************
+* Function prototypes
+****************************************************************************************/
+#if ( configGENERATE_RUN_TIME_STATS == 1 )
+void vRunTimeStatsConfigureTimer(void);
+static inline uint32_t uxRunTimeStatsGetTimerCounter(void)
+{
+  return (uint32_t)(READ_REG(TIM2->CNT));
+}
+#endif
 
 
 #ifdef __cplusplus
