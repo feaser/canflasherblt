@@ -50,10 +50,13 @@ class Application
 {
 public:
   // Constructors and destructor.
-  explicit Application();
+  explicit Application(Board& t_Board);
   virtual ~Application() { }
 
 private:
+  // Members.
+  Board& m_Board;
+
   // Flag the class as non-copyable.
   Application(const Application&) = delete;
   const Application& operator=(const Application&) = delete; 

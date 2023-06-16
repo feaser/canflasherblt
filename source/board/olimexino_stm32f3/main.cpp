@@ -40,6 +40,7 @@
 #include <memory>
 #include "microtbx.h"
 #include "application.hpp"
+#include "hardwareboard.hpp"
 
 
 ///**************************************************************************************
@@ -50,11 +51,16 @@
 ///**************************************************************************************
 int main(void)
 {
-  // Create the application object on the heap. No need to unnecessarily burden the
-  // stack with it. That way the stack can stack small, since it's only used until
-  // the RTOS starts, without having to worry about stack overflows in case the 
-  // application object expands and requires more RAM data.
-  auto app = std::make_unique<Application>();
+  // Hardware board instance. Note that its type is the hardware specific version of
+  // the board class and not the hardware independent Board interface.
+  HardwareBoard board;
+
+  // Application instance. Note that this polymorphs the hardware specific board
+  // instance into the generic hardware independent one. This realizes the hardware
+  // hardware abstraction. The application class is completely hardware independent
+  // and can be reused on different boards. Whenever it does need hardware access,
+  // it does so, by accessing its board member.
+  Application application(board);
   
   while (1 == 1)
   {
