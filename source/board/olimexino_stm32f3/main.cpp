@@ -65,12 +65,6 @@ namespace
 ///**************************************************************************************
 int main(void)
 {
-  // Application instance. Note that this polymorphs the hardware specific board
-  // instance into the generic hardware independent one. This realizes the hardware
-  // hardware abstraction. The application class is completely hardware independent
-  // and can be reused on different boards. Whenever it does need hardware access,
-  // it does so, by accessing its board member.
-  // 
   // Create the application instance on the heap. No need to unnecessarily burden the
   // stack with it. That way the stack can stack small, since it's only used until
   // the RTOS starts, without having to worry about stack overflows in case the 
@@ -79,7 +73,7 @@ int main(void)
   // Note that this polymorphs the hardware specific board instance into the generic
   // hardware independent one. This realizes the hardware abstraction. The application
   // class is completely hardware independent and can be reused on different boards. 
-  // Whenever it does need hardware access, it does so, by accessing its board member.
+  // Whenever it does need hardware access, it does so by accessing its board member.
   auto app = std::make_unique<Application>(board);
 
   // Hand over control to the RTOS by starting the scheduler.
