@@ -38,6 +38,7 @@
 // Include files
 //***************************************************************************************
 #include "application.hpp"
+#include "ticks.hpp"
 
 
 ///**************************************************************************************
@@ -47,8 +48,10 @@
 ///
 ///**************************************************************************************
 Application::Application(Board& t_Board)
-  : m_Board(t_Board)
+  : cpp_freertos::Thread("AppThread", 100, 6),  m_Board(t_Board)
 {
+  // Start the thread.
+  Start();
 }
 
 
@@ -56,16 +59,15 @@ Application::Application(Board& t_Board)
 /// \brief     Application task function.
 ///
 ///**************************************************************************************
-void Application::run()
+void Application::Run()
 {
-  volatile uint32_t count;
+  TickType_t toggleTicks = cpp_freertos::Ticks::MsToTicks(500U);
 
   for (;;)
   {
-    for (count = 0U; count < 1440000UL; count++)
-    {
-      ;
-    }
+    // Wait for the LED toggle time to elapse.
+    Delay(toggleTicks);
+    // Toggle the LED.
     m_Board.statusLed().toggle();
   }
 }

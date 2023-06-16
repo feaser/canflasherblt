@@ -40,20 +40,21 @@
 // Include files
 //***************************************************************************************
 #include "board.hpp"
+#include "thread.hpp"
 
 
 //***************************************************************************************
 // Class definitions
 //***************************************************************************************
 /// \brief Application class.
-class Application
+class Application: public cpp_freertos::Thread
 {
 public:
   // Constructors and destructor.
   explicit Application(Board& t_Board);
   virtual ~Application() { }
   // Methods.
-  void run();
+  void Run() override;
 
 private:
   // Members.

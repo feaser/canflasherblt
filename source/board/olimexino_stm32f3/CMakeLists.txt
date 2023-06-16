@@ -10,6 +10,7 @@ set(PROJECT_SOURCES
     "${CMAKE_CURRENT_LIST_DIR}/system_stm32f3xx.c"
     "${CMAKE_CURRENT_LIST_DIR}/syscalls.c"
     "${CMAKE_CURRENT_LIST_DIR}/sysmem.c"
+    "${CMAKE_CURRENT_LIST_DIR}/FreeRTOSHooks.c"
     "${CMAKE_CURRENT_LIST_DIR}/main.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/hardwareboard.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/statusled.cpp"
@@ -25,6 +26,7 @@ set(PROJECT_LIBRARIES
     application
     microtbx-cortexm
     cube_f3_ll
+    freertos-arm-cm4f 
 )
 
 # Configure project specific compiler definitions.

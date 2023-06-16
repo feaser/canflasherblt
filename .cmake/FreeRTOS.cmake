@@ -61,3 +61,30 @@ target_sources(freertos-heap5 INTERFACE
     "${CMAKE_SOURCE_DIR}/third_party/freertos/portable/MemMang/heap_5.c"
 )
 
+# Create interface library for the add-on C++ wrappers sources.
+add_library(freertos-addon-cpp INTERFACE)
+
+target_include_directories(freertos-addon-cpp INTERFACE
+    "${CMAKE_SOURCE_DIR}/third_party/freertos_addons/c++/Source/include"
+)
+
+target_compile_definitions(freertos-addon-cpp INTERFACE
+    CPP_FREERTOS_NO_CPP_STRINGS
+    CPP_FREERTOS_NO_EXCEPTIONS
+)
+
+
+target_sources(freertos-addon-cpp INTERFACE
+    "${CMAKE_SOURCE_DIR}/third_party/freertos_addons/c++/Source/ccondition_variable.cpp"
+    "${CMAKE_SOURCE_DIR}/third_party/freertos_addons/c++/Source/cevent_groups.cpp"
+    "${CMAKE_SOURCE_DIR}/third_party/freertos_addons/c++/Source/cmem_pool.cpp"
+    "${CMAKE_SOURCE_DIR}/third_party/freertos_addons/c++/Source/cmutex.cpp"
+    "${CMAKE_SOURCE_DIR}/third_party/freertos_addons/c++/Source/cqueue.cpp"
+    "${CMAKE_SOURCE_DIR}/third_party/freertos_addons/c++/Source/cread_write_lock.cpp"
+    "${CMAKE_SOURCE_DIR}/third_party/freertos_addons/c++/Source/csemaphore.cpp"
+    "${CMAKE_SOURCE_DIR}/third_party/freertos_addons/c++/Source/ctasklet.cpp"
+    "${CMAKE_SOURCE_DIR}/third_party/freertos_addons/c++/Source/cthread.cpp"
+    "${CMAKE_SOURCE_DIR}/third_party/freertos_addons/c++/Source/ctickhook.cpp"
+    "${CMAKE_SOURCE_DIR}/third_party/freertos_addons/c++/Source/ctimer.cpp"
+    "${CMAKE_SOURCE_DIR}/third_party/freertos_addons/c++/Source/cworkqueue.cpp"
+)

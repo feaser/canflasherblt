@@ -41,6 +41,7 @@
 #include "microtbx.h"
 #include "application.hpp"
 #include "hardwareboard.hpp"
+#include "thread.hpp"
 
 
 //***************************************************************************************
@@ -81,8 +82,8 @@ int main(void)
   // Whenever it does need hardware access, it does so, by accessing its board member.
   auto app = std::make_unique<Application>(board);
 
-  // Start running the application.
-  app->run();
+  // Hand over control to the RTOS by starting the scheduler.
+  cpp_freertos::Thread::StartScheduler();
 
   // Program should never get here.
   TBX_ASSERT(TBX_FALSE);
