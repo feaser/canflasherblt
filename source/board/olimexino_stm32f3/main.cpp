@@ -43,6 +43,19 @@
 #include "hardwareboard.hpp"
 
 
+//***************************************************************************************
+// Local data declarations
+//***************************************************************************************
+namespace
+{
+  // Declare the board instance globally in the anonymous namespace. This way it is only
+  // accessible within this source file and the constructor runs before main().
+  // Note that its type is the hardware specific version of the board class and not the
+  // hardware independent Board interface.
+  HardwareBoard board;
+}
+
+
 ///**************************************************************************************
 /// \brief     This is the entry point for the software application and is called
 ///            by the reset interrupt vector after the C-startup routines executed.
@@ -51,19 +64,25 @@
 ///**************************************************************************************
 int main(void)
 {
-  // Hardware board instance. Note that its type is the hardware specific version of
-  // the board class and not the hardware independent Board interface.
-  HardwareBoard board;
-
   // Application instance. Note that this polymorphs the hardware specific board
   // instance into the generic hardware independent one. This realizes the hardware
   // hardware abstraction. The application class is completely hardware independent
   // and can be reused on different boards. Whenever it does need hardware access,
   // it does so, by accessing its board member.
-  Application app(board);
+  // 
+  // Create the application instance on the heap. No need to unnecessarily burden the
+  // stack with it. That way the stack can stack small, since it's only used until
+  // the RTOS starts, without having to worry about stack overflows in case the 
+  // application object expands and requires more RAM data.
+  //
+  // Note that this polymorphs the hardware specific board instance into the generic
+  // hardware independent one. This realizes the hardware abstraction. The application
+  // class is completely hardware independent and can be reused on different boards. 
+  // Whenever it does need hardware access, it does so, by accessing its board member.
+  auto app = std::make_unique<Application>(board);
 
   // Start running the application.
-  app.run();
+  app->run();
 
   // Program should never get here.
   TBX_ASSERT(TBX_FALSE);
