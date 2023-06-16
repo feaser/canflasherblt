@@ -1,6 +1,6 @@
 ///**************************************************************************************
-/// \file         board.hpp
-/// \brief        Board support package header file.
+/// \file         tinyusbdevice.hpp
+/// \brief        TinyUSB device header file.
 /// \internal
 ///--------------------------------------------------------------------------------------
 ///                          C O P Y R I G H T
@@ -33,42 +33,58 @@
 ///
 /// \endinternal
 ///**************************************************************************************
-#ifndef BOARD_HPP
-#define BOARD_HPP
+#ifndef TINYUSBDEVICE_HPP
+#define TINYUSBDEVICE_HPP
 
 //***************************************************************************************
 // Include files
 //***************************************************************************************
-#include "led.hpp"
 #include "usbdevice.hpp"
+#include "thread.hpp"
+#include "tusb.h"
+
+
+//***************************************************************************************
+// Forward declarations
+//***************************************************************************************
+class HardwareBoard;
 
 
 //***************************************************************************************
 // Class definitions
 //***************************************************************************************
-/// \brief   Abstract board support package class that represents the hardware
-///          abstraction layer. It defines a hardware independent interface for getters
-///          of hardware specific objects.
-/// \details The idea is that you create a derived class that implements the getters and,
-///          more importantly, returns the hardware specific version of these objects.
-class Board
+/// \brief TinyUSB device class.
+class TinyUsbDevice : public UsbDevice, public cpp_freertos::Thread
 {
 public:
-  // Destructor.
-  virtual ~Board() { }
-  // Methods.
-  virtual Led& statusLed() = 0;
-  virtual UsbDevice& usbDevice() = 0;
-
-protected:
-  // Flag the class as abstract.
-  explicit Board() { }
+  // Constructors and destructor.
+  explicit TinyUsbDevice();
+  virtual ~TinyUsbDevice();
 
 private:
+  // Enumerations.
+  enum CallbackId
+  {
+    MOUNTED,
+    UNMOUNTED,
+    SUSPEND,
+    RESUME
+  };
+  // Members.
+  static TinyUsbDevice* s_InstancePtr;
+  // Methods.
+  void Run() override;
+  void processCallback(CallbackId t_CallbackId);
+  // Friends.
+  friend void tud_mount_cb(void);
+  friend void tud_umount_cb(void);
+  friend void tud_suspend_cb(bool remote_wakeup_en);
+  friend void tud_resume_cb(void);
+
   // Flag the class as non-copyable.
-  Board(const Board&) = delete;
-  const Board& operator=(const Board&) = delete;
+  TinyUsbDevice(const TinyUsbDevice&) = delete;
+  const TinyUsbDevice& operator=(const TinyUsbDevice&) = delete;
 };
 
-#endif // BOARD_HPP
-//********************************** end of board.hpp ***********************************
+#endif // TINYUSBDEVICE_HPP
+//********************************** end of tinyusbdevice.hpp ***************************

@@ -48,7 +48,8 @@
 ///
 ///**************************************************************************************
 Application::Application(Board& t_Board)
-  : cpp_freertos::Thread("AppThread", 100, 6),  m_Board(t_Board)
+  : cpp_freertos::Thread("AppThread", configMINIMAL_STACK_SIZE, 6),
+    m_Board(t_Board)
 {
   // Start the thread.
   Start();

@@ -71,6 +71,8 @@ HardwareBoard::HardwareBoard()
   mcuInit();
   // Create the status LED object on the heap.
   m_StatusLed = std::make_unique<StatusLed>();
+  // Create the TinyUSB device object on the heap.
+  m_TinyUsbDevice = std::make_unique<TinyUsbDevice>();
 }
 
 
@@ -117,6 +119,8 @@ void HardwareBoard::assertHandler(const char * const file, uint32_t line)
 ///**************************************************************************************
 void HardwareBoard::mcuInit()
 {
+  LL_GPIO_InitTypeDef GPIO_InitStruct{ };
+
   // SYSCFG and PWR clock enable.
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
@@ -132,12 +136,27 @@ void HardwareBoard::mcuInit()
   // GPIO port and peripheral clocks enable.
   LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOA);
   LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOB);
+  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOC);
   LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOF);
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_USB);
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_CAN);
 #if ( configGENERATE_RUN_TIME_STATS == 1 )
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM2);
-#endif  
+#endif 
+
+  // Out of reset, the Olimexino-STM32F3 board enables a pull-up on the USB_DP line. If
+  // the board already enumerated, then it might stay in that state, even after a reset.
+  // It is therefore best to first make sure the USB device disconnects from the USB
+  // host. This is done by configuring USB DISC (PC12) as a digital output and setting
+  // it logic high. This turns the P-MOSFET off, which disables the pull-up on the USB_DP
+  // line.
+  LL_GPIO_SetOutputPin(GPIOC, LL_GPIO_PIN_12);
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_12;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   // Set interrupt group priority. Needs to be NVIC_PRIORITYGROUP_4 for FreeRTOS.
   NVIC_SetPriorityGrouping(0x00000003U);

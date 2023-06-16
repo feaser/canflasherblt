@@ -1,6 +1,6 @@
 ///**************************************************************************************
-/// \file         board.hpp
-/// \brief        Board support package header file.
+/// \file         usbdevice.hpp
+/// \brief        USB device driver header file.
 /// \internal
 ///--------------------------------------------------------------------------------------
 ///                          C O P Y R I G H T
@@ -33,42 +33,39 @@
 ///
 /// \endinternal
 ///**************************************************************************************
-#ifndef BOARD_HPP
-#define BOARD_HPP
+#ifndef USBDEVICE_HPP
+#define USBDEVICE_HPP
 
 //***************************************************************************************
 // Include files
 //***************************************************************************************
-#include "led.hpp"
-#include "usbdevice.hpp"
+#include <functional>
 
 
 //***************************************************************************************
 // Class definitions
 //***************************************************************************************
-/// \brief   Abstract board support package class that represents the hardware
-///          abstraction layer. It defines a hardware independent interface for getters
-///          of hardware specific objects.
-/// \details The idea is that you create a derived class that implements the getters and,
-///          more importantly, returns the hardware specific version of these objects.
-class Board
+/// \brief   Abstract USB device driver class.
+class UsbDevice
 {
 public:
   // Destructor.
-  virtual ~Board() { }
-  // Methods.
-  virtual Led& statusLed() = 0;
-  virtual UsbDevice& usbDevice() = 0;
+  virtual ~UsbDevice() { }
+  // Events.
+  std::function<void()> onMounted;
+  std::function<void()> onUnmounted;
+  std::function<void()> onSuspend;
+  std::function<void()> onResume;
 
 protected:
   // Flag the class as abstract.
-  explicit Board() { }
+  explicit UsbDevice() { }
 
 private:
   // Flag the class as non-copyable.
-  Board(const Board&) = delete;
-  const Board& operator=(const Board&) = delete;
+  UsbDevice(const UsbDevice&) = delete;
+  const UsbDevice& operator=(const UsbDevice&) = delete;
 };
 
-#endif // BOARD_HPP
-//********************************** end of board.hpp ***********************************
+#endif // USBDEVICE_HPP
+//********************************** end of usbdevice.hpp *******************************

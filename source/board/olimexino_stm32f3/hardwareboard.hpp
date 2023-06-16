@@ -42,6 +42,7 @@
 #include <memory>
 #include "board.hpp"
 #include "statusled.hpp"
+#include "tinyusbdevice.hpp"
 
 
 //***************************************************************************************
@@ -68,10 +69,12 @@ public:
   virtual ~HardwareBoard() { }
   // Getters and setters.
   Led& statusLed() override { return *m_StatusLed; }
+  UsbDevice& usbDevice() override { return *m_TinyUsbDevice; }
 
 private:
   // Members.
   std::unique_ptr<StatusLed> m_StatusLed{nullptr};
+  std::unique_ptr<TinyUsbDevice> m_TinyUsbDevice{nullptr};
   // Methods.
   void mcuInit();
   void setupSystemClock();
