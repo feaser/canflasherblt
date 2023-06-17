@@ -1,6 +1,6 @@
 ///**************************************************************************************
-/// \file         indicator.hpp
-/// \brief        Status indicator header file.
+/// \file         controlloop.hpp
+/// \brief        Fixed step control loop publisher-subscriber header file.
 /// \internal
 ///--------------------------------------------------------------------------------------
 ///                          C O P Y R I G H T
@@ -33,39 +33,53 @@
 ///
 /// \endinternal
 ///**************************************************************************************
-#ifndef INDICATOR_HPP
-#define INDICATOR_HPP
+#ifndef CONTROLLOOP_HPP
+#define CONTROLLOOP_HPP
 
 //***************************************************************************************
 // Include files
 //***************************************************************************************
-#include "led.hpp"
-#include "controlloop.hpp"
+#include <chrono>
+#include "microtbx.h"
 
 
 //***************************************************************************************
 // Class definitions
 //***************************************************************************************
-/// \brief Status indicator class.
-class Indicator : public ControlLoopSubscriber
+/// \brief Fixed step control loop subscriber abstract interface class.
+class ControlLoopSubscriber
 {
 public:
-  // Constructors and destructor.
-  explicit Indicator(Led& t_StatusLed);
-  virtual ~Indicator() { }
+  // Destructor.
+  virtual ~ControlLoopSubscriber() { }
   // Methods.
-  void update(std::chrono::milliseconds t_Delta) override;
+  virtual void update(std::chrono::milliseconds t_Delta) = 0;
+
+protected:
+  // Flag the class as abstract.
+  explicit ControlLoopSubscriber() { }
+};
+
+/// \brief Fixed step control loop publisher abstract class.
+class ControlLoopPublisher
+{
+public:
+  // Destructor.
+  virtual ~ControlLoopPublisher();
+  // Methods.
+  void attach(ControlLoopSubscriber& t_Subscriber);
+  void detach(ControlLoopSubscriber& t_Subscriber);
+  void notify(std::chrono::milliseconds t_Delta);
+
+protected:
+  // Flag the class as abstract.
+  explicit ControlLoopPublisher();
 
 private:
   // Members.
-  Led& m_StatusLed;
-  std::chrono::milliseconds m_LastToggleMillis{0};
-  std::chrono::milliseconds m_CurrentMillis{0};
-
-  // Flag the class as non-copyable.
-  Indicator(const Indicator&) = delete;
-  const Indicator& operator=(const Indicator&) = delete; 
+  tTbxList * m_Subscribers{nullptr};  
 };
 
-#endif // INDICATOR_HPP
-//********************************** end of indicator.hpp *******************************
+
+#endif // CONTROLLOOP_HPP
+//********************************** end of controlloop.hpp *****************************

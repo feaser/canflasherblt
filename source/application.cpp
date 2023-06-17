@@ -56,6 +56,8 @@ Application::Application(Board& t_Board)
   m_Board.usbDevice().onDataReceived = std::bind(&Application::onUsbDataReceived, 
                                                  this, std::placeholders::_1,
                                                  std::placeholders::_2);
+  // Attach the control loop observers.
+  attach(m_Indicator);
   // Start the thread.
   Start();
 }
@@ -67,18 +69,16 @@ Application::Application(Board& t_Board)
 ///**************************************************************************************
 void Application::Run()
 {
-  const TickType_t periodTicks = cpp_freertos::Ticks::MsToTicks(10U);
+  const TickType_t deltaTicks = cpp_freertos::Ticks::MsToTicks(10U);
+  const auto deltaMillis = std::chrono::milliseconds{deltaTicks};
 
   for (;;)
   {
-    // Update members that depend on a periodic event to drive them.
-    // TODO ##Vg Maybe come up with an interface IUpdate that the application class
-    // holds an dynamic array of. Could use MicroTBX list for this. Or perhaps the
-    // FreeRTOS C++ wrappers expose a list for this.
-    m_Indicator.update();
     // Wait until the task's period to elapses, while taking into consideration the 
     // execution time of this task.
-    DelayUntil(periodTicks);
+    DelayUntil(deltaTicks);
+    // Notify all attached subscribers about the elapsed time step.
+    notify(deltaMillis);
   }
 }
 

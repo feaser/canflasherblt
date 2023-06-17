@@ -53,20 +53,23 @@ Indicator::Indicator(Led& t_StatusLed)
 
 ///**************************************************************************************
 /// \brief     Update method that drives the class. Should be called periodically.
+/// \param     t_Delta Number of milliseconds that passed.
 ///
 ///**************************************************************************************
-void Indicator::update()
+void Indicator::update(std::chrono::milliseconds t_Delta)
 {
-  const TickType_t toggleTicks = cpp_freertos::Ticks::MsToTicks(500U);
+  constexpr auto toggleMillis = std::chrono::milliseconds{500};
 
-  // Did the toggle time pass?
-  TickType_t deltaTicks = cpp_freertos::Ticks::GetTicks() - m_LastToggleTicks;
-  if (deltaTicks >= toggleTicks)
+  // Update the current time. 
+  m_CurrentMillis += t_Delta;
+
+  // Time to toggle the LED?
+  if ((m_CurrentMillis - m_LastToggleMillis) > toggleMillis)
   {
     // Toggle the LED.
     m_StatusLed.toggle();
-    // Update the last tick counter for the next interval detection.
-    m_LastToggleTicks += toggleTicks;
+    // Update the last toggle time for the next interval detection.
+    m_LastToggleMillis += toggleMillis;
   }
 }
 

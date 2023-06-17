@@ -41,6 +41,7 @@
 //***************************************************************************************
 #include "board.hpp"
 #include "thread.hpp"
+#include "controlloop.hpp"
 #include "indicator.hpp"
 
 
@@ -48,7 +49,7 @@
 // Class definitions
 //***************************************************************************************
 /// \brief Application class.
-class Application: public cpp_freertos::Thread
+class Application: public cpp_freertos::Thread, public ControlLoopPublisher
 {
 public:
   // Constructors and destructor.

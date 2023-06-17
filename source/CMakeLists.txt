@@ -6,6 +6,7 @@ add_library(application INTERFACE)
 
 target_sources(application INTERFACE
     "${CMAKE_CURRENT_LIST_DIR}/application.cpp"
+    "${CMAKE_CURRENT_LIST_DIR}/controlloop.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/indicator.cpp"
 )
 
