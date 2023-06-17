@@ -39,6 +39,7 @@
 //***************************************************************************************
 // Include files
 //***************************************************************************************
+#include <array>
 #include "led.hpp"
 #include "controlloop.hpp"
 
@@ -50,15 +51,38 @@
 class Indicator : public ControlLoopSubscriber
 {
 public:
+  // Enumerations.
+  enum State
+  {
+    SLEEPING,  // Off
+    IDLE,      // Slow heartbeat
+    ACTIVE,    // Fast heartbeat
+    ERROR      // On
+  };
   // Constructors and destructor.
   explicit Indicator(Led& t_StatusLed);
   virtual ~Indicator() { }
+  // Getters and setters.
+  void setState(State t_Value);
   // Methods.
   void update(std::chrono::milliseconds t_Delta) override;
 
 private:
+  // Constants.
+  static constexpr std::chrono::milliseconds c_PlayStepMillis{50};
+  static constexpr std::array<uint8_t, 40> c_PlayIdle
+  {
+    0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0    
+  };
+  static constexpr std::array<uint8_t, 20> c_PlayActive
+  {
+    0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  };
   // Members.
   Led& m_StatusLed;
+  State m_State{SLEEPING};
+  size_t m_PlayIdx{0};
   std::chrono::milliseconds m_LastToggleMillis{0};
   std::chrono::milliseconds m_CurrentMillis{0};
 

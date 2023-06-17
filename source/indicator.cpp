@@ -52,24 +52,109 @@ Indicator::Indicator(Led& t_StatusLed)
 
 
 ///**************************************************************************************
+/// \brief     Setter for the indicator state.
+/// \param     t_Value New state value.
+///
+///**************************************************************************************
+void Indicator::setState(State t_Value)
+{
+  // Perform state transition, if the state actually changed.
+  if (m_State != t_Value)
+  {
+    // Perform new state entry actions.
+    switch (t_Value)
+    {
+      case SLEEPING:
+      {
+        // Turn the status LED off.
+        m_StatusLed.off();
+      }
+      break;
+
+      case IDLE:
+      case ACTIVE:
+      {
+        // Turn the status LED off.
+        m_StatusLed.off();
+        // Reset the play index.
+        m_PlayIdx = 0;
+      }
+      break;
+
+      case ERROR:
+      default:
+      {
+        // Turn the status LED on.
+        m_StatusLed.on();
+      }
+      break;
+    }
+    // Update the state.
+    m_State = t_Value;
+  }
+
+}
+
+///**************************************************************************************
 /// \brief     Update method that drives the class. Should be called periodically.
 /// \param     t_Delta Number of milliseconds that passed.
 ///
 ///**************************************************************************************
 void Indicator::update(std::chrono::milliseconds t_Delta)
 {
-  constexpr auto toggleMillis = std::chrono::milliseconds{500};
-
-  // Update the current time. 
-  m_CurrentMillis += t_Delta;
-
-  // Time to toggle the LED?
-  if ((m_CurrentMillis - m_LastToggleMillis) > toggleMillis)
+  // Only need to run a play in the IDLE and ACTIVE states.
+  if ( (m_State == IDLE) || (m_State == ACTIVE) )
   {
-    // Toggle the LED.
-    m_StatusLed.toggle();
-    // Update the last toggle time for the next interval detection.
-    m_LastToggleMillis += toggleMillis;
+    // Update the current time. 
+    m_CurrentMillis += t_Delta;
+    // Did one play step pass?
+    if ((m_CurrentMillis - m_LastToggleMillis) >= c_PlayStepMillis)
+    {
+      // Update the last toggle time for the next interval detection.
+      m_LastToggleMillis += c_PlayStepMillis;
+      // Run the state specific indicator control, where applicable.
+      switch (m_State)
+      {
+        case IDLE:
+        {
+          // Play the current index.
+          if (c_PlayIdle[m_PlayIdx] == 0)
+          {
+            m_StatusLed.off();
+          }
+          else
+          {
+            m_StatusLed.on();
+          }
+          // Update the indexer.
+          m_PlayIdx = (m_PlayIdx < (c_PlayIdle.size() - 1) ? m_PlayIdx + 1 : 0);
+        }
+        break;
+      
+        case ACTIVE:
+        {
+          // Play the current index.
+          if (c_PlayActive[m_PlayIdx] == 0)
+          {
+            m_StatusLed.off();
+          }
+          else
+          {
+            m_StatusLed.on();
+          }
+          // Update the indexer.
+          m_PlayIdx = (m_PlayIdx < (c_PlayActive.size() - 1) ? m_PlayIdx + 1 : 0);
+        }
+        break;
+
+        default:
+        {
+          // Nothing to do in the other states.
+        }
+        break;
+      }
+
+    }
   }
 }
 

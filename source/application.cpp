@@ -58,6 +58,8 @@ Application::Application(Board& t_Board)
                                                  std::placeholders::_2);
   // Attach the control loop observers.
   attach(m_Indicator);
+  // Transition to the idle state.
+  m_Indicator.setState(Indicator::IDLE);
   // Start the thread.
   Start();
 }
@@ -76,7 +78,7 @@ void Application::Run()
   for (;;)
   {
     // Wait until the task's period to elapses, while taking into consideration the 
-    // execution time of this task.
+    // execution time of the task itself.
     DelayUntil(deltaTicks);
     // Notify all attached subscribers about the elapsed time step.
     notify(deltaMillis);
