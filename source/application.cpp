@@ -38,6 +38,7 @@
 // Include files
 //***************************************************************************************
 #include "application.hpp"
+#include "logger.hpp"
 #include "ticks.hpp"
 
 
@@ -62,6 +63,8 @@ Application::Application(Board& t_Board)
   m_Indicator.setState(Indicator::IDLE);
   // Start the thread.
   Start();
+  // Log info.
+  logger().info("Application started.");
 }
 
 

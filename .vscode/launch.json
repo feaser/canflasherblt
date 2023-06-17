@@ -21,7 +21,18 @@
       "postRestartCommands": [
           "break main",
           "continue"
-      ]
+      ],
+      "rttConfig": {
+        "enabled": true,
+        "address": "auto",
+        "decoders": [
+            {
+                "label": "",
+                "port": 0,
+                "type": "console"
+            }
+        ]
+      }
     }
   ]
 }

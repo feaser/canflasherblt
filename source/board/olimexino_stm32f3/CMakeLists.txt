@@ -4,6 +4,7 @@ project(CanFlasherBLT_Olimexino_STM32F3)
 # Include board specific third party components.
 include("${CMAKE_SOURCE_DIR}/.cmake/CubeF3.cmake")
 include("${CMAKE_SOURCE_DIR}/.cmake/TinyUSB.cmake")
+include("${CMAKE_SOURCE_DIR}/.cmake/SeggerRTT.cmake")
 
 # Configure project sources.
 set(PROJECT_SOURCES
@@ -14,6 +15,7 @@ set(PROJECT_SOURCES
     "${CMAKE_CURRENT_LIST_DIR}/FreeRTOSHooks.c"
     "${CMAKE_CURRENT_LIST_DIR}/usb_descriptors.c"
     "${CMAKE_CURRENT_LIST_DIR}/main.cpp"
+    "${CMAKE_CURRENT_LIST_DIR}/rttlogger.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/hardwareboard.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/statusled.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/tinyusbdevice.cpp"
@@ -32,6 +34,7 @@ set(PROJECT_LIBRARIES
     freertos-arm-cm4f 
     tinyusb
     tinyusb_stm32f3
+    segger_rtt
 )
 
 # Configure project specific compiler definitions.
