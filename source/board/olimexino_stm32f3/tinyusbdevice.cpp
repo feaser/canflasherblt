@@ -195,26 +195,6 @@ void TinyUsbDevice::processCallback(CallbackId t_CallbackId)
     }
     break;
 
-    case MOUNTED:
-    {
-      // Trigger the event handler, if assigned.
-      if (onMounted)
-      {
-        onMounted();
-      }
-    }
-    break;
-
-    case UNMOUNTED:
-    {
-      // Trigger the event handler, if assigned.
-      if (onUnmounted)
-      {
-        onUnmounted();
-      }
-    }
-    break;
-
     case SUSPEND:
     {
       // Trigger the event handler, if assigned.
@@ -267,38 +247,6 @@ void tud_vendor_rx_cb(uint8_t itf)
       // Call the instance's method for processing the callback.
       TinyUsbDevice::s_InstancePtr->processCallback(TinyUsbDevice::RXNEWDATA);
     }
-  }
-}
-
-
-///**************************************************************************************
-/// \brief     TinyUSB device callback function that gets called when the device is
-///            mounted on the host.
-///
-///**************************************************************************************
-void tud_mount_cb(void)
-{
-  // Only continue if an instance of TinyUsbDevice was actually created.
-  if (TinyUsbDevice::s_InstancePtr != nullptr)
-  {
-    // Call the instance's method for processing the callback.
-    TinyUsbDevice::s_InstancePtr->processCallback(TinyUsbDevice::MOUNTED);
-  }
-}
-
-
-///**************************************************************************************
-/// \brief     TinyUSB device callback function that gets called when the device is
-///            unmounted from the host.
-///
-///**************************************************************************************
-void tud_umount_cb(void)
-{
-  // Only continue if an instance of TinyUsbDevice was actually created.
-  if (TinyUsbDevice::s_InstancePtr != nullptr)
-  {
-    // Call the instance's method for processing the callback.
-    TinyUsbDevice::s_InstancePtr->processCallback(TinyUsbDevice::UNMOUNTED);
   }
 }
 

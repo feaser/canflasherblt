@@ -68,8 +68,6 @@ private:
   enum CallbackId
   {
     RXNEWDATA,
-    MOUNTED,
-    UNMOUNTED,
     SUSPEND,
     RESUME
   };
@@ -81,8 +79,6 @@ private:
   void processCallback(CallbackId t_CallbackId);
   // Friends.
   friend void tud_vendor_rx_cb(uint8_t itf);
-  friend void tud_mount_cb(void);
-  friend void tud_umount_cb(void);
   friend void tud_suspend_cb(bool remote_wakeup_en);
   friend void tud_resume_cb(void);
 
