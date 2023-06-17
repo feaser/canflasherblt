@@ -1,6 +1,6 @@
 ///**************************************************************************************
-/// \file         application.hpp
-/// \brief        Application header file.
+/// \file         indicator.hpp
+/// \brief        Status indicator header file.
 /// \internal
 ///--------------------------------------------------------------------------------------
 ///                          C O P Y R I G H T
@@ -33,41 +33,34 @@
 ///
 /// \endinternal
 ///**************************************************************************************
-#ifndef APPLICATION_HPP
-#define APPLICATION_HPP
+#ifndef INDICATOR_HPP
+#define INDICATOR_HPP
 
 //***************************************************************************************
 // Include files
 //***************************************************************************************
-#include "board.hpp"
-#include "thread.hpp"
-#include "indicator.hpp"
+#include "led.hpp"
 
 
 //***************************************************************************************
 // Class definitions
 //***************************************************************************************
-/// \brief Application class.
-class Application: public cpp_freertos::Thread
+/// \brief Status indicator class.
+class Indicator
 {
 public:
   // Constructors and destructor.
-  explicit Application(Board& t_Board);
-  virtual ~Application() { }
+  explicit Indicator(Led& t_StatusLed);
+  virtual ~Indicator() { }
 
 private:
   // Members.
-  Board& m_Board;
-  Indicator m_Indicator;
-  // Methods.
-  void Run() override;
-  // Event handlers.
-  void onUsbDataReceived(uint8_t const t_Data[], uint32_t t_Len);
+  Led& m_StatusLed;
 
   // Flag the class as non-copyable.
-  Application(const Application&) = delete;
-  const Application& operator=(const Application&) = delete; 
+  Indicator(const Indicator&) = delete;
+  const Indicator& operator=(const Indicator&) = delete; 
 };
 
-#endif // APPLICATION_HPP
-//********************************** end of application.hpp *****************************
+#endif // INDICATOR_HPP
+//********************************** end of indicator.hpp *******************************

@@ -49,7 +49,8 @@
 ///**************************************************************************************
 Application::Application(Board& t_Board)
   : cpp_freertos::Thread("AppThread", configMINIMAL_STACK_SIZE, 6),
-    m_Board(t_Board)
+    m_Board(t_Board), 
+    m_Indicator(t_Board.statusLed())
 {
   // Set the USB data received event handler to the onUsbDataReceived() method.
   m_Board.usbDevice().onDataReceived = std::bind(&Application::onUsbDataReceived, 

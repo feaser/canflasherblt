@@ -1,6 +1,6 @@
 ///**************************************************************************************
-/// \file         application.hpp
-/// \brief        Application header file.
+/// \file         indicator.cpp
+/// \brief        Status indicator source file.
 /// \internal
 ///--------------------------------------------------------------------------------------
 ///                          C O P Y R I G H T
@@ -33,41 +33,21 @@
 ///
 /// \endinternal
 ///**************************************************************************************
-#ifndef APPLICATION_HPP
-#define APPLICATION_HPP
 
 //***************************************************************************************
 // Include files
 //***************************************************************************************
-#include "board.hpp"
-#include "thread.hpp"
 #include "indicator.hpp"
 
 
-//***************************************************************************************
-// Class definitions
-//***************************************************************************************
-/// \brief Application class.
-class Application: public cpp_freertos::Thread
+///**************************************************************************************
+/// \brief     Indicator constructor.
+/// \param     t_StatusLed Reference to the status LED instance.
+///
+///**************************************************************************************
+Indicator::Indicator(Led& t_StatusLed)
+  : m_StatusLed(t_StatusLed)
 {
-public:
-  // Constructors and destructor.
-  explicit Application(Board& t_Board);
-  virtual ~Application() { }
+}
 
-private:
-  // Members.
-  Board& m_Board;
-  Indicator m_Indicator;
-  // Methods.
-  void Run() override;
-  // Event handlers.
-  void onUsbDataReceived(uint8_t const t_Data[], uint32_t t_Len);
-
-  // Flag the class as non-copyable.
-  Application(const Application&) = delete;
-  const Application& operator=(const Application&) = delete; 
-};
-
-#endif // APPLICATION_HPP
-//********************************** end of application.hpp *****************************
+//********************************** end of indicator.cpp *******************************
