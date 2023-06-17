@@ -69,8 +69,9 @@ Application::Application(Board& t_Board)
 ///**************************************************************************************
 void Application::Run()
 {
-  const TickType_t deltaTicks = cpp_freertos::Ticks::MsToTicks(10U);
-  const auto deltaMillis = std::chrono::milliseconds{deltaTicks};
+  constexpr size_t stepTimeMillis = 10U;
+  constexpr auto deltaMillis = std::chrono::milliseconds{stepTimeMillis};
+  const TickType_t deltaTicks = cpp_freertos::Ticks::MsToTicks(stepTimeMillis);
 
   for (;;)
   {
