@@ -50,4 +50,24 @@ Indicator::Indicator(Led& t_StatusLed)
 {
 }
 
+
+///**************************************************************************************
+/// \brief     Update method that drives the class. Should be called periodically.
+///
+///**************************************************************************************
+void Indicator::update()
+{
+  const TickType_t toggleTicks = cpp_freertos::Ticks::MsToTicks(500U);
+
+  // Did the toggle time pass?
+  TickType_t deltaTicks = cpp_freertos::Ticks::GetTicks() - m_LastToggleTicks;
+  if (deltaTicks >= toggleTicks)
+  {
+    // Toggle the LED.
+    m_StatusLed.toggle();
+    // Update the last tick counter for the next interval detection.
+    m_LastToggleTicks += toggleTicks;
+  }
+}
+
 //********************************** end of indicator.cpp *******************************

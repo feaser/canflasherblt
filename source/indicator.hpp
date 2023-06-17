@@ -40,6 +40,7 @@
 // Include files
 //***************************************************************************************
 #include "led.hpp"
+#include "ticks.hpp"
 
 
 //***************************************************************************************
@@ -52,10 +53,13 @@ public:
   // Constructors and destructor.
   explicit Indicator(Led& t_StatusLed);
   virtual ~Indicator() { }
+  // Methods.
+  void update();
 
 private:
   // Members.
   Led& m_StatusLed;
+  TickType_t m_LastToggleTicks{0};
 
   // Flag the class as non-copyable.
   Indicator(const Indicator&) = delete;

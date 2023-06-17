@@ -62,19 +62,23 @@ Application::Application(Board& t_Board)
 
 
 ///**************************************************************************************
-/// \brief     Application task function.
+/// \brief     Application periodic task function.
 ///
 ///**************************************************************************************
 void Application::Run()
 {
-  TickType_t toggleTicks = cpp_freertos::Ticks::MsToTicks(500U);
+  const TickType_t periodTicks = cpp_freertos::Ticks::MsToTicks(10U);
 
   for (;;)
   {
-    // Wait for the LED toggle time to elapse.
-    Delay(toggleTicks);
-    // Toggle the LED.
-    m_Board.statusLed().toggle();
+    // Update members that depend on a periodic event to drive them.
+    // TODO ##Vg Maybe come up with an interface IUpdate that the application class
+    // holds an dynamic array of. Could use MicroTBX list for this. Or perhaps the
+    // FreeRTOS C++ wrappers expose a list for this.
+    m_Indicator.update();
+    // Wait until the task's period to elapses, while taking into consideration the 
+    // execution time of this task.
+    DelayUntil(periodTicks);
   }
 }
 
