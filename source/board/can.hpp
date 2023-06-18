@@ -95,5 +95,48 @@ private:
   CanData m_Data;
 };
 
+
+/// \brief   CAN reception acceptance filter class.
+/// \details The code and mask values configure the message reception acceptance filter.
+///          A mask bit value of 0 means don't care. The code part of the filter
+///          determines what bit values to match in the received message identifier.
+///          The mode settings sets the identifier type that the filter should apply to:
+///          11-bit (STD), 29-bit (EXT) or both CAN identifiers.
+///          Example 1: Receive all CAN identifiers
+///                     .code = 0x00000000
+///                     .mask = 0x00000000
+///                     .mode = CanFilter::BOTH
+///          Example 2: Receive only CAN identifier 0x124 (11-bit or 29-bit)
+///                     .code = 0x00000124
+///                     .mask = 0x1fffffff
+///                     .mode = CanFilter::BOTH
+///          Example 3: Receive only CAN identifier 0x124 (11-bit)
+///                     .code = 0x00000124
+///                     .mask = 0x1fffffff
+///                     .mode = CanFilter::STD
+///          Example 4: Receive only CAN identifier 0x124 (29-bit)
+///                     .code = 0x00000124
+///                     .mask = 0x1fffffff
+///                     .mode = CanFilter::Mode::EXT
+class CanFilter
+{
+public:
+  // Enumerations.
+  enum Mode
+  {
+    STD, ///< Receive only 11-bit standard CAN identifiers.
+    EXT, ///< Receive only 29-bit extended CAN identifiers.
+    BOTH ///< Receive both 11-bit and 29-bit CAN identifiers.
+  };
+  // Constructors and destructor.
+  explicit CanFilter(uint32_t t_Code, uint32_t t_Mask, Mode t_Mode);
+  explicit CanFilter() : CanFilter(0x00000000UL, 0x00000000UL, BOTH) { }
+  virtual ~CanFilter() { }
+  // Members.
+  uint32_t code;
+  uint32_t mask;
+  Mode mode;
+};
+
 #endif // CAN_HPP
 //********************************** end of can.hpp *************************************

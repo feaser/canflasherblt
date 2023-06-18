@@ -130,4 +130,19 @@ const uint8_t& CanMsg::operator[](uint8_t t_Idx) const //reading of const object
   return m_Data[t_Idx];
 }
 
+
+///**************************************************************************************
+/// \brief     CAN filter constructor.
+/// \param     t_Code The code part of the filter determines what bit values to match in
+///            the received message identifier.
+/// \param     t_Mask A mask bit value of 0 means don't care.
+/// \param     t_Mode The mode settings sets the identifier type that the filter should
+///            apply to
+///
+///**************************************************************************************
+CanFilter::CanFilter(uint32_t t_Code, uint32_t t_Mask, Mode t_Mode)
+  : code(t_Code), mask(t_Mask), mode(t_Mode)
+{
+}
+
 //********************************** end of can.cpp *************************************
