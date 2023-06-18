@@ -72,7 +72,8 @@ public:
   // Type definitions.
   using CanData = std::array<uint8_t, c_DataLenMax>;
   // Constructors and destructor.
-  explicit CanMsg(uint32_t t_Id, uint8_t t_Ext, uint8_t t_Len, CanData t_Data);
+  explicit CanMsg(uint32_t t_Id, uint8_t t_Ext, uint8_t t_Len, CanData t_Data)
+    : m_Id(t_Id), m_Ext(t_Ext), m_Len(t_Len), m_Data{ t_Data } { }
   explicit CanMsg(uint32_t t_Id, uint8_t t_Ext, uint8_t t_Len) 
     : CanMsg(t_Id, t_Ext, t_Len, { }) { }
   explicit CanMsg() : CanMsg(0, TBX_FALSE, 0, { }) { }
@@ -81,12 +82,20 @@ public:
   uint32_t id() const { return m_Id; }
   uint8_t ext() const { return m_Ext; }
   uint8_t len() const { return m_Len; }
-  void setId(uint32_t t_Id);
-  void setExt(uint8_t t_Ext);
-  void setLen(uint8_t t_Len);
+  void setId(uint32_t t_Id) { TBX_ASSERT(t_Id <= c_ExtIdMax); m_Id = t_Id; } 
+  void setExt(uint8_t t_Ext) { m_Ext = (t_Ext == TBX_FALSE) ? TBX_FALSE : TBX_TRUE; }
+  void setLen(uint8_t t_Len) { TBX_ASSERT(t_Len <= c_DataLenMax); m_Len = t_Len; }
   // Operator overloads.
-  uint8_t& operator[](uint8_t t_Idx);
-  const uint8_t& operator[](uint8_t t_Idx) const;
+  uint8_t& operator[](uint8_t t_Idx)
+  {
+    TBX_ASSERT(t_Idx < c_DataLenMax);
+    return m_Data[t_Idx];
+  }
+  const uint8_t& operator[](uint8_t t_Idx) const
+  {
+    TBX_ASSERT(t_Idx < c_DataLenMax);
+    return m_Data[t_Idx];
+  }
 
 private:
   // Members.
@@ -130,7 +139,8 @@ public:
     BOTH ///< Receive both 11-bit and 29-bit CAN identifiers.
   };
   // Constructors and destructor.
-  explicit CanFilter(uint32_t t_Code, uint32_t t_Mask, Mode t_Mode);
+  explicit CanFilter(uint32_t t_Code, uint32_t t_Mask, Mode t_Mode)
+    : code(t_Code), mask(t_Mask), mode(t_Mode) { }
   explicit CanFilter() : CanFilter(0x00000000UL, 0x00000000UL, BOTH) { }
   virtual ~CanFilter() { }
   // Members.
