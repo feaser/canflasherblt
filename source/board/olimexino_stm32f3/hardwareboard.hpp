@@ -70,6 +70,8 @@ public:
   // Getters and setters.
   Led& statusLed() override { return *m_StatusLed; }
   UsbDevice& usbDevice() override { return *m_TinyUsbDevice; }
+  // Methods.
+  void reset() override;
 
 private:
   // Members.

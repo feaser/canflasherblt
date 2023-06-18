@@ -79,6 +79,16 @@ HardwareBoard::HardwareBoard()
 
 
 ///**************************************************************************************
+/// \brief     Performs a software reset of the microcontroller.
+///
+///**************************************************************************************
+void HardwareBoard::reset()
+{
+  NVIC_SystemReset();
+}
+
+
+///**************************************************************************************
 /// \brief     Board specific assertion handler.
 /// \param     file The filename of the source file where the assertion occurred in.
 /// \param     line The line number inside the file where the assertion occurred.
@@ -99,7 +109,7 @@ void HardwareBoard::assertHandler(const char * const file, uint32_t line)
   {
     ;
   }
-} /*** end of assertHandler ***/
+}
 
 
 ///**************************************************************************************

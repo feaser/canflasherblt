@@ -56,9 +56,11 @@ class Board
 public:
   // Destructor.
   virtual ~Board() { }
-  // Methods.
+  // Getters and setters.
   virtual Led& statusLed() = 0;
   virtual UsbDevice& usbDevice() = 0;
+  // Methods.
+  virtual void reset() = 0;
 
 protected:
   // Flag the class as abstract.
