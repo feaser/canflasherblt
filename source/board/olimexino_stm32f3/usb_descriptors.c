@@ -222,11 +222,11 @@ uint8_t const * tud_descriptor_configuration_cb(uint8_t index)
 
 /* Microsoft OS 2.0 registry property descriptor per MS requirements:
  *   https://msdn.microsoft.com/en-us/library/windows/hardware/hh450799(v=vs.85).aspx
- * device should create DeviceInterfaceGUIDs. It can be done by driver and
+ * device should create DeviceInterfaceGUID. It can be done by driver and
  * in case of real PnP solution device should expose MS "Microsoft OS 2.0
  * registry property descriptor". Such descriptor can insert any record
  * into Windows registry per device/configuration/interface. In our case it
- * will insert "DeviceInterfaceGUIDs" multistring property.
+ * will insert "DeviceInterfaceGUID" string property.
  */
 
 #define BOS_TOTAL_LEN             (TUD_BOS_DESC_LEN + TUD_BOS_MICROSOFT_OS_DESC_LEN)
