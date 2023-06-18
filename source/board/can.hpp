@@ -41,6 +41,7 @@
 //***************************************************************************************
 #include <cstdint>
 #include <array>
+#include <functional>
 #include "microtbx.h"
 
 
@@ -137,6 +138,47 @@ public:
   uint32_t mask;
   Mode mode;
 };
+
+
+/// \brief   Abstract CAN driver class.
+class Can
+{
+public:
+  // Enumerations.
+  enum Baudrate
+  {
+    BR10K  =   10000UL,
+    BR20K  =   20000UL,
+    BR50K  =   50000UL,
+    BR100K =  100000UL,
+    BR125K =  125000UL,
+    BR250K =  250000UL,
+    BR500K =  500000UL,
+    BR800K =  800000UL,
+    BR1M   = 1000000UL
+  };
+  // Destructor.
+  virtual ~Can() { }
+  // Getters and setters.
+  virtual void setFilter(CanFilter& t_Filter) = 0;
+  // Methods.
+  virtual void connect(Baudrate t_Baudrate = BR500K) = 0;
+  virtual void disconnect() = 0;
+  virtual bool transmit(CanMsg& t_Msg) = 0;
+  // Events.
+  std::function<void(CanMsg& t_Msg)> onReceived;
+  std::function<void()> onBusOff;
+
+protected:
+  // Flag the class as abstract.
+  explicit Can() { }
+
+private:
+  // Flag the class as non-copyable.
+  Can(const Can&) = delete;
+  const Can& operator=(const Can&) = delete;
+};
+
 
 #endif // CAN_HPP
 //********************************** end of can.hpp *************************************
