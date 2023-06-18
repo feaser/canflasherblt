@@ -53,6 +53,10 @@ Application::Application(Board& t_Board)
     m_Board(t_Board), 
     m_Indicator(t_Board.statusLed())
 {
+  // Set the USB device suspend event handler to the onUsbSuspend() method.
+  m_Board.usbDevice().onSuspend = std::bind(&Application::onUsbSuspend, this);
+  // Set the USB device resume event handler to the onUsbResume() method.
+  m_Board.usbDevice().onResume = std::bind(&Application::onUsbResume, this);
   // Set the USB data received event handler to the onUsbDataReceived() method.
   m_Board.usbDevice().onDataReceived = std::bind(&Application::onUsbDataReceived, 
                                                  this, std::placeholders::_1,
@@ -88,6 +92,29 @@ void Application::Run()
   }
 }
 
+
+///**************************************************************************************
+/// \brief     Event handler that gets called when the USB bus is suspended. Within 7 
+///            milliseconds the device must draw an average of less that 2.5 mA from the
+///            bus.
+///
+///**************************************************************************************
+void Application::onUsbSuspend()
+{
+  // Set indicator to the sleeping state.
+  m_Indicator.setState(Indicator::SLEEPING);
+}
+
+
+///**************************************************************************************
+/// \brief     Event handler that gets called when the USB bus is resumed.
+///
+///**************************************************************************************
+void Application::onUsbResume()
+{
+  // Set indicator to the idle state,
+  m_Indicator.setState(Indicator::IDLE);
+}
 
 ///**************************************************************************************
 /// \brief     Event handler that gets called when new data was received on from the USB

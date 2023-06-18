@@ -72,6 +72,8 @@ public:
   UsbDevice& usbDevice() override { return *m_TinyUsbDevice; }
   // Methods.
   void reset() override;
+  void suspend();
+  void resume();
 
 private:
   // Members.

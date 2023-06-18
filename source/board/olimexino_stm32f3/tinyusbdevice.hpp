@@ -45,6 +45,12 @@
 
 
 //***************************************************************************************
+// Function prototypes
+//***************************************************************************************
+extern "C" void USBWakeUp_RMP_IRQHandler(void);
+
+
+//***************************************************************************************
 // Forward declarations
 //***************************************************************************************
 class HardwareBoard;
@@ -58,7 +64,7 @@ class TinyUsbDevice : public UsbDevice, public cpp_freertos::Thread
 {
 public:
   // Constructors and destructor.
-  explicit TinyUsbDevice();
+  explicit TinyUsbDevice(HardwareBoard& t_HardwareBoard);
   virtual ~TinyUsbDevice();
   // Methods.
   uint8_t transmit(uint8_t const t_Data[], uint32_t t_Len) override;
@@ -73,6 +79,7 @@ private:
   };
   // Members.
   static TinyUsbDevice* s_InstancePtr;
+  HardwareBoard& m_HardwareBoard;
   std::array<uint8_t, CFG_TUD_VENDOR_RX_BUFSIZE> m_RxBuf;
   // Methods.
   void Run() override;
@@ -81,6 +88,7 @@ private:
   friend void tud_vendor_rx_cb(uint8_t itf);
   friend void tud_suspend_cb(bool remote_wakeup_en);
   friend void tud_resume_cb(void);
+  friend void USBWakeUp_RMP_IRQHandler(void);
 
   // Flag the class as non-copyable.
   TinyUsbDevice(const TinyUsbDevice&) = delete;

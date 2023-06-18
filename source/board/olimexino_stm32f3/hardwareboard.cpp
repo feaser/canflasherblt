@@ -47,6 +47,8 @@
 #include "stm32f3xx_ll_rcc.h"
 #include "stm32f3xx_ll_system.h"
 #include "stm32f3xx_ll_utils.h"
+#include "stm32f3xx_ll_pwr.h"
+#include "stm32f3xx_ll_cortex.h"
 
 
 ///**************************************************************************************
@@ -74,7 +76,7 @@ HardwareBoard::HardwareBoard()
   // Create the status LED object on the heap.
   m_StatusLed = std::make_unique<StatusLed>();
   // Create the TinyUSB device object on the heap.
-  m_TinyUsbDevice = std::make_unique<TinyUsbDevice>();
+  m_TinyUsbDevice = std::make_unique<TinyUsbDevice>(*this);
 }
 
 
@@ -85,6 +87,48 @@ HardwareBoard::HardwareBoard()
 void HardwareBoard::reset()
 {
   NVIC_SystemReset();
+}
+
+
+///**************************************************************************************
+/// \brief     Suspends the board by entering low power stop mode.
+///
+///**************************************************************************************
+void HardwareBoard::suspend()
+{
+  // Place CAN transceiver in silent mode. Standby mode would be better for low power.
+  // Unfortunately, the selected CAN transceiver on the Olimexino-STM32F3 does not
+  // support a lower power standby mode, only a silent mode.
+  LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_2);
+
+  // During (or after) a debugging session, the DBGMCU_CR->DBG_STOP bit is set to 1. This
+  // effectively means that the HCLK and FCLK keep running in stop mode. This is not what
+  // you want, because it also means that timer systems keep running and for example,
+  // the SysTick interrupt still triggers. Consequently, the RTOS still runs.
+  // Therefore it's better to explictly set DBGMCU_CR->DBG_STOP to 0 here. The negative
+  // side effect is that the debugger loses connection, once the board enters stop mode.
+  // However, there is not much debugging to do in stop mode.
+  LL_DBGMCU_DisableDBGStopMode();
+  LL_PWR_SetPowerMode(LL_PWR_MODE_STOP_LPREGU);
+  // Set SLEEPDEEP bit of Cortex system control register.
+  LL_LPM_EnableDeepSleep();
+  // Request wait for interrupt.
+  __WFI();
+}
+
+
+///**************************************************************************************
+/// \brief     Resumes the board after being woken from low power stop mode.
+/// \attention This method could be called from interrupt level.
+///
+///**************************************************************************************
+void HardwareBoard::resume()
+{
+  // Make sure the system clocks run in the same configuration as before entering low
+  // power mode. 
+  setupSystemClock();
+  // Place CAN transceiver in normal mode.
+  LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_2);
 }
 
 
@@ -172,6 +216,16 @@ void HardwareBoard::mcuInit()
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
   LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  // Configure digital output that controls the CAN transceiver's normal / silent mode
+  // and default to normal mode.
+  LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_2);
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_2;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   // Set interrupt group priority. Needs to be NVIC_PRIORITYGROUP_4 for FreeRTOS.
   NVIC_SetPriorityGrouping(0x00000003U);

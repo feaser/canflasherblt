@@ -63,6 +63,8 @@ private:
   // Methods.
   void Run() override;
   // Event handlers.
+  void onUsbSuspend();
+  void onUsbResume();
   void onUsbDataReceived(uint8_t const t_Data[], uint32_t t_Len);
 
   // Flag the class as non-copyable.

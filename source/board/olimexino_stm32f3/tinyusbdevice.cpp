@@ -59,9 +59,10 @@ TinyUsbDevice* TinyUsbDevice::s_InstancePtr = nullptr;
 /// \brief     TinyUSB device constructor. 
 ///
 ///**************************************************************************************
-TinyUsbDevice::TinyUsbDevice()
+TinyUsbDevice::TinyUsbDevice(HardwareBoard& t_HardwareBoard)
   : UsbDevice(),
-    cpp_freertos::Thread("UsbDeviceThread", configMINIMAL_STACK_SIZE + 32, 8)
+    cpp_freertos::Thread("UsbDeviceThread", configMINIMAL_STACK_SIZE + 32, 8),
+    m_HardwareBoard(t_HardwareBoard)
 {
   LL_GPIO_InitTypeDef GPIO_InitStruct{ };
 
@@ -202,6 +203,8 @@ void TinyUsbDevice::processCallback(CallbackId t_CallbackId)
       {
         onSuspend();
       }
+      // Perform actual suspend.
+      m_HardwareBoard.suspend();
     }
     break;
 
@@ -320,6 +323,17 @@ void USBWakeUp_RMP_IRQHandler(void)
 {
   // Clear the EXTI Line for USB wakeup interrupt flag.
   LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_18);
+
+  // Only continue if an instance of TinyUsbDevice was actually created.
+  if (TinyUsbDevice::s_InstancePtr != nullptr)
+  {
+    // Make sure perform resume action right here in the interrupt and not in 
+    // tud_resume_cb(), because at this point the system clocks are not yet properly
+    // configured. This means that peripherals and timers can not yet be fully accessed.
+    // Callback tud_resume_cb() is called at task level, but the RTOS scheduler does
+    // not yet run.
+    TinyUsbDevice::s_InstancePtr->m_HardwareBoard.resume();
+  }
 
   // Pass the event on to the TinyUSB device stack on the configured roothub port.
   tud_int_handler(BOARD_TUD_RHPORT);
