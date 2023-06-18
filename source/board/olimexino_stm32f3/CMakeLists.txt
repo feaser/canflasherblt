@@ -18,6 +18,7 @@ set(PROJECT_SOURCES
     "${CMAKE_CURRENT_LIST_DIR}/rttlogger.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/hardwareboard.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/statusled.cpp"
+    "${CMAKE_CURRENT_LIST_DIR}/bxcan.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/tinyusbdevice.cpp"
 )
 

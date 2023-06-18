@@ -43,6 +43,7 @@
 #include "board.hpp"
 #include "statusled.hpp"
 #include "tinyusbdevice.hpp"
+#include "bxcan.hpp"
 
 
 //***************************************************************************************
@@ -70,6 +71,7 @@ public:
   // Getters and setters.
   Led& statusLed() override { return *m_StatusLed; }
   UsbDevice& usbDevice() override { return *m_TinyUsbDevice; }
+  Can& can() override { return *m_BxCan; }
   // Methods.
   void reset() override;
   void suspend();
@@ -79,6 +81,7 @@ private:
   // Members.
   std::unique_ptr<StatusLed> m_StatusLed{nullptr};
   std::unique_ptr<TinyUsbDevice> m_TinyUsbDevice{nullptr};
+  std::unique_ptr<BxCan> m_BxCan{nullptr};
   // Methods.
   void mcuInit();
   void setupSystemClock();

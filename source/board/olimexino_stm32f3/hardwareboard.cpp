@@ -77,6 +77,8 @@ HardwareBoard::HardwareBoard()
   m_StatusLed = std::make_unique<StatusLed>();
   // Create the TinyUSB device object on the heap.
   m_TinyUsbDevice = std::make_unique<TinyUsbDevice>(*this);
+  // Create the bxCAN object on the heap.
+  m_BxCan = std::make_unique<BxCan>();
 }
 
 

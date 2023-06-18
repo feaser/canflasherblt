@@ -1,6 +1,6 @@
 ///**************************************************************************************
-/// \file         board.hpp
-/// \brief        Board support package header file.
+/// \file         bxcan.hpp
+/// \brief        Basic Extended CAN driver header file.
 /// \internal
 ///--------------------------------------------------------------------------------------
 ///                          C O P Y R I G H T
@@ -33,46 +33,37 @@
 ///
 /// \endinternal
 ///**************************************************************************************
-#ifndef BOARD_HPP
-#define BOARD_HPP
+#ifndef BXCAN_HPP
+#define BXCAN_HPP
 
 //***************************************************************************************
 // Include files
 //***************************************************************************************
-#include "led.hpp"
-#include "usbdevice.hpp"
 #include "can.hpp"
 
 
 //***************************************************************************************
 // Class definitions
 //***************************************************************************************
-/// \brief   Abstract board support package class that represents the hardware
-///          abstraction layer. It defines a hardware independent interface for getters
-///          of hardware specific objects.
-/// \details The idea is that you create a derived class that implements the getters and,
-///          more importantly, returns the hardware specific version of these objects.
-class Board
+/// \brief Basic Extended CAN driver class.
+class BxCan : public Can
 {
 public:
-  // Destructor.
-  virtual ~Board() { }
+  // Constructors and destructor.
+  explicit BxCan();
+  virtual ~BxCan();
   // Getters and setters.
-  virtual Led& statusLed() = 0;
-  virtual UsbDevice& usbDevice() = 0;
-  virtual Can& can() = 0;
+  void setFilter(CanFilter& t_Filter) override;
   // Methods.
-  virtual void reset() = 0;
-
-protected:
-  // Flag the class as abstract.
-  explicit Board() { }
+  void connect(Baudrate t_Baudrate) override;
+  void disconnect() override;
+  uint8_t transmit(CanMsg& t_Msg) override;
 
 private:
   // Flag the class as non-copyable.
-  Board(const Board&) = delete;
-  const Board& operator=(const Board&) = delete;
+  BxCan(const BxCan&) = delete;
+  const BxCan& operator=(const BxCan&) = delete;
 };
 
-#endif // BOARD_HPP
-//********************************** end of board.hpp ***********************************
+#endif // BXCAN_HPP
+//********************************** end of bxcan.hpp ***********************************

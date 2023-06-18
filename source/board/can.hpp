@@ -174,7 +174,7 @@ public:
   // Methods.
   virtual void connect(Baudrate t_Baudrate = BR500K) = 0;
   virtual void disconnect() = 0;
-  virtual bool transmit(CanMsg& t_Msg) = 0;
+  virtual uint8_t transmit(CanMsg& t_Msg) = 0;
   // Events.
   std::function<void(CanMsg& t_Msg)> onReceived;
   std::function<void()> onBusOff;
