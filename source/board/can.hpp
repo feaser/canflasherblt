@@ -1,6 +1,6 @@
 ///**************************************************************************************
-/// \file         board.hpp
-/// \brief        Board support package header file.
+/// \file         can.hpp
+/// \brief        CAN driver header file.
 /// \internal
 ///--------------------------------------------------------------------------------------
 ///                          C O P Y R I G H T
@@ -33,45 +33,67 @@
 ///
 /// \endinternal
 ///**************************************************************************************
-#ifndef BOARD_HPP
-#define BOARD_HPP
+#ifndef CAN_HPP
+#define CAN_HPP
 
 //***************************************************************************************
 // Include files
 //***************************************************************************************
-#include "led.hpp"
-#include "usbdevice.hpp"
-#include "can.hpp"
+#include <cstdint>
+#include <array>
+#include "microtbx.h"
 
 
 //***************************************************************************************
 // Class definitions
 //***************************************************************************************
-/// \brief   Abstract board support package class that represents the hardware
-///          abstraction layer. It defines a hardware independent interface for getters
-///          of hardware specific objects.
-/// \details The idea is that you create a derived class that implements the getters and,
-///          more importantly, returns the hardware specific version of these objects.
-class Board
+/// \brief   CAN message class.
+/// \details Note that this class uses array subscript operator overloading for easy
+///          access to the CAN message data bytes.
+/// \example Message initialization using just the constructor:
+///            CanMsg myMsg(0x123, TBX_FALSE, 8, { 1, 2, 3, 4, 5, 6, 7, 8 });
+///
+///          Message initialization using setters:
+///            myMsg.setId(0x123);
+///            myMsg.setExt(TBX_FALSE);
+///            myMsg.setLen(8);
+///            for (uint8_t idx = 0; idx < CanMsg::c_DataLenMax; idx++)
+///            {
+///              myMsg[idx] = idx + 1;
+///            }
+class CanMsg
 {
 public:
-  // Destructor.
-  virtual ~Board() { }
+  // Constants.
+  static constexpr size_t c_DataLenMax = 8U;
+  static constexpr size_t c_StdIdMax = 0x7FFU;
+  static constexpr size_t c_ExtIdMax = 0x1FFFFFFFUL;
+  // Type definitions.
+  using CanData = std::array<uint8_t, c_DataLenMax>;
+  // Constructors and destructor.
+  explicit CanMsg(uint32_t t_Id, uint8_t t_Ext, uint8_t t_Len, CanData t_Data);
+  explicit CanMsg(uint32_t t_Id, uint8_t t_Ext, uint8_t t_Len) 
+    : CanMsg(t_Id, t_Ext, t_Len, { }) { }
+  explicit CanMsg() : CanMsg(0, TBX_FALSE, 0, { }) { }
+  virtual ~CanMsg() { }
   // Getters and setters.
-  virtual Led& statusLed() = 0;
-  virtual UsbDevice& usbDevice() = 0;
-  // Methods.
-  virtual void reset() = 0;
-
-protected:
-  // Flag the class as abstract.
-  explicit Board() { }
+  uint32_t id() const { return m_Id; }
+  uint8_t ext() const { return m_Ext; }
+  uint8_t len() const { return m_Len; }
+  void setId(uint32_t t_Id);
+  void setExt(uint8_t t_Ext);
+  void setLen(uint8_t t_Len);
+  // Operator overloads.
+  uint8_t& operator[](uint8_t t_Idx);
+  const uint8_t& operator[](uint8_t t_Idx) const;
 
 private:
-  // Flag the class as non-copyable.
-  Board(const Board&) = delete;
-  const Board& operator=(const Board&) = delete;
+  // Members.
+  uint32_t m_Id;
+  uint8_t m_Ext;
+  uint8_t m_Len;
+  CanData m_Data;
 };
 
-#endif // BOARD_HPP
-//********************************** end of board.hpp ***********************************
+#endif // CAN_HPP
+//********************************** end of can.hpp *************************************
