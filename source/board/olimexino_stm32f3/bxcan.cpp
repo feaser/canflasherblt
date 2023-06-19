@@ -59,7 +59,8 @@ BxCan* BxCan::s_InstancePtr = nullptr;
 ///
 ///**************************************************************************************
 BxCan::BxCan()
-  : Can()
+  : Can(),
+    cpp_freertos::Thread("CanThread", configMINIMAL_STACK_SIZE, 8)
 {
   LL_GPIO_InitTypeDef GPIO_InitStruct{ };
 
@@ -82,6 +83,9 @@ BxCan::BxCan()
   NVIC_EnableIRQ(CAN_RX0_IRQn);
   NVIC_EnableIRQ(CAN_RX1_IRQn);
   NVIC_EnableIRQ(CAN_SCE_IRQn);  
+
+  // Start the thread.
+  Start();
 }
 
 
@@ -310,6 +314,20 @@ uint8_t BxCan::transmit(CanMsg& t_Msg)
 
   // Give the result back to the caller.
   return result;
+}
+
+
+///**************************************************************************************
+/// \brief     CAN communication event task function.
+///
+///**************************************************************************************
+void BxCan::Run()
+{
+  for (;;)
+  {
+    // TODO ##Vg Implement event loop.
+    Delay(50U);
+  }
 }
 
 

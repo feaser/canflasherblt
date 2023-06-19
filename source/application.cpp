@@ -49,7 +49,7 @@
 ///
 ///**************************************************************************************
 Application::Application(Board& t_Board)
-  : cpp_freertos::Thread("AppThread", configMINIMAL_STACK_SIZE, 6),
+  : cpp_freertos::Thread("AppThread", configMINIMAL_STACK_SIZE, 4),
     m_Board(t_Board), 
     m_Indicator(t_Board.statusLed())
 {

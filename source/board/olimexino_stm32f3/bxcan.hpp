@@ -40,6 +40,7 @@
 // Include files
 //***************************************************************************************
 #include "can.hpp"
+#include "thread.hpp"
 #include "microtbx.h"
 
 
@@ -56,7 +57,7 @@ extern "C" void CAN_SCE_IRQHandler(void);
 // Class definitions
 //***************************************************************************************
 /// \brief Basic Extended CAN driver class.
-class BxCan : public Can
+class BxCan : public Can, public cpp_freertos::Thread
 {
 public:
   // Constructors and destructor.
@@ -76,6 +77,7 @@ private:
   Baudrate m_Baudrate{BR500K};
   CanFilter m_Filter{0UL, 0UL, CanFilter::BOTH};
   // Methods.
+  void Run() override;
   void processInterrupt();
   uint8_t findBitTimingSettings(uint16_t& t_Prescaler, uint8_t& t_Tseg1, 
                                 uint8_t& t_Tseg2);

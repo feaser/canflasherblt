@@ -61,7 +61,7 @@ TinyUsbDevice* TinyUsbDevice::s_InstancePtr = nullptr;
 ///**************************************************************************************
 TinyUsbDevice::TinyUsbDevice(HardwareBoard& t_HardwareBoard)
   : UsbDevice(),
-    cpp_freertos::Thread("UsbDeviceThread", configMINIMAL_STACK_SIZE + 32, 8),
+    cpp_freertos::Thread("UsbDeviceThread", configMINIMAL_STACK_SIZE + 32, 6),
     m_HardwareBoard(t_HardwareBoard)
 {
   LL_GPIO_InitTypeDef GPIO_InitStruct{ };

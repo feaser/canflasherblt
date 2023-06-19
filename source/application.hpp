@@ -49,7 +49,7 @@
 // Class definitions
 //***************************************************************************************
 /// \brief Application class.
-class Application: public cpp_freertos::Thread, public ControlLoopPublisher
+class Application : public cpp_freertos::Thread, public ControlLoopPublisher
 {
 public:
   // Constructors and destructor.
