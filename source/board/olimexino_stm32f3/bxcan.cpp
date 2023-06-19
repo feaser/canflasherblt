@@ -534,7 +534,7 @@ void BxCan::processTxInterrupt()
     // clearing.
     WRITE_REG(CAN->TSR, txMbDoneRQCPbit);
   }
-  // Inform the scheduler if higher priority task was woken, requiring a context switch
+  // Inform the scheduler if a higher priority task was woken, requiring a context switch
   // when this ISR finishes.
   portYIELD_FROM_ISR(switchRequired);        
 }
@@ -605,7 +605,7 @@ void BxCan::processRxFifo0Interrupt()
       }
     }
   }
-  // Inform the scheduler if higher priority task was woken, requiring a context switch
+  // Inform the scheduler if a higher priority task was woken, requiring a context switch
   // when this ISR finishes.
   portYIELD_FROM_ISR(switchRequired);        
 }
@@ -676,7 +676,7 @@ void BxCan::processRxFifo1Interrupt()
       }
     }
   }
-  // Inform the scheduler if higher priority task was woken, requiring a context switch
+  // Inform the scheduler if a higher priority task was woken, requiring a context switch
   // when this ISR finishes.
   portYIELD_FROM_ISR(switchRequired);        
 }
@@ -688,7 +688,30 @@ void BxCan::processRxFifo1Interrupt()
 ///**************************************************************************************
 void BxCan::processErrorInterrupt()
 {
-  // TODO ##Vg Implement processErrorInterrupt().
+  BxCanEvent canEvent;
+  BaseType_t switchRequired = pdFALSE;
+
+  // Process the bus off error interrupt event.
+  if (READ_BIT(CAN->MSR, CAN_MSR_ERRI) != 0U)
+  {
+    // Set the event type.
+    canEvent.type = BxCanEvent::BUSOFF;
+    // Clear the error interrupt flag. Needs to be done by writing a 1 to it.
+    WRITE_REG(CAN->MSR, CAN_MSR_ERRI);
+    // Add the event to the queue.
+    BaseType_t xHigherPrioTaskWoken = pdFALSE;
+    if (m_EventQueue->EnqueueFromISR(&canEvent, &xHigherPrioTaskWoken))
+    {
+      // Keep track if a task switch is required at the end of the ISR.
+      if (xHigherPrioTaskWoken == pdTRUE)
+      {
+        switchRequired = pdTRUE;
+      }
+    }
+  }
+  // Inform the scheduler if a higher priority task was woken, requiring a context switch
+  // when this ISR finishes.
+  portYIELD_FROM_ISR(switchRequired);        
 }
 
 

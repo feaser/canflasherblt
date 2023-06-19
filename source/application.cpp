@@ -127,6 +127,7 @@ void Application::onUsbResume()
   m_Indicator.setState(Indicator::IDLE);
 }
 
+
 ///**************************************************************************************
 /// \brief     Event handler that gets called when new data was received on from the USB
 ///            host.
@@ -155,6 +156,7 @@ void Application::onCanTransmitted(CanMsg& t_Msg)
   logger().info("CAN Tx: 0x%X", t_Msg.id());
 }
 
+
 ///**************************************************************************************
 /// \brief     Event handler that gets called when a new CAN message was received.
 /// \param     t_Msg The newly received CAN message.
@@ -164,6 +166,5 @@ void Application::onCanReceived(CanMsg& t_Msg)
 {
   logger().info("CAN Rx: 0x%X", t_Msg.id());
 }
-
 
 //********************************** end of application.cpp *****************************

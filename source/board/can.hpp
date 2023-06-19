@@ -107,6 +107,9 @@ private:
 
 
 /// \brief   CAN reception acceptance filter class.
+/// \example Creating a filter to receive all 11-bit (STD) CAN identifiers:
+///            CanFilter myFilter(0x00000000UL, 0x00000000UL, CanFilter::STD);
+
 /// \details The code and mask values configure the message reception acceptance filter.
 ///          A mask bit value of 0 means don't care. The code part of the filter
 ///          determines what bit values to match in the received message identifier.
@@ -127,7 +130,7 @@ private:
 ///          Example 4: Receive only CAN identifier 0x124 (29-bit)
 ///                     .code = 0x00000124
 ///                     .mask = 0x1fffffff
-///                     .mode = CanFilter::Mode::EXT
+///                     .mode = CanFilter::EXT
 class CanFilter
 {
 public:
