@@ -66,6 +66,7 @@ private:
   void onUsbSuspend();
   void onUsbResume();
   void onUsbDataReceived(uint8_t const t_Data[], uint32_t t_Len);
+  void onCanTransmitted(CanMsg& t_Msg);
 
   // Flag the class as non-copyable.
   Application(const Application&) = delete;

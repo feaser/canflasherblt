@@ -39,8 +39,10 @@
 //***************************************************************************************
 // Include files
 //***************************************************************************************
+#include <memory>
 #include "can.hpp"
 #include "thread.hpp"
+#include "queue.hpp"
 #include "microtbx.h"
 
 
@@ -56,12 +58,32 @@ extern "C" void CAN_SCE_IRQHandler(void);
 //***************************************************************************************
 // Class definitions
 //***************************************************************************************
+/// \brief Basic Extended CAN event class.
+class BxCanEvent
+{
+public: 
+  // Enumerations.
+  enum Type
+  {
+    TXCOMPLETE,
+    RXINDICATION,
+    BUSOFF
+  };
+  // Constructors and destructor.
+  explicit BxCanEvent() { }
+  virtual ~BxCanEvent() { }
+  // Members.
+  Type type{RXINDICATION};
+  CanMsg msg;
+};
+
+
 /// \brief Basic Extended CAN driver class.
 class BxCan : public Can, public cpp_freertos::Thread
 {
 public:
   // Constructors and destructor.
-  explicit BxCan();
+  explicit BxCan(size_t t_EventQueueSize = 16U);
   virtual ~BxCan();
   // Getters and setters.
   void setFilter(CanFilter& t_Filter) override;
@@ -78,9 +100,12 @@ private:
   uint8_t m_Connected{TBX_FALSE};
   Baudrate m_Baudrate{BR500K};
   CanFilter m_Filter{0UL, 0UL, CanFilter::BOTH};
+  std::unique_ptr<cpp_freertos::Queue> m_EventQueue{nullptr};
   // Methods.
   void Run() override;
-  void processInterrupt();
+  void processTxInterrupt();
+  void processRxInterrupt();
+  void processErrorInterrupt();
   uint8_t findBitTimingSettings(uint16_t& t_Prescaler, uint8_t& t_Tseg1, 
                                 uint8_t& t_Tseg2);
   // Friends.

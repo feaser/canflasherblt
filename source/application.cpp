@@ -61,6 +61,9 @@ Application::Application(Board& t_Board)
   m_Board.usbDevice().onDataReceived = std::bind(&Application::onUsbDataReceived, 
                                                  this, std::placeholders::_1,
                                                  std::placeholders::_2);
+  // Set the CAN message transmitted event handler to the onCanTransmitted() method.
+  m_Board.can().onTransmitted = std::bind(&Application::onCanTransmitted, 
+                                          this, std::placeholders::_1);
   // Attach the control loop observers.
   attach(m_Indicator);
   // Connect to the CAN bus.
@@ -135,6 +138,18 @@ void Application::onUsbDataReceived(uint8_t const t_Data[], uint32_t t_Len)
     uint8_t connectRes[] = { 8, 0xFF, 0x10, 0x00, 0x08, 0x08, 0x00, 0x01, 0x01 };
     m_Board.usbDevice().transmit(connectRes, sizeof(connectRes)/sizeof(connectRes[0]));
   }
+}
+
+
+///**************************************************************************************
+/// \brief     Event handler that gets called when the transmission of a CAN message
+///            completed.
+/// \param     t_Msg The CAN message that was transmitted.
+///
+///**************************************************************************************
+void Application::onCanTransmitted(CanMsg& t_Msg)
+{
+  logger().info("CAN Tx: 0x%X", t_Msg.id());
 }
 
 //********************************** end of application.cpp *****************************

@@ -38,6 +38,7 @@
 // Include files
 //***************************************************************************************
 #include "bxcan.hpp"
+#include "ticks.hpp"
 #include "stm32f3xx.h"
 #include "stm32f3xx_ll_rcc.h"
 #include "stm32f3xx_ll_gpio.h"
@@ -46,21 +47,22 @@
 //***************************************************************************************
 // Static data declarations
 //***************************************************************************************
-/// \brief   Storage for the single bxCan instance. 
+/// \brief   Storage for the single BxCan instance. 
 /// \details Needed for mapping the CAN interrupt service routines to the processXxx()
 ///          instance methods. Note that this only works if there will only be one
-///          bxCan instance. This is the case for this board, since its microcontroller
+///          BxCan instance. This is the case for this board, since its microcontroller
 ///          only has one CAN controller. 
 BxCan* BxCan::s_InstancePtr = nullptr;
 
 
 ///**************************************************************************************
 /// \brief     Basic Extended CAN driver constructor. 
+/// \param     t_EventQueueSize Size of the internal event queue.
 ///
 ///**************************************************************************************
-BxCan::BxCan()
+BxCan::BxCan(size_t t_EventQueueSize)
   : Can(),
-    cpp_freertos::Thread("CanThread", configMINIMAL_STACK_SIZE, 8)
+    cpp_freertos::Thread("CanThread", configMINIMAL_STACK_SIZE + 64, 8)
 {
   LL_GPIO_InitTypeDef GPIO_InitStruct{ };
 
@@ -68,7 +70,9 @@ BxCan::BxCan()
   TBX_ASSERT(s_InstancePtr == nullptr);
   // Store a pointer to ourselves.
   s_InstancePtr = this;
-
+  // Create the event queue.
+  m_EventQueue = std::make_unique<cpp_freertos::Queue>(t_EventQueueSize, 
+                                                       sizeof(BxCanEvent));
   // CAN TX and RX GPIO pin configuration.
   GPIO_InitStruct.Pin = LL_GPIO_PIN_8 | LL_GPIO_PIN_9;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
@@ -356,7 +360,7 @@ uint8_t BxCan::transmit(CanMsg& t_Msg)
       uint32_t dataLow  =  t_Msg[0]         | (t_Msg[1] << 8U) | 
                           (t_Msg[2] << 16U) | (t_Msg[3] << 24U);
       uint32_t dataHigh =  t_Msg[4]         | (t_Msg[5] << 8U) | 
-                          (t_Msg[7] << 16U) | (t_Msg[7] << 24U);
+                          (t_Msg[6] << 16U) | (t_Msg[7] << 24U);
       WRITE_REG(CAN->sTxMailBox[txMbEmptyIdx].TDLR, dataLow);
       WRITE_REG(CAN->sTxMailBox[txMbEmptyIdx].TDHR, dataHigh);
       // Request start of message for transmission.
@@ -378,25 +382,71 @@ uint8_t BxCan::transmit(CanMsg& t_Msg)
 ///**************************************************************************************
 void BxCan::Run()
 {
+  BxCanEvent canEvent;
+
   for (;;)
   {
-    // TODO ##Vg Implement event loop.
-    Delay(50U);
+    // Wait for an event to show up in the queue.
+    if (m_EventQueue->Dequeue(&canEvent, cpp_freertos::Ticks::MsToTicks(100U)))
+    {
+      // Process the event based on its type.
+      switch (canEvent.type)
+      {
+        case BxCanEvent::TXCOMPLETE:
+        {
+          // Trigger the event handler, if assigned.
+          if (onTransmitted)
+          {
+            onTransmitted(canEvent.msg);
+          }
+        } 
+        break;
+      
+        case BxCanEvent::RXINDICATION:
+        {
+          // Trigger the event handler, if assigned.
+          if (onReceived)
+          {
+            onReceived(canEvent.msg);
+          }
+        } 
+        break;
+
+        case BxCanEvent::BUSOFF:
+        {
+          // Trigger the event handler, if assigned.
+          if (onBusOff)
+          {
+            onBusOff();
+          }
+        } 
+        break;
+
+        default:
+        {
+          // Invalid event type. Should not happen.
+          TBX_ASSERT(TBX_FALSE);
+        }
+        break;
+      }
+    }
   }
 }
 
 
 ///**************************************************************************************
-/// \brief     CAN communication interrupt service routine.
+/// \brief     CAN communication transmit interrupt service routine.
 ///
 ///**************************************************************************************
-void BxCan::processInterrupt()
+void BxCan::processTxInterrupt()
 {
+  BxCanEvent canEvent;
+
   // ------------------------------------------------------------------------------------
   // ---------------------------- Transmit interrupt ------------------------------------
   // ------------------------------------------------------------------------------------
   // Process the transmit complete interrupt events.
-  while (READ_BIT(CAN->TSR, CAN_TSR_RQCP0 | CAN_TSR_RQCP1 | CAN_TSR_RQCP2) != 0)
+  while (READ_BIT(CAN->TSR, CAN_TSR_RQCP0 | CAN_TSR_RQCP1 | CAN_TSR_RQCP2) != 0U)
   {
     uint8_t  txMbDoneIdx = c_InvalidMailboxIdx;
     uint32_t txMbDoneRQCPbit;
@@ -404,18 +454,18 @@ void BxCan::processInterrupt()
     // Decide which transmit mailbox, with a completed request, to process. Store its
     // RQCP bit value and transmit mailbox index. An invalid transmit mailbox index value
     // is used to signal that the transmission was not successful.
-    if (READ_BIT(CAN->TSR, CAN_TSR_RQCP0) != 0)
+    if (READ_BIT(CAN->TSR, CAN_TSR_RQCP0) != 0U)
     {
       txMbDoneRQCPbit = CAN_TSR_RQCP0;
-      if (READ_BIT(CAN->TSR, CAN_TSR_TXOK0) != 0)
+      if (READ_BIT(CAN->TSR, CAN_TSR_TXOK0) != 0U)
       {
         txMbDoneIdx = 0U;
       }
     }
-    else if (READ_BIT(CAN->TSR, CAN_TSR_RQCP1) != 0)
+    else if (READ_BIT(CAN->TSR, CAN_TSR_RQCP1) != 0U)
     {
       txMbDoneRQCPbit = CAN_TSR_RQCP1;
-      if (READ_BIT(CAN->TSR, CAN_TSR_TXOK1) != 0)
+      if (READ_BIT(CAN->TSR, CAN_TSR_TXOK1) != 0U)
       {
         txMbDoneIdx = 1U;
       }
@@ -423,7 +473,7 @@ void BxCan::processInterrupt()
     else
     {
       txMbDoneRQCPbit = CAN_TSR_RQCP2;
-      if (READ_BIT(CAN->TSR, CAN_TSR_TXOK2) != 0)
+      if (READ_BIT(CAN->TSR, CAN_TSR_TXOK2) != 0U)
       {
         txMbDoneIdx = 2U;
       }
@@ -432,7 +482,46 @@ void BxCan::processInterrupt()
     // Only need to retrieve the message info in case of a successful tranmsission.
     if (txMbDoneIdx != c_InvalidMailboxIdx)
     {
-      // TODO ##Vg Add transmit complete event to the queue.
+      // Set the event type.
+      canEvent.type = BxCanEvent::TXCOMPLETE;
+      // Read the identifier from the mailbox.
+      if (READ_BIT(CAN->sTxMailBox[txMbDoneIdx].TIR, CAN_TI0R_IDE) != 0U)
+      {
+        // Read 29-bit identifier.
+        canEvent.msg.setExt(TBX_TRUE);
+        uint32_t msgId = READ_BIT(CAN->sTxMailBox[txMbDoneIdx].TIR, CAN_TI0R_EXID);
+        msgId = msgId >> CAN_TI0R_EXID_Pos;
+        canEvent.msg.setId(msgId);
+      }
+      else
+      {
+        // Read 11-bit identifier.
+        canEvent.msg.setExt(TBX_FALSE);
+        uint32_t msgId = READ_BIT(CAN->sTxMailBox[txMbDoneIdx].TIR, CAN_TI0R_STID);
+        msgId = msgId >> CAN_TI0R_STID_Pos;
+        canEvent.msg.setId(msgId);
+      }
+      // Read the data length code (DLC).
+      uint32_t msgDlc = READ_BIT(CAN->sTxMailBox[txMbDoneIdx].TDTR, CAN_TDT0R_DLC);
+      msgDlc = msgDlc >> CAN_TDT0R_DLC_Pos;
+      canEvent.msg.setLen(msgDlc);
+      // Read the data bytes.
+      uint32_t dataLow  = READ_REG(CAN->sTxMailBox[txMbDoneIdx].TDLR);
+      uint32_t dataHigh = READ_REG(CAN->sTxMailBox[txMbDoneIdx].TDHR);
+      canEvent.msg[0] = static_cast<uint8_t>(dataLow);
+      canEvent.msg[1] = static_cast<uint8_t>(dataLow >> 8U);
+      canEvent.msg[2] = static_cast<uint8_t>(dataLow >> 16U);
+      canEvent.msg[3] = static_cast<uint8_t>(dataLow >> 24U);
+      canEvent.msg[4] = static_cast<uint8_t>(dataHigh);
+      canEvent.msg[5] = static_cast<uint8_t>(dataHigh >> 8U);
+      canEvent.msg[6] = static_cast<uint8_t>(dataHigh >> 16U);
+      canEvent.msg[7] = static_cast<uint8_t>(dataHigh >> 24U);
+      // Add the event to the queue.
+      BaseType_t xHigherPrioTaskWoken = pdFALSE;
+      if (m_EventQueue->EnqueueFromISR(&canEvent, &xHigherPrioTaskWoken))
+      {
+        portYIELD_FROM_ISR(xHigherPrioTaskWoken);        
+      }
     }
 
     // Reset the mailbox' RQCP bit flag to be able to detect the next request completed
@@ -442,6 +531,26 @@ void BxCan::processInterrupt()
     // clearing.
     WRITE_REG(CAN->TSR, txMbDoneRQCPbit);
   }
+}
+
+
+///**************************************************************************************
+/// \brief     CAN communication reception interrupt service routine.
+///
+///**************************************************************************************
+void BxCan::processRxInterrupt()
+{
+  // TODO ##Vg Implement processRxInterrupt().
+}
+
+
+///**************************************************************************************
+/// \brief     CAN communication error interrupt service routine.
+///
+///**************************************************************************************
+void BxCan::processErrorInterrupt()
+{
+  // TODO ##Vg Implement processErrorInterrupt().
 }
 
 
@@ -556,7 +665,7 @@ void USB_HP_CAN_TX_IRQHandler(void)
   if (BxCan::s_InstancePtr != nullptr)
   {
     // Pass the event on for further handling in the generic interrupt handler.
-    BxCan::s_InstancePtr->processInterrupt();
+    BxCan::s_InstancePtr->processTxInterrupt();
   }
 }
 
@@ -571,7 +680,7 @@ void USB_LP_CAN_RX0_IRQHandler(void)
   if (BxCan::s_InstancePtr != nullptr)
   {
     // Pass the event on for further handling in the generic interrupt handler.
-    BxCan::s_InstancePtr->processInterrupt();
+    BxCan::s_InstancePtr->processRxInterrupt();
   }
 }
 
@@ -586,7 +695,7 @@ void CAN_RX1_IRQHandler(void)
   if (BxCan::s_InstancePtr != nullptr)
   {
     // Pass the event on for further handling in the generic interrupt handler.
-    BxCan::s_InstancePtr->processInterrupt();
+    BxCan::s_InstancePtr->processRxInterrupt();
   }
 }
 
@@ -601,7 +710,7 @@ void CAN_SCE_IRQHandler(void)
   if (BxCan::s_InstancePtr != nullptr)
   {
     // Pass the event on for further handling in the generic interrupt handler.
-    BxCan::s_InstancePtr->processInterrupt();
+    BxCan::s_InstancePtr->processErrorInterrupt();
   }
 }
 } // extern "C"
