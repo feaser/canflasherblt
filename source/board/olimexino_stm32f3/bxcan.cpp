@@ -168,6 +168,7 @@ void BxCan::connect(Baudrate t_Baudrate)
   // the frequency of the clock that drives the CAN peripheral.
   TBX_ASSERT(bitTimingSettingsFound == TBX_OK);
   // Configure the bit timing settings.
+  CLEAR_BIT(CAN->BTR, CAN_BTR_BRP | CAN_BTR_TS1 | CAN_BTR_TS2 | CAN_BTR_SJW);
   SET_BIT(CAN->BTR, (prescaler - 1U) << CAN_BTR_BRP_Pos);
   SET_BIT(CAN->BTR, (tseg1 - 1U) << CAN_BTR_TS1_Pos);
   SET_BIT(CAN->BTR, (tseg2 - 1U) << CAN_BTR_TS2_Pos);
@@ -309,9 +310,63 @@ void BxCan::disconnect()
 uint8_t BxCan::transmit(CanMsg& t_Msg)
 {
   uint8_t result = TBX_ERROR;
+  uint8_t txMbEmptyIdx;
+  // Lookup table indexed with the TSR->TMEx bits value. In return it gives the index
+  // of the first empty transmit mailbox. Made static to lower ROM and stack load.
+  static const uint8_t txMbIdxEmptyLookup[] =
+  {
+    c_InvalidMailboxIdx, // %000 - All mailboxes are busy.
+    0U,                  // %001 - Mailbox 1 is available.
+    1U,                  // %010 - Mailbox 2 is available.
+    0U,                  // %011 - Mailbox 1 is available.
+    2U,                  // %100 - Mailbox 3 is available.
+    0U,                  // %101 - Mailbox 1 is available.
+    1U,                  // %110 - Mailbox 2 is available.
+    0U                   // %111 - Mailbox 1 is available.
+  };
 
-  // TODO ##Vg Implement transmit().
-
+  // Only continue if actually connected.
+  if (m_Connected == TBX_TRUE)
+  {
+    // Obtain mutual exclusive access to the transmit mailboxes.
+    TbxCriticalSectionEnter();
+    // Get first free transmit mailbox index by feeding the value of the TMEx bits into
+    // the lookup table.
+    uint8_t tmeBits = READ_BIT(CAN->TSR, CAN_TSR_TME) >> CAN_TSR_TME_Pos;
+    txMbEmptyIdx = txMbIdxEmptyLookup[tmeBits];
+    // Only continue with transmission if an empty mailbox is available.
+    if (txMbEmptyIdx != c_InvalidMailboxIdx)
+    {
+      // Write the identifier to the mailbox.
+      if (t_Msg.ext() == TBX_TRUE)
+      {
+        // Write 29-bit identifier and set the IDE bit.
+        WRITE_REG(CAN->sTxMailBox[txMbEmptyIdx].TIR, t_Msg.id() << 3U);
+        SET_BIT(CAN->sTxMailBox[txMbEmptyIdx].TIR, CAN_TI0R_IDE); // IDE bit
+      }
+      else
+      {
+        // Write 11-bit identifier in a way that also resets the IDE bit.
+        WRITE_REG(CAN->sTxMailBox[txMbEmptyIdx].TIR, t_Msg.id() << 21U);
+      }
+      // Write the data length code (DLC).
+      CLEAR_BIT(CAN->sTxMailBox[txMbEmptyIdx].TDTR, CAN_TDT0R_DLC);
+      SET_BIT(CAN->sTxMailBox[txMbEmptyIdx].TDTR, t_Msg.len() << CAN_TDT0R_DLC_Pos);
+      // Write the data bytes.
+      uint32_t dataLow  =  t_Msg[0]         | (t_Msg[1] << 8U) | 
+                          (t_Msg[2] << 16U) | (t_Msg[3] << 24U);
+      uint32_t dataHigh =  t_Msg[4]         | (t_Msg[5] << 8U) | 
+                          (t_Msg[7] << 16U) | (t_Msg[7] << 24U);
+      WRITE_REG(CAN->sTxMailBox[txMbEmptyIdx].TDLR, dataLow);
+      WRITE_REG(CAN->sTxMailBox[txMbEmptyIdx].TDHR, dataHigh);
+      // Request start of message for transmission.
+      SET_BIT(CAN->sTxMailBox[txMbEmptyIdx].TIR, CAN_TI0R_TXRQ);
+      // Update the result.
+      result = TBX_OK;
+    }
+    // Release mutual exclusive access to the transmit mailboxes.
+    TbxCriticalSectionExit();
+  }
   // Give the result back to the caller.
   return result;
 }
@@ -337,7 +392,56 @@ void BxCan::Run()
 ///**************************************************************************************
 void BxCan::processInterrupt()
 {
-  // TODO ##Vg Implement processInterrupt()
+  // ------------------------------------------------------------------------------------
+  // ---------------------------- Transmit interrupt ------------------------------------
+  // ------------------------------------------------------------------------------------
+  // Process the transmit complete interrupt events.
+  while (READ_BIT(CAN->TSR, CAN_TSR_RQCP0 | CAN_TSR_RQCP1 | CAN_TSR_RQCP2) != 0)
+  {
+    uint8_t  txMbDoneIdx = c_InvalidMailboxIdx;
+    uint32_t txMbDoneRQCPbit;
+
+    // Decide which transmit mailbox, with a completed request, to process. Store its
+    // RQCP bit value and transmit mailbox index. An invalid transmit mailbox index value
+    // is used to signal that the transmission was not successful.
+    if (READ_BIT(CAN->TSR, CAN_TSR_RQCP0) != 0)
+    {
+      txMbDoneRQCPbit = CAN_TSR_RQCP0;
+      if (READ_BIT(CAN->TSR, CAN_TSR_TXOK0) != 0)
+      {
+        txMbDoneIdx = 0U;
+      }
+    }
+    else if (READ_BIT(CAN->TSR, CAN_TSR_RQCP1) != 0)
+    {
+      txMbDoneRQCPbit = CAN_TSR_RQCP1;
+      if (READ_BIT(CAN->TSR, CAN_TSR_TXOK1) != 0)
+      {
+        txMbDoneIdx = 1U;
+      }
+    }
+    else
+    {
+      txMbDoneRQCPbit = CAN_TSR_RQCP2;
+      if (READ_BIT(CAN->TSR, CAN_TSR_TXOK2) != 0)
+      {
+        txMbDoneIdx = 2U;
+      }
+    }
+
+    // Only need to retrieve the message info in case of a successful tranmsission.
+    if (txMbDoneIdx != c_InvalidMailboxIdx)
+    {
+      // TODO ##Vg Add transmit complete event to the queue.
+    }
+
+    // Reset the mailbox' RQCP bit flag to be able to detect the next request completed
+    // event. Note that this also clears the mailbox' TXOK, ALST and TERR bits. Note that
+    // you need to write a 1 to the RQCP bit to clear it. A bitwise OR operation does
+    // not work properly on this register. It would actually result in all RQCP bit flags
+    // clearing.
+    WRITE_REG(CAN->TSR, txMbDoneRQCPbit);
+  }
 }
 
 

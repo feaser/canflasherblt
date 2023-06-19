@@ -71,6 +71,8 @@ public:
   uint8_t transmit(CanMsg& t_Msg) override;
 
 private:
+  // Constants.
+  static constexpr uint8_t c_InvalidMailboxIdx = 0xFFU;
   // Members.
   static BxCan* s_InstancePtr;
   uint8_t m_Connected{TBX_FALSE};

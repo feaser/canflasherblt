@@ -84,6 +84,9 @@ void Application::Run()
   constexpr auto deltaMillis = std::chrono::milliseconds{stepTimeMillis};
   const TickType_t deltaTicks = cpp_freertos::Ticks::MsToTicks(stepTimeMillis);
 
+  CanMsg myMsg(0x123, TBX_FALSE, 8, { 1, 2, 3, 4, 5, 6, 7, 8 });
+  m_Board.can().transmit(myMsg);
+
   for (;;)
   {
     // Wait until the task's period to elapses, while taking into consideration the 
