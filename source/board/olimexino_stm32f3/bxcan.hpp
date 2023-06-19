@@ -104,7 +104,8 @@ private:
   // Methods.
   void Run() override;
   void processTxInterrupt();
-  void processRxInterrupt();
+  void processRxFifo0Interrupt();
+  void processRxFifo1Interrupt();
   void processErrorInterrupt();
   uint8_t findBitTimingSettings(uint16_t& t_Prescaler, uint8_t& t_Tseg1, 
                                 uint8_t& t_Tseg2);

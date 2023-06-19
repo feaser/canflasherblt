@@ -443,6 +443,7 @@ void BxCan::Run()
 void BxCan::processTxInterrupt()
 {
   BxCanEvent canEvent;
+  BaseType_t switchRequired = pdFALSE;
 
   // Process the transmit complete interrupt events.
   while (READ_BIT(CAN->TSR, CAN_TSR_RQCP0 | CAN_TSR_RQCP1 | CAN_TSR_RQCP2) != 0U)
@@ -519,10 +520,13 @@ void BxCan::processTxInterrupt()
       BaseType_t xHigherPrioTaskWoken = pdFALSE;
       if (m_EventQueue->EnqueueFromISR(&canEvent, &xHigherPrioTaskWoken))
       {
-        portYIELD_FROM_ISR(xHigherPrioTaskWoken);        
+        // Keep track if a task switch is required at the end of the ISR.
+        if (xHigherPrioTaskWoken == pdTRUE)
+        {
+          switchRequired = pdTRUE;
+        }
       }
     }
-
     // Reset the mailbox' RQCP bit flag to be able to detect the next request completed
     // event. Note that this also clears the mailbox' TXOK, ALST and TERR bits. Note that
     // you need to write a 1 to the RQCP bit to clear it. A bitwise OR operation does
@@ -530,16 +534,151 @@ void BxCan::processTxInterrupt()
     // clearing.
     WRITE_REG(CAN->TSR, txMbDoneRQCPbit);
   }
+  // Inform the scheduler if higher priority task was woken, requiring a context switch
+  // when this ISR finishes.
+  portYIELD_FROM_ISR(switchRequired);        
 }
 
 
 ///**************************************************************************************
-/// \brief     CAN communication reception interrupt service routine.
+/// \brief     CAN communication reception interrupt service routine on FIFO0
 ///
 ///**************************************************************************************
-void BxCan::processRxInterrupt()
+void BxCan::processRxFifo0Interrupt()
 {
-  // TODO ##Vg Implement processRxInterrupt().
+  BxCanEvent canEvent;
+  BaseType_t switchRequired = pdFALSE;
+
+  // Process the FIFO0 message reception interrupt events.
+  while (READ_BIT(CAN->RF0R, CAN_RF0R_FMP0) != 0U)
+  {
+    // Clear FIFO overrun and FIFO full flags. FIFO full is not interesting and in case
+    // of an FIFO overrun, nothing can be done to save the message. It is assumed that
+    // the owner will be able to detect that a message went missing, if needed, for
+    // example via a message reception timeout. Note that you need to write a 1 to the
+    // ROVR and FULL bits to clear them.
+    WRITE_REG(CAN->RF0R, CAN_RF0R_FULL0 | CAN_RF0R_FOVR0);
+    // Set the event type.
+    canEvent.type = BxCanEvent::RXINDICATION;
+    // Read the identifier from the mailbox.
+    if (READ_BIT(CAN->sFIFOMailBox[0].RIR, CAN_RI0R_IDE) != 0U)
+    {
+      // Read 29-bit identifier.
+      canEvent.msg.setExt(TBX_TRUE);
+      uint32_t msgId = READ_BIT(CAN->sFIFOMailBox[0].RIR, CAN_RI0R_EXID);
+      msgId = msgId >> CAN_RI0R_EXID_Pos;
+      canEvent.msg.setId(msgId);
+    }
+    else
+    {
+      // Read 11-bit identifier.
+      canEvent.msg.setExt(TBX_FALSE);
+      uint32_t msgId = READ_BIT(CAN->sFIFOMailBox[0].RIR, CAN_RI0R_STID);
+      msgId = msgId >> CAN_RI0R_STID_Pos;
+      canEvent.msg.setId(msgId);
+    }
+    // Read the data length code (DLC).
+    uint32_t msgDlc = READ_BIT(CAN->sFIFOMailBox[0].RDTR, CAN_RDT0R_DLC);
+    msgDlc = msgDlc >> CAN_RDT0R_DLC_Pos;
+    canEvent.msg.setLen(msgDlc);
+    // Read the data bytes.
+    uint32_t dataLow  = READ_REG(CAN->sFIFOMailBox[0].RDLR);
+    uint32_t dataHigh = READ_REG(CAN->sFIFOMailBox[0].RDHR);
+    canEvent.msg[0] = static_cast<uint8_t>(dataLow);
+    canEvent.msg[1] = static_cast<uint8_t>(dataLow >> 8U);
+    canEvent.msg[2] = static_cast<uint8_t>(dataLow >> 16U);
+    canEvent.msg[3] = static_cast<uint8_t>(dataLow >> 24U);
+    canEvent.msg[4] = static_cast<uint8_t>(dataHigh);
+    canEvent.msg[5] = static_cast<uint8_t>(dataHigh >> 8U);
+    canEvent.msg[6] = static_cast<uint8_t>(dataHigh >> 16U);
+    canEvent.msg[7] = static_cast<uint8_t>(dataHigh >> 24U);
+    // Release the mailbox back to the FIFO for new message storage.
+    SET_BIT(CAN->RF0R, CAN_RF0R_RFOM0);
+    // Add the event to the queue.
+    BaseType_t xHigherPrioTaskWoken = pdFALSE;
+    if (m_EventQueue->EnqueueFromISR(&canEvent, &xHigherPrioTaskWoken))
+    {
+      // Keep track if a task switch is required at the end of the ISR.
+      if (xHigherPrioTaskWoken == pdTRUE)
+      {
+        switchRequired = pdTRUE;
+      }
+    }
+  }
+  // Inform the scheduler if higher priority task was woken, requiring a context switch
+  // when this ISR finishes.
+  portYIELD_FROM_ISR(switchRequired);        
+}
+
+
+///**************************************************************************************
+/// \brief     CAN communication reception interrupt service routine on FIFO1
+///
+///**************************************************************************************
+void BxCan::processRxFifo1Interrupt()
+{
+  BxCanEvent canEvent;
+  BaseType_t switchRequired = pdFALSE;
+
+  // Process the FIFO0 message reception interrupt events.
+  while (READ_BIT(CAN->RF1R, CAN_RF1R_FMP1) != 0U)
+  {
+    // Clear FIFO overrun and FIFO full flags. FIFO full is not interesting and in case
+    // of an FIFO overrun, nothing can be done to save the message. It is assumed that
+    // the owner will be able to detect that a message went missing, if needed, for
+    // example via a message reception timeout. Note that you need to write a 1 to the
+    // ROVR and FULL bits to clear them.
+    WRITE_REG(CAN->RF1R, CAN_RF1R_FULL1 | CAN_RF1R_FOVR1);
+    // Set the event type.
+    canEvent.type = BxCanEvent::RXINDICATION;
+    // Read the identifier from the mailbox.
+    if (READ_BIT(CAN->sFIFOMailBox[1].RIR, CAN_RI1R_IDE) != 0U)
+    {
+      // Read 29-bit identifier.
+      canEvent.msg.setExt(TBX_TRUE);
+      uint32_t msgId = READ_BIT(CAN->sFIFOMailBox[1].RIR, CAN_RI1R_EXID);
+      msgId = msgId >> CAN_RI1R_EXID_Pos;
+      canEvent.msg.setId(msgId);
+    }
+    else
+    {
+      // Read 11-bit identifier.
+      canEvent.msg.setExt(TBX_FALSE);
+      uint32_t msgId = READ_BIT(CAN->sFIFOMailBox[1].RIR, CAN_RI1R_STID);
+      msgId = msgId >> CAN_RI1R_STID_Pos;
+      canEvent.msg.setId(msgId);
+    }
+    // Read the data length code (DLC).
+    uint32_t msgDlc = READ_BIT(CAN->sFIFOMailBox[1].RDTR, CAN_RDT1R_DLC);
+    msgDlc = msgDlc >> CAN_RDT1R_DLC_Pos;
+    canEvent.msg.setLen(msgDlc);
+    // Read the data bytes.
+    uint32_t dataLow  = READ_REG(CAN->sFIFOMailBox[1].RDLR);
+    uint32_t dataHigh = READ_REG(CAN->sFIFOMailBox[1].RDHR);
+    canEvent.msg[0] = static_cast<uint8_t>(dataLow);
+    canEvent.msg[1] = static_cast<uint8_t>(dataLow >> 8U);
+    canEvent.msg[2] = static_cast<uint8_t>(dataLow >> 16U);
+    canEvent.msg[3] = static_cast<uint8_t>(dataLow >> 24U);
+    canEvent.msg[4] = static_cast<uint8_t>(dataHigh);
+    canEvent.msg[5] = static_cast<uint8_t>(dataHigh >> 8U);
+    canEvent.msg[6] = static_cast<uint8_t>(dataHigh >> 16U);
+    canEvent.msg[7] = static_cast<uint8_t>(dataHigh >> 24U);
+    // Release the mailbox back to the FIFO for new message storage.
+    SET_BIT(CAN->RF1R, CAN_RF1R_RFOM1);
+    // Add the event to the queue.
+    BaseType_t xHigherPrioTaskWoken = pdFALSE;
+    if (m_EventQueue->EnqueueFromISR(&canEvent, &xHigherPrioTaskWoken))
+    {
+      // Keep track if a task switch is required at the end of the ISR.
+      if (xHigherPrioTaskWoken == pdTRUE)
+      {
+        switchRequired = pdTRUE;
+      }
+    }
+  }
+  // Inform the scheduler if higher priority task was woken, requiring a context switch
+  // when this ISR finishes.
+  portYIELD_FROM_ISR(switchRequired);        
 }
 
 
@@ -679,7 +818,7 @@ void USB_LP_CAN_RX0_IRQHandler(void)
   if (BxCan::s_InstancePtr != nullptr)
   {
     // Pass the event on for further handling in the generic interrupt handler.
-    BxCan::s_InstancePtr->processRxInterrupt();
+    BxCan::s_InstancePtr->processRxFifo0Interrupt();
   }
 }
 
@@ -694,7 +833,7 @@ void CAN_RX1_IRQHandler(void)
   if (BxCan::s_InstancePtr != nullptr)
   {
     // Pass the event on for further handling in the generic interrupt handler.
-    BxCan::s_InstancePtr->processRxInterrupt();
+    BxCan::s_InstancePtr->processRxFifo1Interrupt();
   }
 }
 

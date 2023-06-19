@@ -62,7 +62,10 @@ Application::Application(Board& t_Board)
                                                  this, std::placeholders::_1,
                                                  std::placeholders::_2);
   // Set the CAN message transmitted event handler to the onCanTransmitted() method.
-  m_Board.can().onTransmitted = std::bind(&Application::onCanTransmitted, 
+  m_Board.can().onTransmitted = std::bind(&Application::onCanTransmitted,
+                                          this, std::placeholders::_1);
+  // Set the CAN message received event handler to the onCanReceived() method.
+  m_Board.can().onReceived = std::bind(&Application::onCanReceived,
                                           this, std::placeholders::_1);
   // Attach the control loop observers.
   attach(m_Indicator);
@@ -151,5 +154,16 @@ void Application::onCanTransmitted(CanMsg& t_Msg)
 {
   logger().info("CAN Tx: 0x%X", t_Msg.id());
 }
+
+///**************************************************************************************
+/// \brief     Event handler that gets called when a new CAN message was received.
+/// \param     t_Msg The newly received CAN message.
+///
+///**************************************************************************************
+void Application::onCanReceived(CanMsg& t_Msg)
+{
+  logger().info("CAN Rx: 0x%X", t_Msg.id());
+}
+
 
 //********************************** end of application.cpp *****************************
