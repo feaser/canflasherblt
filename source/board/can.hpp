@@ -177,6 +177,7 @@ public:
   virtual uint8_t transmit(CanMsg& t_Msg) = 0;
   // Events.
   std::function<void(CanMsg& t_Msg)> onReceived;
+  std::function<void(CanMsg& t_Msg)> onTransmitted;
   std::function<void()> onBusOff;
 
 protected:

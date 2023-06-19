@@ -63,12 +63,14 @@ Application::Application(Board& t_Board)
                                                  std::placeholders::_2);
   // Attach the control loop observers.
   attach(m_Indicator);
+  // Connect to the CAN bus.
+  m_Board.can().connect(Can::BR500K);
   // Transition to the idle state.
   m_Indicator.setState(Indicator::IDLE);
-  // Start the thread.
-  Start();
   // Log info.
   logger().info("Application started.");
+  // Start the thread.
+  Start();
 }
 
 

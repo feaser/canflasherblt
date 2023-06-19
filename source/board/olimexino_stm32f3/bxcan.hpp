@@ -40,6 +40,16 @@
 // Include files
 //***************************************************************************************
 #include "can.hpp"
+#include "microtbx.h"
+
+
+//***************************************************************************************
+// Function prototypes
+//***************************************************************************************
+extern "C" void USB_HP_CAN_TX_IRQHandler(void);
+extern "C" void USB_LP_CAN_RX0_IRQHandler(void);
+extern "C" void CAN_RX1_IRQHandler(void);
+extern "C" void CAN_SCE_IRQHandler(void);
 
 
 //***************************************************************************************
@@ -60,6 +70,21 @@ public:
   uint8_t transmit(CanMsg& t_Msg) override;
 
 private:
+  // Members.
+  static BxCan* s_InstancePtr;
+  uint8_t m_Connected{TBX_FALSE};
+  Baudrate m_Baudrate{BR500K};
+  CanFilter m_Filter{0UL, 0UL, CanFilter::BOTH};
+  // Methods.
+  void processInterrupt();
+  uint8_t findBitTimingSettings(uint16_t& t_Prescaler, uint8_t& t_Tseg1, 
+                                uint8_t& t_Tseg2);
+  // Friends.
+  friend void USB_HP_CAN_TX_IRQHandler(void);
+  friend void USB_LP_CAN_RX0_IRQHandler(void);
+  friend void CAN_RX1_IRQHandler(void);
+  friend void CAN_SCE_IRQHandler(void);
+
   // Flag the class as non-copyable.
   BxCan(const BxCan&) = delete;
   const BxCan& operator=(const BxCan&) = delete;
