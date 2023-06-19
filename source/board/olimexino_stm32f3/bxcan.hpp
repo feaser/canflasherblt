@@ -85,12 +85,12 @@ public:
   // Constructors and destructor.
   explicit BxCan(size_t t_EventQueueSize = 16U);
   virtual ~BxCan();
-  // Getters and setters.
-  void setFilter(CanFilter& t_Filter) override;
   // Methods.
   void connect(Baudrate t_Baudrate) override;
   void disconnect() override;
   uint8_t transmit(CanMsg& t_Msg) override;
+  // Getters and setters.
+  void setFilter(CanFilter& t_Filter) override;
 
 private:
   // Constants.

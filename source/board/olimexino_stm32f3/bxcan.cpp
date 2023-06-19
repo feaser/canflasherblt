@@ -111,29 +111,6 @@ BxCan::~BxCan()
 
 
 ///**************************************************************************************
-/// \brief     Sets the message reception acceptance filter. Automatically reconnects,
-///            if the driver is in the connected state when calling this method.
-/// \param     t_Filter Message reception acceptance filter.
-///
-///**************************************************************************************
-void BxCan::setFilter(CanFilter& t_Filter)
-{
-  // Store current connection state.
-  uint8_t wasConnected = m_Connected;
-
-  // Make sure that we're in the disconnected state, before updating the filter.
-  disconnect();
-  // Copy and store the filter settings.
-  m_Filter = t_Filter;
-  // Reconnect if needed.
-  if (wasConnected == TBX_TRUE)
-  {
-    connect(m_Baudrate);
-  }
-}
-
-
-///**************************************************************************************
 /// \brief     Configures the CAN controller and synchronizes to the CAN bus.
 /// \param     t_Baudrate Desired communication speed.
 ///
@@ -306,6 +283,29 @@ void BxCan::disconnect()
 
 
 ///**************************************************************************************
+/// \brief     Sets the message reception acceptance filter. Automatically reconnects,
+///            if the driver is in the connected state when calling this method.
+/// \param     t_Filter Message reception acceptance filter.
+///
+///**************************************************************************************
+void BxCan::setFilter(CanFilter& t_Filter)
+{
+  // Store current connection state.
+  uint8_t wasConnected = m_Connected;
+
+  // Make sure that we're in the disconnected state, before updating the filter.
+  disconnect();
+  // Copy and store the filter settings.
+  m_Filter = t_Filter;
+  // Reconnect if needed.
+  if (wasConnected == TBX_TRUE)
+  {
+    connect(m_Baudrate);
+  }
+}
+
+
+///**************************************************************************************
 /// \brief     Submits a message for transmission on the CAN bus.
 /// \param     t_Msg The message to transmit.
 /// \return    TBX_OK if successful, TBX_ERROR otherwise.
@@ -442,9 +442,6 @@ void BxCan::processTxInterrupt()
 {
   BxCanEvent canEvent;
 
-  // ------------------------------------------------------------------------------------
-  // ---------------------------- Transmit interrupt ------------------------------------
-  // ------------------------------------------------------------------------------------
   // Process the transmit complete interrupt events.
   while (READ_BIT(CAN->TSR, CAN_TSR_RQCP0 | CAN_TSR_RQCP1 | CAN_TSR_RQCP2) != 0U)
   {
