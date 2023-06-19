@@ -42,6 +42,7 @@
 #include "stm32f3xx.h"
 #include "stm32f3xx_ll_rcc.h"
 #include "stm32f3xx_ll_gpio.h"
+#include "stm32f3xx_ll_bus.h"
 
 
 //***************************************************************************************
@@ -276,8 +277,9 @@ void BxCan::disconnect()
     // Update connection state flag.
     m_Connected = TBX_FALSE;
 
-    // TODO ##Vg Implement disconnect().
-
+    // Bring the CAN peripheral back into its reset state.
+    LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_CAN);
+    LL_APB1_GRP1_ReleaseReset(LL_APB1_GRP1_PERIPH_CAN);
   }
 }
 
