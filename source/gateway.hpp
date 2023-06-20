@@ -82,6 +82,7 @@ private:
   uint8_t m_CanExtIds;
   uint32_t m_CanIdToTarget;
   uint32_t m_CanIdFromTarget;
+  uint8_t m_Started{TBX_FALSE};
   uint8_t m_Connected{TBX_FALSE};
   // Methods.
   void onUsbDataReceived(uint8_t const t_Data[], uint32_t t_Len);

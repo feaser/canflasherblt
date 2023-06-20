@@ -92,6 +92,8 @@ void Gateway::start()
   m_Can.setFilter(canFilter);
   // Connect to the CAN bus.
   m_Can.connect(m_CanBaudrate);
+  // Update started state flag.
+  m_Started = TBX_TRUE;
   // Log info.
   logger().info("Gateway started.");
 }
@@ -105,6 +107,8 @@ void Gateway::stop()
 {
   // Disconnect from the CAN bus.
   m_Can.disconnect();
+  // Update started state flag.
+  m_Started = TBX_FALSE;
   // Log info.
   logger().info("Gateway stopped.");
 }
@@ -129,6 +133,19 @@ void Gateway::update(std::chrono::milliseconds t_Delta)
 void Gateway::onUsbDataReceived(uint8_t const t_Data[], uint32_t t_Len)
 {
   // TODO ##Vg Implement onUsbDataReceived().
+
+  // - Only process if the gateway is started.
+  // - Validate if it is an XCP packet. Check length >= 2 and <= 9.
+  // - Check if it's the connect command and then extract the node id (CM).
+  // - If a bootloader is present and the node id equals own node ide, reset.
+  // - Otherwise check if the connected flag is not yet set. If not, then set it and
+  //   trigger onConnected.
+  // - Check if its a disconnect or reset command that flags the end of the firmware
+  //   update. If so and were in the connected state. reset the connected flag and
+  //   trigger onDisconnected.
+  // - Pass the packet on via CAN.
+  // - Probably also need to store a time reference of the last received XCP command for
+  //   the gateway timeout monitoring.
 }
 
 
@@ -140,6 +157,8 @@ void Gateway::onUsbDataReceived(uint8_t const t_Data[], uint32_t t_Len)
 void Gateway::onCanReceived(CanMsg& t_Msg)
 {
   // TODO ##Vg Implement onCanReceived().
+
+  // - Only process if the gateway is started.
 }
 
 
