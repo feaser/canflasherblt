@@ -51,7 +51,8 @@
 Application::Application(Board& t_Board)
   : cpp_freertos::Thread("AppThread", configMINIMAL_STACK_SIZE, 4),
     m_Board(t_Board), 
-    m_Indicator(t_Board.statusLed())
+    m_Indicator(t_Board.statusLed()),
+    m_Gateway(t_Board.usbDevice(), t_Board.can(), t_Board.boot())
 {
   // Set the USB device suspend event handler to the onUsbSuspend() method.
   m_Board.usbDevice().onSuspend = std::bind(&Application::onUsbSuspend, this);
@@ -69,6 +70,7 @@ Application::Application(Board& t_Board)
                                           this, std::placeholders::_1);
   // Attach the control loop observers.
   attach(m_Indicator);
+  attach(m_Gateway);
   // Connect to the CAN bus.
   m_Board.can().connect(Can::BR500K);
   // Transition to the idle state.

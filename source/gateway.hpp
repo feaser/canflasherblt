@@ -1,6 +1,6 @@
 ///**************************************************************************************
-/// \file         application.hpp
-/// \brief        Application header file.
+/// \file         gateway.hpp
+/// \brief        Gateway for XCP USB-CAN header file.
 /// \internal
 ///--------------------------------------------------------------------------------------
 ///                          C O P Y R I G H T
@@ -33,48 +33,58 @@
 ///
 /// \endinternal
 ///**************************************************************************************
-#ifndef APPLICATION_HPP
-#define APPLICATION_HPP
+#ifndef GATEWAY_HPP
+#define GATEWAY_HPP
 
 //***************************************************************************************
 // Include files
 //***************************************************************************************
-#include "board.hpp"
-#include "thread.hpp"
+#include <cstdint>
 #include "controlloop.hpp"
-#include "indicator.hpp"
-#include "gateway.hpp"
+#include "usbdevice.hpp"
+#include "can.hpp"
+#include "boot.hpp"
 
 
 //***************************************************************************************
 // Class definitions
 //***************************************************************************************
-/// \brief Application class.
-class Application : public cpp_freertos::Thread, public ControlLoopPublisher
+/// \brief Gateway for XCP USB-CAN class.
+class Gateway : public ControlLoopSubscriber
 {
 public:
   // Constructors and destructor.
-  explicit Application(Board& t_Board);
-  virtual ~Application() { }
+  explicit Gateway(UsbDevice& t_UsbDevice, Can& t_Can, Boot& t_Boot, 
+                   uint8_t t_OwnNodeId, Can::Baudrate t_CanBaudrate, uint8_t t_CanExtIds, 
+                   uint32_t t_CanIdToTarget, uint32_t t_CanIdFromTarget);
+  explicit Gateway(UsbDevice& t_UsbDevice, Can& t_Can, Boot& t_Boot)
+    : Gateway(t_UsbDevice, t_Can, t_Boot, 0U, Can::BR500K, 
+              TBX_FALSE, 0x667UL, 0x7E1UL) { }
+  virtual ~Gateway() { }
+  // Methods.
+  void start();
+  void stop();
+  void update(std::chrono::milliseconds t_Delta) override;
+  // Events.
+  std::function<void()> onConnected;
+  std::function<void()> onDisconnected;
+  std::function<void()> onError;
 
 private:
   // Members.
-  Board& m_Board;
-  Indicator m_Indicator;
-  Gateway m_Gateway;
-  // Methods.
-  void Run() override;
-  // Event handlers.
-  void onUsbSuspend();
-  void onUsbResume();
-  void onUsbDataReceived(uint8_t const t_Data[], uint32_t t_Len);
-  void onCanTransmitted(CanMsg& t_Msg);
-  void onCanReceived(CanMsg& t_Msg);
+  UsbDevice& m_UsbDevice;
+  Can& m_Can;
+  Boot& m_Boot;
+  uint8_t m_OwnNodeId;
+  Can::Baudrate m_CanBaudrate;
+  uint8_t m_CanExtIds;
+  uint32_t m_CanIdToTarget;
+  uint32_t m_CanIdFromTarget;
 
   // Flag the class as non-copyable.
-  Application(const Application&) = delete;
-  const Application& operator=(const Application&) = delete; 
+  Gateway(const Gateway&) = delete;
+  const Gateway& operator=(const Gateway&) = delete; 
 };
 
-#endif // APPLICATION_HPP
-//********************************** end of application.hpp *****************************
+#endif // GATEWAY_HPP
+//********************************** end of gateway.hpp *********************************

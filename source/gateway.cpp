@@ -1,6 +1,6 @@
 ///**************************************************************************************
-/// \file         indicator.cpp
-/// \brief        Status indicator source file.
+/// \file         gateway.cpp
+/// \brief        Gateway for XCP USB-CAN source file.
 /// \internal
 ///--------------------------------------------------------------------------------------
 ///                          C O P Y R I G H T
@@ -37,125 +37,67 @@
 //***************************************************************************************
 // Include files
 //***************************************************************************************
-#include "indicator.hpp"
+#include "gateway.hpp"
 
 
 ///**************************************************************************************
-/// \brief     Indicator constructor.
-/// \param     t_StatusLed Reference to the status LED instance.
+/// \brief     Gateway constructor.
+/// \param     t_UsbDevice Reference to the USB device instance.
+/// \param     t_Can Reference to the CAN driver instance.
+/// \param     t_Boot Reference to the Bootloader interaction instance.
+/// \param     t_OwnNodeId Own node identifier for firmware updates. Upon reception of
+///            an XCP Connect command via USB with the command parameter (CM) set to
+///            this node identifier value, the XCP packet is not pushed through the
+///            gateway. Instead this system's own bootloader is activated.
+/// \param     t_CanBaudrate Desired CAN communication baudrate.
+/// \param     t_CanExtIds TBX_TRUE if the specified CAN identifiers are 29-bit extended,
+///            TBX_FALSE for 11-bit standard CAN identifiers.
+/// \param     t_CanIdToTarget The CAN identifier to use when sending XCP packets to the
+///            microcontroller target via the CAN bus.
+/// \param     t_CanIdFromTarget The CAN identifier for receiving XCP packets from the
+///            microcontroller target via the CAN bus.
 ///
 ///**************************************************************************************
-Indicator::Indicator(Led& t_StatusLed)
-  : ControlLoopSubscriber(), m_StatusLed(t_StatusLed)
+Gateway::Gateway(UsbDevice& t_UsbDevice, Can& t_Can, Boot& t_Boot, uint8_t t_OwnNodeId,
+                 Can::Baudrate t_CanBaudrate, uint8_t t_CanExtIds, 
+                uint32_t t_CanIdToTarget, uint32_t t_CanIdFromTarget)
+  : ControlLoopSubscriber(),
+    m_UsbDevice(t_UsbDevice), m_Can(t_Can), m_Boot(t_Boot),
+    m_OwnNodeId(t_OwnNodeId), m_CanBaudrate(t_CanBaudrate), m_CanExtIds(t_CanExtIds),
+    m_CanIdToTarget(t_CanIdToTarget), m_CanIdFromTarget(t_CanIdFromTarget)
 {
+  // TODO ##Vg Add CAN and USB device event handler methods and bind them here.
 }
 
 
 ///**************************************************************************************
-/// \brief     Setter for the indicator state.
-/// \param     t_Value New state value.
+/// \brief     Starts the gateway. 
 ///
 ///**************************************************************************************
-void Indicator::setState(State t_Value)
+void Gateway::start()
 {
-  // Perform state transition, if the state actually changed.
-  if (m_State != t_Value)
-  {
-    // Perform new state entry actions.
-    switch (t_Value)
-    {
-      case SLEEPING:
-      {
-        // Turn the status LED off.
-        m_StatusLed.off();
-      }
-      break;
-
-      case IDLE:
-      case ACTIVE:
-      {
-        // Turn the status LED off.
-        m_StatusLed.off();
-        // Reset the play index.
-        m_PlayIdx = 0;
-      }
-      break;
-
-      case ERROR:
-      default:
-      {
-        // Turn the status LED on.
-        m_StatusLed.on();
-      }
-      break;
-    }
-    // Update the state.
-    m_State = t_Value;
-  }
-
+  // TODO ##Vg Implement start().
 }
+
+
+///**************************************************************************************
+/// \brief     Stops the gateway. 
+///
+///**************************************************************************************
+void Gateway::stop()
+{
+  // TODO ##Vg Implement stop().
+}
+
 
 ///**************************************************************************************
 /// \brief     Update method that drives the class. Should be called periodically.
 /// \param     t_Delta Number of milliseconds that passed.
 ///
 ///**************************************************************************************
-void Indicator::update(std::chrono::milliseconds t_Delta)
+void Gateway::update(std::chrono::milliseconds t_Delta)
 {
-  // Only need to run a play in the IDLE and ACTIVE states.
-  if ( (m_State == IDLE) || (m_State == ACTIVE) )
-  {
-    // Update the current time. 
-    m_CurrentMillis += t_Delta;
-    // Did one play step pass?
-    if ((m_CurrentMillis - m_LastToggleMillis) >= c_PlayStepMillis)
-    {
-      // Update the last toggle time for the next interval detection.
-      m_LastToggleMillis += c_PlayStepMillis;
-      // Run the state specific indicator control, where applicable.
-      switch (m_State)
-      {
-        case IDLE:
-        {
-          // Play the current index.
-          if (c_PlayIdle[m_PlayIdx] == 0)
-          {
-            m_StatusLed.off();
-          }
-          else
-          {
-            m_StatusLed.on();
-          }
-          // Update the indexer.
-          m_PlayIdx = (m_PlayIdx < (c_PlayIdle.size() - 1) ? m_PlayIdx + 1 : 0);
-        }
-        break;
-      
-        case ACTIVE:
-        {
-          // Play the current index.
-          if (c_PlayActive[m_PlayIdx] == 0)
-          {
-            m_StatusLed.off();
-          }
-          else
-          {
-            m_StatusLed.on();
-          }
-          // Update the indexer.
-          m_PlayIdx = (m_PlayIdx < (c_PlayActive.size() - 1) ? m_PlayIdx + 1 : 0);
-        }
-        break;
-
-        default:
-        {
-          // Nothing to do in the other states.
-        }
-        break;
-      }
-
-    }
-  }
+  // TODO ##Vg Implement update().
 }
 
-//********************************** end of indicator.cpp *******************************
+//********************************** end of gateway.cpp *********************************
