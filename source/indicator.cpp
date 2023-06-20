@@ -78,6 +78,8 @@ void Indicator::setState(State t_Value)
         m_StatusLed.off();
         // Reset the play index.
         m_PlayIdx = 0;
+        // Initialize the last toggle time.
+        m_LastToggleMillis = m_CurrentMillis;
       }
       break;
 
@@ -102,11 +104,12 @@ void Indicator::setState(State t_Value)
 ///**************************************************************************************
 void Indicator::update(std::chrono::milliseconds t_Delta)
 {
+  // Update the current time. 
+  m_CurrentMillis += t_Delta;
+
   // Only need to run a play in the IDLE and ACTIVE states.
   if ( (m_State == IDLE) || (m_State == ACTIVE) )
   {
-    // Update the current time. 
-    m_CurrentMillis += t_Delta;
     // Did one play step pass?
     if ((m_CurrentMillis - m_LastToggleMillis) >= c_PlayStepMillis)
     {
