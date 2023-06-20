@@ -1,6 +1,6 @@
 ///**************************************************************************************
-/// \file         board.hpp
-/// \brief        Board support package header file.
+/// \file         boot.hpp
+/// \brief        Bootloader interaction header file.
 /// \internal
 ///--------------------------------------------------------------------------------------
 ///                          C O P Y R I G H T
@@ -33,46 +33,32 @@
 ///
 /// \endinternal
 ///**************************************************************************************
-#ifndef BOARD_HPP
-#define BOARD_HPP
+#ifndef BOOT_HPP
+#define BOOT_HPP
 
 //***************************************************************************************
 // Include files
 //***************************************************************************************
-#include "led.hpp"
-#include "usbdevice.hpp"
-#include "can.hpp"
-#include "boot.hpp"
+#include "microtbx.h"
 
 
 //***************************************************************************************
 // Class definitions
 //***************************************************************************************
-/// \brief   Abstract board support package class that represents the hardware
-///          abstraction layer. It defines a hardware independent interface for getters
-///          of hardware specific objects.
-/// \details The idea is that you create a derived class that implements the getters and,
-///          more importantly, returns the hardware specific version of these objects.
-class Board
+/// \brief   Abstract bootloader interaction class.
+class Boot
 {
 public:
   // Destructor.
-  virtual ~Board() { }
-  // Getters and setters.
-  virtual Led& statusLed() = 0;
-  virtual UsbDevice& usbDevice() = 0;
-  virtual Can& can() = 0;
-  virtual Boot& boot() = 0;
+  virtual ~Boot() { }
+  // Methods.
+  virtual uint8_t detectLoader() = 0;
+  virtual void activateLoader() = 0;
 
 protected:
   // Flag the class as abstract.
-  explicit Board() { }
-
-private:
-  // Flag the class as non-copyable.
-  Board(const Board&) = delete;
-  const Board& operator=(const Board&) = delete;
+  explicit Boot() { }
 };
 
-#endif // BOARD_HPP
-//********************************** end of board.hpp ***********************************
+#endif // BOOT_HPP
+//********************************** end of boot.hpp ************************************

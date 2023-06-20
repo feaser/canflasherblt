@@ -20,6 +20,7 @@ set(PROJECT_SOURCES
     "${CMAKE_CURRENT_LIST_DIR}/statusled.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/bxcan.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/tinyusbdevice.cpp"
+    "${CMAKE_CURRENT_LIST_DIR}/bootloader.cpp"
 )
 
 # Configure project include paths.

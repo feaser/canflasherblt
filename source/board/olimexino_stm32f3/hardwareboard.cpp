@@ -79,16 +79,8 @@ HardwareBoard::HardwareBoard()
   m_TinyUsbDevice = std::make_unique<TinyUsbDevice>(*this);
   // Create the bxCAN object on the heap.
   m_BxCan = std::make_unique<BxCan>();
-}
-
-
-///**************************************************************************************
-/// \brief     Performs a software reset of the microcontroller.
-///
-///**************************************************************************************
-void HardwareBoard::reset()
-{
-  NVIC_SystemReset();
+  // Create the bootloader object on the heap.
+  m_Bootloader = std::make_unique<Bootloader>();
 }
 
 
@@ -340,7 +332,6 @@ void BoardAssertHandler(const char * const file, uint32_t line)
   // Pass the event on to the static method of the board class.
   HardwareBoard::assertHandler(file, line);
 }
-
 } // extern "C"
 
 //********************************** end of hardwareboard.cpp ***************************

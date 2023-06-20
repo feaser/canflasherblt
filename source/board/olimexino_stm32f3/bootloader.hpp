@@ -1,6 +1,6 @@
 ///**************************************************************************************
-/// \file         board.hpp
-/// \brief        Board support package header file.
+/// \file         bootloader.hpp
+/// \brief        OpenBLT bootloader interaction header file.
 /// \internal
 ///--------------------------------------------------------------------------------------
 ///                          C O P Y R I G H T
@@ -33,46 +33,29 @@
 ///
 /// \endinternal
 ///**************************************************************************************
-#ifndef BOARD_HPP
-#define BOARD_HPP
+#ifndef BOOTLOADER_HPP
+#define BOOTLOADER_HPP
 
 //***************************************************************************************
 // Include files
 //***************************************************************************************
-#include "led.hpp"
-#include "usbdevice.hpp"
-#include "can.hpp"
 #include "boot.hpp"
 
 
 //***************************************************************************************
 // Class definitions
 //***************************************************************************************
-/// \brief   Abstract board support package class that represents the hardware
-///          abstraction layer. It defines a hardware independent interface for getters
-///          of hardware specific objects.
-/// \details The idea is that you create a derived class that implements the getters and,
-///          more importantly, returns the hardware specific version of these objects.
-class Board
+/// \brief OpenBLT bootloader interaction class.
+class Bootloader : public Boot
 {
 public:
-  // Destructor.
-  virtual ~Board() { }
-  // Getters and setters.
-  virtual Led& statusLed() = 0;
-  virtual UsbDevice& usbDevice() = 0;
-  virtual Can& can() = 0;
-  virtual Boot& boot() = 0;
-
-protected:
-  // Flag the class as abstract.
-  explicit Board() { }
-
-private:
-  // Flag the class as non-copyable.
-  Board(const Board&) = delete;
-  const Board& operator=(const Board&) = delete;
+  // Constructors and destructor.
+  explicit Bootloader() { }
+  virtual ~Bootloader() { }
+  // Methods.
+  uint8_t detectLoader() override;
+  void activateLoader() override;
 };
 
-#endif // BOARD_HPP
-//********************************** end of board.hpp ***********************************
+#endif // BOOTLOADER_HPP
+//********************************** end of bootloader.hpp ******************************

@@ -44,6 +44,7 @@
 #include "statusled.hpp"
 #include "tinyusbdevice.hpp"
 #include "bxcan.hpp"
+#include "bootloader.hpp"
 
 
 //***************************************************************************************
@@ -72,8 +73,8 @@ public:
   Led& statusLed() override { return *m_StatusLed; }
   UsbDevice& usbDevice() override { return *m_TinyUsbDevice; }
   Can& can() override { return *m_BxCan; }
+  Boot& boot() override { return *m_Bootloader; }
   // Methods.
-  void reset() override;
   void suspend();
   void resume();
 
@@ -82,6 +83,7 @@ private:
   std::unique_ptr<StatusLed> m_StatusLed{nullptr};
   std::unique_ptr<TinyUsbDevice> m_TinyUsbDevice{nullptr};
   std::unique_ptr<BxCan> m_BxCan{nullptr};
+  std::unique_ptr<Bootloader> m_Bootloader{nullptr};
   // Methods.
   void mcuInit();
   void setupSystemClock();

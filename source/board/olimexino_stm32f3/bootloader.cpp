@@ -1,6 +1,6 @@
 ///**************************************************************************************
-/// \file         board.hpp
-/// \brief        Board support package header file.
+/// \file         bootloader.cpp
+/// \brief        OpenBLT bootloader interaction source file.
 /// \internal
 ///--------------------------------------------------------------------------------------
 ///                          C O P Y R I G H T
@@ -33,46 +33,45 @@
 ///
 /// \endinternal
 ///**************************************************************************************
-#ifndef BOARD_HPP
-#define BOARD_HPP
 
 //***************************************************************************************
 // Include files
 //***************************************************************************************
-#include "led.hpp"
-#include "usbdevice.hpp"
-#include "can.hpp"
-#include "boot.hpp"
+#include "bootloader.hpp"
+#include "stm32f3xx.h"
 
 
-//***************************************************************************************
-// Class definitions
-//***************************************************************************************
-/// \brief   Abstract board support package class that represents the hardware
-///          abstraction layer. It defines a hardware independent interface for getters
-///          of hardware specific objects.
-/// \details The idea is that you create a derived class that implements the getters and,
-///          more importantly, returns the hardware specific version of these objects.
-class Board
+///**************************************************************************************
+/// \brief     Determine if a bootloader is present on the system.
+/// \return    TBX_TRUE if a bootloader is present, TBX_FALSE otherwise.
+///
+///**************************************************************************************
+uint8_t Bootloader::detectLoader()
 {
-public:
-  // Destructor.
-  virtual ~Board() { }
-  // Getters and setters.
-  virtual Led& statusLed() = 0;
-  virtual UsbDevice& usbDevice() = 0;
-  virtual Can& can() = 0;
-  virtual Boot& boot() = 0;
+  uint8_t result = TBX_FALSE;
 
-protected:
-  // Flag the class as abstract.
-  explicit Board() { }
+  // If the OpenBLT bootloader is present on this system, then it will have moved the
+  // vector base address forward to the begin of this firmware, right before it started
+  // this firmware. This means that if the vector base address is not the same as the
+  // start of flash memory, then the OpenBLT bootloader is present on this system.
+  if (SCB->VTOR != FLASH_BASE)
+  {
+    // Update the result to indicate that a bootloader is present on this system.
+    result = TBX_TRUE;
+  }
+  // Give the result back to the caller.
+  return result;
+}
 
-private:
-  // Flag the class as non-copyable.
-  Board(const Board&) = delete;
-  const Board& operator=(const Board&) = delete;
-};
 
-#endif // BOARD_HPP
-//********************************** end of board.hpp ***********************************
+///**************************************************************************************
+/// \brief     Activate the bootloader.
+///
+///**************************************************************************************
+void Bootloader::activateLoader()
+{
+  // Activate the bootloader by performing a software reset.
+  NVIC_SystemReset();
+}
+
+//********************************** end of bootloader.cpp ******************************
