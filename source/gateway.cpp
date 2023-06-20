@@ -158,7 +158,10 @@ void Gateway::onCanReceived(CanMsg& t_Msg)
 {
   // TODO ##Vg Implement onCanReceived().
 
-  // - Only process if the gateway is started.
+  // - Only process if the gateway is started and connected.
+  // - Validate if it is an XCP packet. Length > 0 and I think the first byte needs to
+  //   be 0xFF.
+  // - Pass the packet on via USB.
 }
 
 
