@@ -37,6 +37,7 @@
 //***************************************************************************************
 // Include files
 //***************************************************************************************
+#include <array>
 #include "gateway.hpp"
 #include "logger.hpp"
 
@@ -212,7 +213,7 @@ void Gateway::onUsbDataReceived(uint8_t const t_Data[], uint32_t t_Len)
         }
       }               
     }
-    // Copy the message data.
+    // Copy the packet data.
     for (uint8_t idx=0; idx < t_Data[0]; idx++)
     {
       xcpMsgToTarget[idx] = t_Data[idx + 1];
@@ -234,12 +235,31 @@ void Gateway::onUsbDataReceived(uint8_t const t_Data[], uint32_t t_Len)
 ///**************************************************************************************
 void Gateway::onCanReceived(CanMsg& t_Msg)
 {
-  // TODO ##Vg Implement onCanReceived().
-
-  // - Only process if the gateway is started and connected.
-  // - Validate if it is an XCP packet. Length > 0 and I think the first byte needs to
-  //   be 0xFF.
-  // - Pass the packet on via USB.
+  // Only process the message if the the gateway is started and actually connected.
+  if ((m_Started == TBX_TRUE) && (m_Connected == TBX_TRUE))
+  {
+    // Only process the message if it in fact is the XCP response packet we expect. Note
+    // that an XCP response packet always has a length of at least 1.
+    if ((t_Msg.id() == m_CanIdFromTarget) && (t_Msg.ext() == m_CanExtIds) &&
+        (t_Msg.len() >= 1U))
+    {
+      // Prepare the XCP packet for sending via USB by adding one extra byte at the
+      // front with the length.
+      std::array<uint8_t, CanMsg::c_DataLenMax + 1U> xcpPacketToHost;
+      xcpPacketToHost[0] = t_Msg.len();
+      // Copy the packet data.
+      for (uint8_t idx=0; idx < t_Msg.len(); idx++)
+      {
+        xcpPacketToHost[idx + 1] = t_Msg[idx];
+      }
+      // Send the XCP response packet to the host via USB.
+      if (m_UsbDevice.transmit(xcpPacketToHost.data(), t_Msg.len() + 1U) == TBX_ERROR)
+      {
+        // USB transmit FIFO full. Log this as a warning.
+        logger().warning("Gateway USB transmit FIFO full.");
+      }
+    }
+  }
 }
 
 
