@@ -89,7 +89,6 @@ private:
   uint8_t m_Connected{TBX_FALSE};
   std::chrono::milliseconds m_LastPacketMillis{0};
   std::chrono::milliseconds m_CurrentMillis{0};
-
   // Methods.
   void onUsbDataReceived(uint8_t const t_Data[], uint32_t t_Len);
   void onCanReceived(CanMsg& t_Msg);
