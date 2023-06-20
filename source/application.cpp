@@ -111,6 +111,8 @@ void Application::onUsbSuspend()
   m_Gateway.stop();
   // Set indicator to the sleeping state.
   m_Indicator.setState(Indicator::SLEEPING);
+  // Log info.
+  logger().info("Gateway stopped.");
 }
 
 
@@ -124,6 +126,8 @@ void Application::onUsbResume()
   m_Indicator.setState(Indicator::IDLE);
   // Start the gateway.
   m_Gateway.start();
+  // Log info.
+  logger().info("Gateway started.");
 }
 
 
@@ -136,6 +140,8 @@ void Application::onGatewayConnected()
 {
   // Set indicator to the active state,
   m_Indicator.setState(Indicator::ACTIVE);
+  // Log info.
+  logger().info("Gateway connected.");
 }
 
 
@@ -148,6 +154,8 @@ void Application::onGatewayDisconnected()
 {
   // Set indicator to the idle state,
   m_Indicator.setState(Indicator::IDLE);
+  // Log info.
+  logger().info("Gateway disconnected.");
 }
 
 

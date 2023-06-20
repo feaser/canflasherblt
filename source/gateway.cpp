@@ -94,8 +94,6 @@ void Gateway::start()
   m_Can.connect(m_CanBaudrate);
   // Update started state flag.
   m_Started = TBX_TRUE;
-  // Log info.
-  logger().info("Gateway started.");
 }
 
 
@@ -109,8 +107,6 @@ void Gateway::stop()
   m_Can.disconnect();
   // Update started state flag.
   m_Started = TBX_FALSE;
-  // Log info.
-  logger().info("Gateway stopped.");
 }
 
 
@@ -121,7 +117,25 @@ void Gateway::stop()
 ///**************************************************************************************
 void Gateway::update(std::chrono::milliseconds t_Delta)
 {
-  // TODO ##Vg Implement update().
+  // Update the current time. 
+  m_CurrentMillis += t_Delta;
+
+  // Only need to do gateway inactivity timeout monitoring when the gateway is started
+  // and actually connected.
+  if ((m_Started == TBX_TRUE) && (m_Connected == TBX_TRUE))
+  {
+    // Check if no packets were received for the idle timeout time.
+    if ((m_CurrentMillis - m_LastPacketMillis) > c_IdleTimeoutMillis)
+    {
+      // Transition to the disconnected state.
+      m_Connected = TBX_FALSE;
+      // Trigger the event handler, if assigned.
+      if (onDisconnected)
+      {
+        onDisconnected();
+      }
+    }
+  }
 }
 
 
@@ -132,20 +146,84 @@ void Gateway::update(std::chrono::milliseconds t_Delta)
 ///**************************************************************************************
 void Gateway::onUsbDataReceived(uint8_t const t_Data[], uint32_t t_Len)
 {
-  // TODO ##Vg Implement onUsbDataReceived().
+  constexpr uint8_t xcpCmdConnect = 0xFFU;
+  constexpr uint8_t xcpCmdDisconnect = 0xFEU;
+  constexpr uint8_t xcpCmdProgramReset = 0xCFU;
 
-  // - Only process if the gateway is started.
-  // - Validate if it is an XCP packet. Check length >= 2 and <= 9.
-  // - Check if it's the connect command and then extract the node id (CM).
-  // - If a bootloader is present and the node id equals own node ide, reset.
-  // - Otherwise check if the connected flag is not yet set. If not, then set it and
-  //   trigger onConnected.
-  // - Check if its a disconnect or reset command that flags the end of the firmware
-  //   update. If so and were in the connected state. reset the connected flag and
-  //   trigger onDisconnected.
-  // - Pass the packet on via CAN.
-  // - Probably also need to store a time reference of the last received XCP command for
-  //   the gateway timeout monitoring.
+  // Only process the new data if the gateway is started.
+  if (m_Started == TBX_TRUE)
+  {
+    CanMsg xcpMsgToTarget(m_CanIdToTarget, m_CanExtIds, t_Len - 1U, { });
+
+    // Refresh the last XCP packet received time, used for inactivity timeout monitoring.
+    m_LastPacketMillis = m_CurrentMillis;
+
+    // Does this look like a valid XCP command packet? XCP packets on USB always contain
+    // the packet length in the first byte. E.g. the XCP Connect command:
+    //   0xFF 0x00
+    // would look like
+    //   0x02 0xFF 0x00 
+    //Furthermore, since this is a USB-CAN gateway, a packet CAN never be more than 8 bytes
+    // in length, so 9 including the extra lenght byt eat the start.
+    if ((t_Len >= 2U) && (t_Len <= 9U) && (t_Len == (t_Data[0] + 1U)))
+    {
+      // Is it the XCP Connect command? It has a length of 2.
+      if ((t_Data[1] == xcpCmdConnect) && (t_Data[0] == 2U))
+      {
+        // Read out the node ID that is located in the connect mode parameter.
+        uint8_t targetNodeId = t_Data[2];
+        // Is a bootloader present on our own system?
+        if (m_Boot.detectLoader() == TBX_TRUE)
+        {
+          // Is this our own node ID?
+          if (targetNodeId == m_OwnNodeId)
+          {
+            // Host is attempting to connect directly to use. Activate our own
+            // bootloader. Note that this function does not return.
+            m_Boot.activateLoader();
+          }
+        }
+        // Are we not yet in the connected state?
+        if (m_Connected == TBX_FALSE)
+        {
+          // Transition to the connected state.
+          m_Connected = TBX_TRUE;
+          // Trigger the event handler, if assigned.
+          if (onConnected)
+          {
+            onConnected();
+          }
+        } 
+      }
+      // Is it the XCP Disonnect or Program Reset command? Both have a length of 1.
+      else if (((t_Data[1] == xcpCmdDisconnect) || (t_Data[1] == xcpCmdProgramReset)) &&
+               (t_Data[0] == 1U))
+      {
+        // Currently in the connected state?
+        if (m_Connected == TBX_TRUE)
+        {
+          // Transition to the disconnected state.
+          m_Connected = TBX_FALSE;
+          // Trigger the event handler, if assigned.
+          if (onDisconnected)
+          {
+            onDisconnected();
+          }
+        }
+      }               
+    }
+    // Copy the message data.
+    for (uint8_t idx=0; idx < t_Data[0]; idx++)
+    {
+      xcpMsgToTarget[idx] = t_Data[idx + 1];
+    }
+    // Place the XCP packet on the CAN bus.
+    if (m_Can.transmit(xcpMsgToTarget) == TBX_ERROR)
+    {
+      // No more transmit mailboxes available. Log this as a warning.
+      logger().warning("Gateway CAN transmit mailboxes all busy.");
+    }
+  }
 }
 
 
@@ -172,13 +250,13 @@ void Gateway::onCanReceived(CanMsg& t_Msg)
 ///**************************************************************************************
 void Gateway::onCanBusOff()
 {
-  // Log warning
-  logger().warning("CAN bus off detected.");
   // Trigger the event handler, if assigned.
   if (onError)
   {
     onError();
   }
+  // Log warning
+  logger().warning("Gateway CAN bus off error detected.");
 }
 
 //********************************** end of gateway.cpp *********************************
