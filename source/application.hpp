@@ -67,9 +67,9 @@ private:
   // Event handlers.
   void onUsbSuspend();
   void onUsbResume();
-  void onUsbDataReceived(uint8_t const t_Data[], uint32_t t_Len);
-  void onCanTransmitted(CanMsg& t_Msg);
-  void onCanReceived(CanMsg& t_Msg);
+  void onGatewayConnected();
+  void onGatewayDisconnected();
+  void onGatewayError();
 
   // Flag the class as non-copyable.
   Application(const Application&) = delete;

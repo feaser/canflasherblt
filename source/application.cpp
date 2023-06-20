@@ -58,23 +58,19 @@ Application::Application(Board& t_Board)
   m_Board.usbDevice().onSuspend = std::bind(&Application::onUsbSuspend, this);
   // Set the USB device resume event handler to the onUsbResume() method.
   m_Board.usbDevice().onResume = std::bind(&Application::onUsbResume, this);
-  // Set the USB data received event handler to the onUsbDataReceived() method.
-  m_Board.usbDevice().onDataReceived = std::bind(&Application::onUsbDataReceived, 
-                                                 this, std::placeholders::_1,
-                                                 std::placeholders::_2);
-  // Set the CAN message transmitted event handler to the onCanTransmitted() method.
-  m_Board.can().onTransmitted = std::bind(&Application::onCanTransmitted,
-                                          this, std::placeholders::_1);
-  // Set the CAN message received event handler to the onCanReceived() method.
-  m_Board.can().onReceived = std::bind(&Application::onCanReceived,
-                                          this, std::placeholders::_1);
+  // Set the gateway connected event handler to the onGatewayConnected() method.
+  m_Gateway.onConnected = std::bind(&Application::onGatewayConnected, this);
+  // Set the gateway disconnected event handler to the onGatewayDisconnected() method.
+  m_Gateway.onDisconnected = std::bind(&Application::onGatewayDisconnected, this);
+  // Set the gateway error event handler to the onGatewayError() method.
+  m_Gateway.onError = std::bind(&Application::onGatewayError, this);
   // Attach the control loop observers.
   attach(m_Indicator);
   attach(m_Gateway);
-  // Connect to the CAN bus.
-  m_Board.can().connect(Can::BR500K);
   // Transition to the idle state.
   m_Indicator.setState(Indicator::IDLE);
+  // Start the gateway.
+  m_Gateway.start();
   // Log info.
   logger().info("Application started.");
   // Start the thread.
@@ -91,9 +87,6 @@ void Application::Run()
   constexpr size_t stepTimeMillis = 10U;
   constexpr auto deltaMillis = std::chrono::milliseconds{stepTimeMillis};
   const TickType_t deltaTicks = cpp_freertos::Ticks::MsToTicks(stepTimeMillis);
-
-  CanMsg myMsg(0x123, TBX_FALSE, 8, { 1, 2, 3, 4, 5, 6, 7, 8 });
-  m_Board.can().transmit(myMsg);
 
   for (;;)
   {
@@ -114,6 +107,8 @@ void Application::Run()
 ///**************************************************************************************
 void Application::onUsbSuspend()
 {
+  // Stop the gateway.
+  m_Gateway.stop();
   // Set indicator to the sleeping state.
   m_Indicator.setState(Indicator::SLEEPING);
 }
@@ -127,46 +122,44 @@ void Application::onUsbResume()
 {
   // Set indicator to the idle state,
   m_Indicator.setState(Indicator::IDLE);
+  // Start the gateway.
+  m_Gateway.start();
 }
 
 
 ///**************************************************************************************
-/// \brief     Event handler that gets called when new data was received on from the USB
-///            host.
+/// \brief     Event handler that gets called when the gateway connected to a target on
+///            the CAN bus.
 ///
 ///**************************************************************************************
-void Application::onUsbDataReceived(uint8_t const t_Data[], uint32_t t_Len)
+void Application::onGatewayConnected()
 {
-  // Was this the XCP Connect command with connect parameter 0?
-  if ((t_Data[0] == 2U) && (t_Data[1] == 0xFFU) && (t_Data[2] == 0x00U) && (t_Len == 3U))
-  {
-    // Send the XCP Connect response.
-    uint8_t connectRes[] = { 8, 0xFF, 0x10, 0x00, 0x08, 0x08, 0x00, 0x01, 0x01 };
-    m_Board.usbDevice().transmit(connectRes, sizeof(connectRes)/sizeof(connectRes[0]));
-  }
+  // Set indicator to the active state,
+  m_Indicator.setState(Indicator::ACTIVE);
 }
 
 
 ///**************************************************************************************
-/// \brief     Event handler that gets called when the transmission of a CAN message
-///            completed.
-/// \param     t_Msg The CAN message that was transmitted.
+/// \brief     Event handler that gets called when the gateway disconnected from a target
+///            on the CAN bus.
 ///
 ///**************************************************************************************
-void Application::onCanTransmitted(CanMsg& t_Msg)
+void Application::onGatewayDisconnected()
 {
-  logger().info("CAN Tx: 0x%X", t_Msg.id());
+  // Set indicator to the idle state,
+  m_Indicator.setState(Indicator::IDLE);
 }
 
 
 ///**************************************************************************************
-/// \brief     Event handler that gets called when a new CAN message was received.
-/// \param     t_Msg The newly received CAN message.
+/// \brief     Event handler that gets called when the gateway detected an error. For
+///            example a CAN bus off event.
 ///
 ///**************************************************************************************
-void Application::onCanReceived(CanMsg& t_Msg)
+void Application::onGatewayError()
 {
-  logger().info("CAN Rx: 0x%X", t_Msg.id());
+  // Set indicator to the error state,
+  m_Indicator.setState(Indicator::ERROR);
 }
 
 //********************************** end of application.cpp *****************************

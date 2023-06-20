@@ -40,10 +40,12 @@
 // Include files
 //***************************************************************************************
 #include <cstdint>
+#include <functional>
 #include "controlloop.hpp"
 #include "usbdevice.hpp"
 #include "can.hpp"
 #include "boot.hpp"
+#include "microtbx.h"
 
 
 //***************************************************************************************
@@ -80,6 +82,11 @@ private:
   uint8_t m_CanExtIds;
   uint32_t m_CanIdToTarget;
   uint32_t m_CanIdFromTarget;
+  uint8_t m_Connected{TBX_FALSE};
+  // Methods.
+  void onUsbDataReceived(uint8_t const t_Data[], uint32_t t_Len);
+  void onCanReceived(CanMsg& t_Msg);
+  void onCanBusOff();
 
   // Flag the class as non-copyable.
   Gateway(const Gateway&) = delete;

@@ -38,6 +38,7 @@
 // Include files
 //***************************************************************************************
 #include "gateway.hpp"
+#include "logger.hpp"
 
 
 ///**************************************************************************************
@@ -66,7 +67,12 @@ Gateway::Gateway(UsbDevice& t_UsbDevice, Can& t_Can, Boot& t_Boot, uint8_t t_Own
     m_OwnNodeId(t_OwnNodeId), m_CanBaudrate(t_CanBaudrate), m_CanExtIds(t_CanExtIds),
     m_CanIdToTarget(t_CanIdToTarget), m_CanIdFromTarget(t_CanIdFromTarget)
 {
-  // TODO ##Vg Add CAN and USB device event handler methods and bind them here.
+  // Set the USB data received event handler to the onUsbDataReceived() method.
+  m_UsbDevice.onDataReceived = std::bind(&Gateway::onUsbDataReceived, 
+                                         this, std::placeholders::_1,
+                                         std::placeholders::_2);
+  // Set the CAN message received event handler to the onCanReceived() method.
+  m_Can.onReceived = std::bind(&Gateway::onCanReceived, this, std::placeholders::_1);
 }
 
 
@@ -76,7 +82,18 @@ Gateway::Gateway(UsbDevice& t_UsbDevice, Can& t_Can, Boot& t_Boot, uint8_t t_Own
 ///**************************************************************************************
 void Gateway::start()
 {
-  // TODO ##Vg Implement start().
+  // Configure the CAN reception acceptance filter to just receive XCP packets from
+  // the target.
+  CanFilter canFilter(m_CanIdFromTarget, 0x1FFFFFFFUL, CanFilter::STD);
+  if (m_CanExtIds == TBX_TRUE)
+  {
+    canFilter.mode = CanFilter::EXT;
+  }
+  m_Can.setFilter(canFilter);
+  // Connect to the CAN bus.
+  m_Can.connect(m_CanBaudrate);
+  // Log info.
+  logger().info("Gateway started.");
 }
 
 
@@ -86,7 +103,10 @@ void Gateway::start()
 ///**************************************************************************************
 void Gateway::stop()
 {
-  // TODO ##Vg Implement stop().
+  // Disconnect from the CAN bus.
+  m_Can.disconnect();
+  // Log info.
+  logger().info("Gateway stopped.");
 }
 
 
@@ -98,6 +118,45 @@ void Gateway::stop()
 void Gateway::update(std::chrono::milliseconds t_Delta)
 {
   // TODO ##Vg Implement update().
+}
+
+
+///**************************************************************************************
+/// \brief     Event handler that gets called when new data was received on from the USB
+///            host.
+///
+///**************************************************************************************
+void Gateway::onUsbDataReceived(uint8_t const t_Data[], uint32_t t_Len)
+{
+  // TODO ##Vg Implement onUsbDataReceived().
+}
+
+
+///**************************************************************************************
+/// \brief     Event handler that gets called when a new CAN message was received.
+/// \param     t_Msg The newly received CAN message.
+///
+///**************************************************************************************
+void Gateway::onCanReceived(CanMsg& t_Msg)
+{
+  // TODO ##Vg Implement onCanReceived().
+}
+
+
+///**************************************************************************************
+/// \brief     Event handler that gets called when a CAN bus off error event was
+///            detected.
+///
+///**************************************************************************************
+void Gateway::onCanBusOff()
+{
+  // Log warning
+  logger().warning("CAN bus off detected.");
+  // Trigger the event handler, if assigned.
+  if (onError)
+  {
+    onError();
+  }
 }
 
 //********************************** end of gateway.cpp *********************************
