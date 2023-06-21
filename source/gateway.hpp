@@ -61,7 +61,7 @@ public:
                    uint8_t t_OwnNodeId, Can::Baudrate t_CanBaudrate, uint8_t t_CanExtIds, 
                    uint32_t t_CanIdToTarget, uint32_t t_CanIdFromTarget);
   explicit Gateway(UsbDevice& t_UsbDevice, Can& t_Can, Boot& t_Boot)
-    : Gateway(t_UsbDevice, t_Can, t_Boot, 0U, Can::BR500K, 
+    : Gateway(t_UsbDevice, t_Can, t_Boot, 255U, Can::BR500K, 
               TBX_FALSE, 0x667UL, 0x7E1UL) { }
   virtual ~Gateway() { }
   // Methods.
