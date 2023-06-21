@@ -49,7 +49,7 @@
 ///
 ///**************************************************************************************
 Application::Application(Board& t_Board)
-  : cpp_freertos::Thread("AppThread", configMINIMAL_STACK_SIZE, 4),
+  : cpp_freertos::Thread("AppThread", configMINIMAL_STACK_SIZE + 48, 4),
     m_Board(t_Board), 
     m_Indicator(t_Board.statusLed()),
     m_Gateway(t_Board.usbDevice(), t_Board.can(), t_Board.boot())
@@ -87,14 +87,24 @@ void Application::Run()
   constexpr size_t stepTimeMillis = 10U;
   constexpr auto deltaMillis = std::chrono::milliseconds{stepTimeMillis};
   const TickType_t deltaTicks = cpp_freertos::Ticks::MsToTicks(stepTimeMillis);
+  constexpr size_t heapMonitorSteps = 30000UL / stepTimeMillis; // 30 seconds.
+  size_t stepsCounter = 0U;
 
+  // Enter the task body, which should be an infinite loop.
   for (;;)
   {
-    // Wait until the task's period to elapses, while taking into consideration the 
+    // Wait until the task's period elapses, while taking into consideration the 
     // execution time of the task itself.
     DelayUntil(deltaTicks);
     // Notify all attached subscribers about the elapsed time step.
     notify(deltaMillis);
+    // Run the heap monitor.
+    if (++stepsCounter >= heapMonitorSteps)
+    {
+      stepsCounter = 0;
+      logger().info("Heap monitor reports %u of %u bytes available.", TbxHeapGetFree(),
+                    TBX_CONF_HEAP_SIZE);
+    }
   }
 }
 
