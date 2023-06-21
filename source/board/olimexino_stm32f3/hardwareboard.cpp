@@ -51,6 +51,17 @@
 #include "stm32f3xx_ll_cortex.h"
 
 
+//***************************************************************************************
+// External data declarations
+//***************************************************************************************
+// The constant array with vectors of the vector table is declared externally in the
+// C-startup code.
+extern "C" 
+{
+  extern const uint32_t g_pfnVectors[];
+}  
+
+
 ///**************************************************************************************
 /// \brief     Board support package constructor.
 /// \details   Note that this class builds on the concept of polymorphing to create an
@@ -177,6 +188,12 @@ void HardwareBoard::mcuInit()
   // SYSCFG and PWR clock enable.
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
+
+  // Remap the vector table to where the vector table is located for this program. Only
+  // needed when a bootloader is present in the start of memory. The bootloader already
+  // properly reconfigures the vector table base address. Unfortunatly, this change gets
+  // overwritten by the default SystemInit() implementation.
+  SCB->VTOR = (uint32_t)&g_pfnVectors[0];
 
   // Remap USB interrupts lines from 19, 20 and 42 to 74, 75, 76. This way they no longer
   // overlap with the CAN interrupt lines. With the remap enabled, use the following
