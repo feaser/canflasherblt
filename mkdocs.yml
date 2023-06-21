@@ -1,0 +1,9 @@
+site_name: CanFlasherBLT User Manual
+site_description: User Manual for CanFlasherBLT
+repo_url: https://github.com/feaser/canflasherblt
+theme: readthedocs
+nav:
+  - Home: 'index.md'
+  - Getting started: 'gettingstarted.md'
+  - Building: 'building.md'
+  - Portation: 'portation.md'
