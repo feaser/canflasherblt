@@ -74,6 +74,8 @@ Gateway::Gateway(UsbDevice& t_UsbDevice, Can& t_Can, Boot& t_Boot, uint8_t t_Own
                                          std::placeholders::_2);
   // Set the CAN message received event handler to the onCanReceived() method.
   m_Can.onReceived = std::bind(&Gateway::onCanReceived, this, std::placeholders::_1);
+  // Set the CAN bus off event handler to the onCanBusOff() method.
+  m_Can.onBusOff = std::bind(&Gateway::onCanBusOff, this);
 }
 
 
