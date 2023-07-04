@@ -82,6 +82,7 @@ public:
   uint32_t id() const { return m_Id; }
   uint8_t ext() const { return m_Ext; }
   uint8_t len() const { return m_Len; }
+  CanData& data() { return m_Data; }
   void setId(uint32_t t_Id) { TBX_ASSERT(t_Id <= c_ExtIdMax); m_Id = t_Id; } 
   void setExt(uint8_t t_Ext) { m_Ext = (t_Ext == TBX_FALSE) ? TBX_FALSE : TBX_TRUE; }
   void setLen(uint8_t t_Len) { TBX_ASSERT(t_Len <= c_DataLenMax); m_Len = t_Len; }

@@ -416,6 +416,8 @@ void BxCan::Run()
 
         case BxCanEvent::BUSOFF:
         {
+          // Disconnect to bring the CAN controller in the offline state.
+          disconnect();
           // Trigger the event handler, if assigned.
           if (onBusOff)
           {
