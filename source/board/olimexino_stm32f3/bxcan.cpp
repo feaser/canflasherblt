@@ -100,6 +100,9 @@ BxCan::BxCan(size_t t_EventQueueSize)
 ///**************************************************************************************
 BxCan::~BxCan()
 {
+  // Make sure that we're in the disconnected state.
+  disconnect();
+  
   // Disable the CAN related interrupts in the NVIC.
   NVIC_DisableIRQ(CAN_TX_IRQn);
   NVIC_DisableIRQ(CAN_RX0_IRQn);
