@@ -1,0 +1,669 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="297mm"
+   height="210mm"
+   viewBox="0 0 297 210"
+   version="1.1"
+   id="svg895"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="xcp_gateway.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview897"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:zoom="1"
+     inkscape:cx="438.5"
+     inkscape:cy="402.5"
+     inkscape:window-width="1920"
+     inkscape:window-height="1027"
+     inkscape:window-x="-8"
+     inkscape:window-y="22"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs892">
+    <pattern
+       id="EMFhbasepattern"
+       patternUnits="userSpaceOnUse"
+       width="6"
+       height="6"
+       x="0"
+       y="0" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g1441"
+       transform="matrix(0.186717,0,0,0.186717,121.41155,75.19702)"
+       inkscape:export-filename="C:\Work\software\CanFlasherBLT\docs\images\xcp_gateway.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:30;stop-color:#000000"
+         id="rect283"
+         width="145"
+         height="145"
+         x="76.460411"
+         y="19.310419"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96"
+         ry="26.585812" />
+      <path
+         style="fill:#ffeeaa;fill-opacity:0.533333;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 188.09323,39.86074 c 7.76317,-0.03118 7.76317,-0.03118 7.76317,-0.03118 l -2.21359,6.827843 6.70312,-0.03118 -15.6822,17.054017 3.4295,-10.506773 -4.30247,-0.09353 z"
+         id="path8758"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <rect
+         style="font-variation-settings:normal;vector-effect:none;fill:none;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:30;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
+         id="rect283-9-8"
+         width="31.764"
+         height="31.763819"
+         x="132.77663"
+         y="111.75893"
+         rx="5"
+         ry="5"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <rect
+         style="font-variation-settings:normal;vector-effect:none;fill:none;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:30;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
+         id="rect283-9-8-4"
+         width="31.764"
+         height="31.763819"
+         x="89.385239"
+         y="111.75893"
+         rx="5"
+         ry="5"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <rect
+         style="font-variation-settings:normal;vector-effect:none;fill:none;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:30;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
+         id="rect283-9-8-6"
+         width="31.764"
+         height="31.763819"
+         x="176.16771"
+         y="111.75893"
+         rx="5"
+         ry="5"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <rect
+         style="font-variation-settings:normal;fill:none;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:30;stroke-opacity:1;stop-color:#000000"
+         id="rect283-9-8-6-8"
+         width="31.764"
+         height="31.763819"
+         x="176.16771"
+         y="35.838623"
+         rx="5"
+         ry="5"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <g
+         style="fill:none;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+         transform="matrix(0.38638055,0,0,0.51540315,139.0816,28.545359)"
+         id="g6"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96">
+        <path
+           d="m 90,28.076 h -5.183 v -1.474 c 0,-0.552 -0.447,-1 -1,-1 H 73.382 c -2.493,0 -4.521,2.028 -4.521,4.521 v 0.543 H 19.397 c -4.226,0 -7.665,3.438 -7.665,7.665 0,4.227 3.438,7.665 7.664,7.665 l 25.605,0.008 v -1 1 h 25.6 c 3.124,0 5.665,2.541 5.665,5.664 0,3.124 -2.541,5.665 -5.665,5.665 H 21.14 v -0.544 c 0,-2.492 -2.028,-4.521 -4.521,-4.521 H 6.183 c -0.552,0 -1,0.447 -1,1 v 1.473 H 0 v 7.184 h 5.183 v 1.473 c 0,0.553 0.448,1 1,1 h 10.435 c 2.493,0 4.521,-2.028 4.521,-4.521 v -0.544 h 49.463 c 4.227,0 7.665,-3.438 7.665,-7.665 0,-4.226 -3.438,-7.664 -7.665,-7.664 h -25.6 L 19.397,43.996 c -3.124,0 -5.665,-2.541 -5.665,-5.665 0,-3.124 2.541,-5.665 5.665,-5.665 H 68.86 v 0.544 c 0,2.493 2.028,4.521 4.521,4.521 h 10.436 c 0.553,0 1,-0.448 1,-1 V 35.257 H 90 Z M 2,59.925 v -3.184 h 3.183 v 3.184 z m 17.14,-0.048 c 0,1.39 -1.131,2.521 -2.521,2.521 H 7.183 v -8.129 h 9.435 c 1.39,0 2.521,1.131 2.521,2.521 v 3.087 z M 82.817,35.732 h -9.436 c -1.391,0 -2.521,-1.131 -2.521,-2.521 v -3.087 c 0,-1.39 1.131,-2.521 2.521,-2.521 h 9.436 z M 88,33.258 H 84.817 V 30.075 H 88 Z"
+           style="opacity:1;fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:1.66605;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+           stroke-linecap="round"
+           id="path4-3" />
+      </g>
+      <g
+         style="fill:none;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(0.27761579,0,0,0.27761579,179.58888,39.347935)"
+         id="g6-3-1"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96">
+        <path
+           id="path4-9-9"
+           style="opacity:1;fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:2.81;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           d="m 776.04102,182.17383 c -0.90236,0 -1.70379,0.5774 -1.99024,1.43359 l -16.68945,49.8086 c -0.21405,0.64109 -0.10832,1.34681 0.28515,1.89453 0.39452,0.54771 1.02936,0.87304 1.70508,0.87304 h 13.96485 l -12.61719,37.65821 c -0.31373,0.93803 0.0679,1.97096 0.91992,2.47461 0.33366,0.19621 0.70217,0.29101 1.06836,0.29101 0.5708,0 1.13481,-0.23299 1.54297,-0.67578 l 59.6543,-64.65234 c 0.56554,-0.61277 0.71452,-1.50177 0.38085,-2.26563 -0.33366,-0.76386 -1.08876,-1.25781 -1.92187,-1.25781 h -22.6875 l 7.64453,-22.81641 c 0.2151,-0.64004 0.10741,-1.34486 -0.28711,-1.89257 -0.39347,-0.54772 -1.02545,-0.87305 -1.70117,-0.87305 z m 1.50976,4.19726 h 24.8457 L 794.75,209.18945 c -0.2151,0.64005 -0.10741,1.34487 0.28711,1.89258 0.39347,0.54771 1.0274,0.87305 1.70312,0.87305 h 20.81446 l -49.76172,53.92969 10.43164,-31.13282 c 0.21405,-0.64109 0.10636,-1.34486 -0.28711,-1.89257 -0.39452,-0.54772 -1.0274,-0.87305 -1.70312,-0.87305 h -13.9668 z"
+           transform="matrix(0.95305578,0,0,0.95305578,-708.72186,-173.62239)" />
+      </g>
+      <g
+         id="g16172"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96"
+         transform="translate(-16.776587,-8.8694763)">
+        <path
+           style="fill:#006699;fill-opacity:0.2;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 114.41244,130.27545 1.21592,-1.40298 h 12.72036 l 1.21592,1.18474 -0.0623,12.84507 -1.18474,1.15357 -12.59566,-0.0312 -1.3718,-1.06003 z"
+           id="path9947-6" />
+        <g
+           id="g4641"
+           transform="translate(59.044851,6.7026631)">
+          <path
+             d="m 68.576813,138.12328 h -11.58118 c -1.39328,0 -2.52634,-1.13381 -2.52634,-2.52709 v -11.58118 c 0,-1.39328 1.13381,-2.52634 2.52634,-2.52634 h 11.58118 c 1.39328,0 2.52708,1.13381 2.52708,2.52634 v 11.58118 c 0,1.39328 -1.1338,2.52709 -2.52708,2.52709 z m -11.58118,-15.14839 c -0.57322,0 -1.04012,0.46616 -1.04012,1.04012 v 11.58118 c 0,0.57322 0.46616,1.04013 1.04012,1.04013 h 11.58118 c 0.57322,0 1.04013,-0.46691 1.04013,-1.04013 v -11.58118 c 0,-0.57322 -0.46691,-1.04012 -1.04013,-1.04012 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path12" />
+          <path
+             d="m 60.106353,122.97489 c -0.4104,0 -0.74348,-0.33308 -0.74348,-0.74348 v -3.93078 c 0,-0.4104 0.33308,-0.74348 0.74348,-0.74348 0.4104,0 0.74348,0.33308 0.74348,0.74348 v 3.93078 c 0,0.41114 -0.33308,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path14" />
+          <path
+             d="m 65.466093,122.97489 c -0.41114,0 -0.74348,-0.33308 -0.74348,-0.74348 v -3.93078 c 0,-0.4104 0.33234,-0.74348 0.74348,-0.74348 0.41115,0 0.74348,0.33308 0.74348,0.74348 v 3.93078 c 0,0.41114 -0.33233,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path16" />
+          <path
+             d="m 60.106353,142.05331 c -0.4104,0 -0.74348,-0.33234 -0.74348,-0.74348 v -3.93003 c 0,-0.41115 0.33308,-0.74348 0.74348,-0.74348 0.4104,0 0.74348,0.33233 0.74348,0.74348 v 3.93003 c 0,0.4104 -0.33308,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path18" />
+          <path
+             d="m 65.466093,142.05331 c -0.41114,0 -0.74348,-0.33234 -0.74348,-0.74348 v -3.93003 c 0,-0.41115 0.33234,-0.74348 0.74348,-0.74348 0.41115,0 0.74348,0.33233 0.74348,0.74348 v 3.93003 c 0,0.4104 -0.33233,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path20" />
+          <path
+             d="m 55.212773,127.86921 h -3.93077 c -0.4104,0 -0.74348,-0.33308 -0.74348,-0.74348 0,-0.4104 0.33308,-0.74348 0.74348,-0.74348 h 3.93077 c 0.4104,0 0.74348,0.33308 0.74348,0.74348 0,0.4104 -0.33308,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path22" />
+          <path
+             d="m 74.290453,133.22895 h -3.93003 c -0.41115,0 -0.74348,-0.33233 -0.74348,-0.74348 0,-0.41114 0.33233,-0.74348 0.74348,-0.74348 h 3.93003 c 0.41114,0 0.74348,0.33234 0.74348,0.74348 0,0.41115 -0.33234,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path24" />
+          <path
+             d="m 74.290453,127.86921 h -3.93003 c -0.41115,0 -0.74348,-0.33308 -0.74348,-0.74348 0,-0.4104 0.33233,-0.74348 0.74348,-0.74348 h 3.93003 c 0.41114,0 0.74348,0.33308 0.74348,0.74348 0,0.4104 -0.33234,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path26" />
+          <path
+             d="m 55.212773,133.22895 h -3.93077 c -0.4104,0 -0.74348,-0.33233 -0.74348,-0.74348 0,-0.41114 0.33308,-0.74348 0.74348,-0.74348 h 3.93077 c 0.4104,0 0.74348,0.33234 0.74348,0.74348 0,0.41115 -0.33308,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path28" />
+        </g>
+      </g>
+      <g
+         id="g16185"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96"
+         transform="translate(-16.776587,-8.8694763)">
+        <path
+           style="fill:#006699;fill-opacity:0.2;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 157.92908,130.27545 1.21592,-1.40298 h 12.72036 l 1.21592,1.18474 -0.0623,12.84507 -1.18474,1.15357 -12.59566,-0.0312 -1.3718,-1.06003 z"
+           id="path9947-6-7" />
+        <g
+           id="g4641-6"
+           transform="translate(102.70119,6.7026631)">
+          <path
+             d="m 68.576813,138.12328 h -11.58118 c -1.39328,0 -2.52634,-1.13381 -2.52634,-2.52709 v -11.58118 c 0,-1.39328 1.13381,-2.52634 2.52634,-2.52634 h 11.58118 c 1.39328,0 2.52708,1.13381 2.52708,2.52634 v 11.58118 c 0,1.39328 -1.1338,2.52709 -2.52708,2.52709 z m -11.58118,-15.14839 c -0.57322,0 -1.04012,0.46616 -1.04012,1.04012 v 11.58118 c 0,0.57322 0.46616,1.04013 1.04012,1.04013 h 11.58118 c 0.57322,0 1.04013,-0.46691 1.04013,-1.04013 v -11.58118 c 0,-0.57322 -0.46691,-1.04012 -1.04013,-1.04012 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path12-3" />
+          <path
+             d="m 60.106353,122.97489 c -0.4104,0 -0.74348,-0.33308 -0.74348,-0.74348 v -3.93078 c 0,-0.4104 0.33308,-0.74348 0.74348,-0.74348 0.4104,0 0.74348,0.33308 0.74348,0.74348 v 3.93078 c 0,0.41114 -0.33308,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path14-5" />
+          <path
+             d="m 65.466093,122.97489 c -0.41114,0 -0.74348,-0.33308 -0.74348,-0.74348 v -3.93078 c 0,-0.4104 0.33234,-0.74348 0.74348,-0.74348 0.41115,0 0.74348,0.33308 0.74348,0.74348 v 3.93078 c 0,0.41114 -0.33233,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path16-5" />
+          <path
+             d="m 60.106353,142.05331 c -0.4104,0 -0.74348,-0.33234 -0.74348,-0.74348 v -3.93003 c 0,-0.41115 0.33308,-0.74348 0.74348,-0.74348 0.4104,0 0.74348,0.33233 0.74348,0.74348 v 3.93003 c 0,0.4104 -0.33308,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path18-3" />
+          <path
+             d="m 65.466093,142.05331 c -0.41114,0 -0.74348,-0.33234 -0.74348,-0.74348 v -3.93003 c 0,-0.41115 0.33234,-0.74348 0.74348,-0.74348 0.41115,0 0.74348,0.33233 0.74348,0.74348 v 3.93003 c 0,0.4104 -0.33233,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path20-1" />
+          <path
+             d="m 55.212773,127.86921 h -3.93077 c -0.4104,0 -0.74348,-0.33308 -0.74348,-0.74348 0,-0.4104 0.33308,-0.74348 0.74348,-0.74348 h 3.93077 c 0.4104,0 0.74348,0.33308 0.74348,0.74348 0,0.4104 -0.33308,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path22-6" />
+          <path
+             d="m 74.290453,133.22895 h -3.93003 c -0.41115,0 -0.74348,-0.33233 -0.74348,-0.74348 0,-0.41114 0.33233,-0.74348 0.74348,-0.74348 h 3.93003 c 0.41114,0 0.74348,0.33234 0.74348,0.74348 0,0.41115 -0.33234,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path24-4" />
+          <path
+             d="m 74.290453,127.86921 h -3.93003 c -0.41115,0 -0.74348,-0.33308 -0.74348,-0.74348 0,-0.4104 0.33233,-0.74348 0.74348,-0.74348 h 3.93003 c 0.41114,0 0.74348,0.33308 0.74348,0.74348 0,0.4104 -0.33234,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path26-5" />
+          <path
+             d="m 55.212773,133.22895 h -3.93077 c -0.4104,0 -0.74348,-0.33233 -0.74348,-0.74348 0,-0.41114 0.33308,-0.74348 0.74348,-0.74348 h 3.93077 c 0.4104,0 0.74348,0.33234 0.74348,0.74348 0,0.41115 -0.33308,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path28-7" />
+        </g>
+      </g>
+      <g
+         id="g16198"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96"
+         transform="translate(-16.776587,-8.8694763)">
+        <path
+           style="fill:#006699;fill-opacity:0.2;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 201.29065,130.27545 1.21592,-1.40298 h 12.72036 l 1.21592,1.18474 -0.0623,12.84507 -1.18474,1.15357 -12.59566,-0.0312 -1.3718,-1.06003 z"
+           id="path9947-6-7-9" />
+        <g
+           id="g4641-6-9"
+           transform="translate(146.09313,6.7026631)">
+          <path
+             d="m 68.576813,138.12328 h -11.58118 c -1.39328,0 -2.52634,-1.13381 -2.52634,-2.52709 v -11.58118 c 0,-1.39328 1.13381,-2.52634 2.52634,-2.52634 h 11.58118 c 1.39328,0 2.52708,1.13381 2.52708,2.52634 v 11.58118 c 0,1.39328 -1.1338,2.52709 -2.52708,2.52709 z m -11.58118,-15.14839 c -0.57322,0 -1.04012,0.46616 -1.04012,1.04012 v 11.58118 c 0,0.57322 0.46616,1.04013 1.04012,1.04013 h 11.58118 c 0.57322,0 1.04013,-0.46691 1.04013,-1.04013 v -11.58118 c 0,-0.57322 -0.46691,-1.04012 -1.04013,-1.04012 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path12-3-0" />
+          <path
+             d="m 60.106353,122.97489 c -0.4104,0 -0.74348,-0.33308 -0.74348,-0.74348 v -3.93078 c 0,-0.4104 0.33308,-0.74348 0.74348,-0.74348 0.4104,0 0.74348,0.33308 0.74348,0.74348 v 3.93078 c 0,0.41114 -0.33308,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path14-5-3" />
+          <path
+             d="m 65.466093,122.97489 c -0.41114,0 -0.74348,-0.33308 -0.74348,-0.74348 v -3.93078 c 0,-0.4104 0.33234,-0.74348 0.74348,-0.74348 0.41115,0 0.74348,0.33308 0.74348,0.74348 v 3.93078 c 0,0.41114 -0.33233,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path16-5-2" />
+          <path
+             d="m 60.106353,142.05331 c -0.4104,0 -0.74348,-0.33234 -0.74348,-0.74348 v -3.93003 c 0,-0.41115 0.33308,-0.74348 0.74348,-0.74348 0.4104,0 0.74348,0.33233 0.74348,0.74348 v 3.93003 c 0,0.4104 -0.33308,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path18-3-8" />
+          <path
+             d="m 65.466093,142.05331 c -0.41114,0 -0.74348,-0.33234 -0.74348,-0.74348 v -3.93003 c 0,-0.41115 0.33234,-0.74348 0.74348,-0.74348 0.41115,0 0.74348,0.33233 0.74348,0.74348 v 3.93003 c 0,0.4104 -0.33233,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path20-1-8" />
+          <path
+             d="m 55.212773,127.86921 h -3.93077 c -0.4104,0 -0.74348,-0.33308 -0.74348,-0.74348 0,-0.4104 0.33308,-0.74348 0.74348,-0.74348 h 3.93077 c 0.4104,0 0.74348,0.33308 0.74348,0.74348 0,0.4104 -0.33308,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path22-6-4" />
+          <path
+             d="m 74.290453,133.22895 h -3.93003 c -0.41115,0 -0.74348,-0.33233 -0.74348,-0.74348 0,-0.41114 0.33233,-0.74348 0.74348,-0.74348 h 3.93003 c 0.41114,0 0.74348,0.33234 0.74348,0.74348 0,0.41115 -0.33234,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path24-4-8" />
+          <path
+             d="m 74.290453,127.86921 h -3.93003 c -0.41115,0 -0.74348,-0.33308 -0.74348,-0.74348 0,-0.4104 0.33233,-0.74348 0.74348,-0.74348 h 3.93003 c 0.41114,0 0.74348,0.33308 0.74348,0.74348 0,0.4104 -0.33234,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path26-5-6" />
+          <path
+             d="m 55.212773,133.22895 h -3.93077 c -0.4104,0 -0.74348,-0.33233 -0.74348,-0.74348 0,-0.41114 0.33308,-0.74348 0.74348,-0.74348 h 3.93077 c 0.4104,0 0.74348,0.33234 0.74348,0.74348 0,0.41115 -0.33308,0.74348 -0.74348,0.74348 z"
+             style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0.743479;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+             stroke-linecap="round"
+             id="path28-7-2" />
+        </g>
+      </g>
+      <g
+         style="fill:none;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+         transform="matrix(0.58633215,0,0,0.58633215,88.461853,26.265769)"
+         id="g10"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96">
+        <path
+           d="M 82.302,75.38 H 7.698 C 3.454,75.38 0,71.927 0,67.682 v -3.233 c 0,-0.553 0.448,-1 1,-1 h 32.003 c 0.552,0 1,0.447 1,1 v 2.857 h 21.994 v -2.857 c 0,-0.553 0.447,-1 1,-1 H 89 c 0.553,0 1,0.447 1,1 v 3.233 c 0,4.245 -3.453,7.698 -7.698,7.698 z M 2,65.448 v 2.233 c 0,3.142 2.556,5.698 5.698,5.698 H 82.302 C 85.444,73.379 88,70.822 88,67.681 V 65.448 H 57.997 v 2.857 c 0,0.553 -0.447,1 -1,1 H 33.003 c -0.552,0 -1,-0.447 -1,-1 v -2.857 z"
+           style="opacity:1;fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:1.26802;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+           stroke-linecap="round"
+           id="path4" />
+        <path
+           d="m 83.914,65.448 c -0.553,0 -1,-0.447 -1,-1 V 17.907 c 0,-0.71 -0.577,-1.288 -1.287,-1.288 H 8.374 c -0.71,0 -1.288,0.578 -1.288,1.288 v 46.541 c 0,0.553 -0.448,1 -1,1 -0.552,0 -1,-0.447 -1,-1 V 17.907 c 0,-1.813 1.475,-3.288 3.288,-3.288 h 73.253 c 1.813,0 3.287,1.475 3.287,3.288 v 46.541 c 0,0.553 -0.447,1 -1,1 z"
+           style="opacity:1;fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:1.26802;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+           stroke-linecap="round"
+           id="path6" />
+        <path
+           d="m 78.5,60.448 h -67 c -0.552,0 -1,-0.447 -1,-1 v -36.31 c 0,-1.712 1.393,-3.104 3.104,-3.104 h 62.791 c 1.712,0 3.104,1.393 3.104,3.104 v 36.31 c 0.001,0.553 -0.446,1 -0.999,1 z m -66,-2 h 65 v -35.31 c 0,-0.609 -0.495,-1.104 -1.104,-1.104 H 13.604 c -0.609,0 -1.104,0.496 -1.104,1.104 z"
+           style="opacity:1;fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:1.26802;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+           stroke-linecap="round"
+           id="path8" />
+      </g>
+      <rect
+         x="100.63745"
+         y="48.427288"
+         rx="0"
+         ry="0"
+         width="3.6403306"
+         height="3.6403306"
+         style="fill:#ad0000;fill-opacity:0.533333;fill-rule:nonzero;stroke:none;stroke-width:0.743474;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="rect6"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <rect
+         x="105.68607"
+         y="48.427288"
+         rx="0"
+         ry="0"
+         width="3.6403306"
+         height="3.6403306"
+         style="fill:#ad0000;fill-opacity:0.533333;fill-rule:nonzero;stroke:none;stroke-width:0.743474;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+         id="rect8"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <rect
+         x="110.73471"
+         y="48.427288"
+         rx="0"
+         ry="0"
+         width="3.6403306"
+         height="3.6403306"
+         style="fill:#ad0000;fill-opacity:0.533333;fill-rule:nonzero;stroke:none;stroke-width:0.743474;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+         id="rect10"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <rect
+         x="115.78713"
+         y="48.427288"
+         rx="0"
+         ry="0"
+         width="3.6403306"
+         height="3.6403306"
+         style="fill:#ad0000;fill-opacity:0.533333;fill-rule:nonzero;stroke:none;stroke-width:0.743474;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+         id="rect12"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <rect
+         x="120.83578"
+         y="48.427288"
+         rx="0"
+         ry="0"
+         width="3.6403306"
+         height="3.6403306"
+         style="fill:#ad0000;fill-opacity:0.533333;fill-rule:nonzero;stroke:none;stroke-width:0.743474;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+         id="rect14"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <rect
+         style="font-variation-settings:normal;fill:none;fill-opacity:0.4;stroke:#000000;stroke-width:0.79375;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:113.386;stroke-opacity:1;stop-color:#000000"
+         id="rect12240"
+         width="31.33717"
+         height="6.1252403"
+         x="99.027534"
+         y="47.126953"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <path
+         style="fill:none;fill-opacity:1;stroke:#666666;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 192.04939,68.599206 V 110.75062"
+         id="path5286"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <path
+         style="fill:none;stroke:#666666;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 192.04939,89.895372 H 111.5019"
+         id="path6952"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <path
+         style="fill:none;stroke:#666666;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 105.06454,95.296584 V 110.75063"
+         id="path6954"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <path
+         style="fill:none;stroke:#666666;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 148.65453,89.895372 V 110.75062"
+         id="path6956"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <path
+         id="rect14024"
+         style="fill:none;fill-opacity:0.533333;stroke:#666666;stroke-width:4;stroke-dashoffset:113.386;stop-color:#000000"
+         d="m 105.07012,97.267124 v -3.37295 c 0,-2.216 1.784,-3.999989 4,-3.999989 v 0 h 3.42977"
+         inkscape:export-filename="C:\Users\Frank Voorburg\Desktop\canflasherblt_logo.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+    </g>
+    <g
+       id="g2099"
+       transform="translate(2.1166667,-0.39687501)"
+       inkscape:export-filename="C:\Work\software\CanFlasherBLT\docs\images\xcp_gateway.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <path
+         style="fill:#eeeeee;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 88.791898,92.86875 8.03957,-7.775176 v 3.887588 h 24.343942 v -3.887588 l 8.04936,7.775176 -8.04936,7.77517 V 96.756337 H 96.831468 v 3.887583 z"
+         id="path2008" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 88.605842,93.054806 c -0.01958,-0.0098 -0.02938,-0.02938 -0.03917,-0.04896 -0.02938,-0.04896 -0.03917,-0.08813 -0.03917,-0.137094 0,-0.04896 0.0098,-0.08813 0.03917,-0.127302 0.0098,-0.02938 0.01958,-0.04896 0.03917,-0.05875 l 0.186056,0.186056 z"
+         id="path2010" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 88.977953,93.054806 -0.186055,-0.186056 -0.186056,-0.186056 8.03957,-7.775176 0.186056,0.186056 0.186056,0.186056 z"
+         id="path2012" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 96.645412,84.907518 c 0.01959,-0.01958 0.03917,-0.02938 0.05876,-0.03917 0.03917,-0.02938 0.07834,-0.03917 0.127301,-0.03917 0.04896,0 0.08813,0.0098 0.137094,0.03917 0.03917,0.01959 0.06855,0.04896 0.08813,0.08813 0.02938,0.04896 0.03917,0.08813 0.03917,0.137094 v 0 h -0.264396 z"
+         id="path2014" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 96.567073,85.093574 h 0.264395 0.264395 v 3.887588 h -0.264395 -0.264395 z"
+         id="path2016" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 96.831468,89.245557 c -0.04896,0 -0.08813,-0.0098 -0.127301,-0.03917 -0.04896,-0.01958 -0.07834,-0.04896 -0.09792,-0.08813 -0.02938,-0.04896 -0.03917,-0.08813 -0.03917,-0.137094 h 0.264395 z"
+         id="path2018" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 96.831468,89.245557 v -0.264395 -0.264395 h 24.343942 v 0.264395 0.264395 z"
+         id="path2020" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 121.4398,88.981162 c 0,0.04896 -0.01,0.08813 -0.0392,0.137094 -0.0196,0.03917 -0.049,0.06855 -0.0881,0.08813 -0.049,0.02938 -0.0881,0.03917 -0.13709,0.03917 V 88.98116 Z"
+         id="path2022" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 121.4398,88.981162 h -0.26439 -0.2644 v -3.887588 h 0.2644 0.26439 z"
+         id="path2024" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 120.91101,85.093574 c 0,-0.04896 0.01,-0.08813 0.0392,-0.127301 0.0196,-0.04896 0.049,-0.07834 0.0979,-0.09792 0.0392,-0.02938 0.0783,-0.03917 0.12731,-0.03917 0.049,0 0.0881,0.0098 0.13709,0.03917 0.01,0.0098 0.0294,0.01959 0.049,0.03917 l -0.18606,0.186056 z"
+         id="path2026" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 120.98935,85.27963 0.18606,-0.186056 0.18605,-0.186056 8.04936,7.775176 -0.18605,0.186056 -0.18606,0.186056 z"
+         id="path2028" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 129.41082,92.682694 c 0.0196,0.0098 0.0294,0.02938 0.0392,0.05875 0.0294,0.03917 0.0392,0.07834 0.0392,0.127301 0,0.04896 -0.01,0.08813 -0.0392,0.137094 -0.01,0.01958 -0.0196,0.03917 -0.0392,0.04896 l -0.18605,-0.186056 z"
+         id="path2030" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 129.03871,92.682694 0.18606,0.186056 0.18605,0.186056 -8.04936,7.775174 -0.18605,-0.18606 -0.18606,-0.18605 z"
+         id="path2032" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 121.36146,100.82998 c -0.0196,0.0196 -0.0392,0.0294 -0.049,0.0392 -0.049,0.0294 -0.0881,0.0392 -0.13709,0.0392 -0.049,0 -0.0881,-0.01 -0.1273,-0.0392 -0.049,-0.0196 -0.0783,-0.049 -0.0979,-0.0881 -0.0294,-0.049 -0.0392,-0.0881 -0.0392,-0.13709 h 0.26439 z"
+         id="path2034" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 121.4398,100.64392 h -0.26439 -0.2644 v -3.887583 h 0.2644 0.26439 z"
+         id="path2036" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 121.17541,96.491942 c 0.049,0 0.0881,0.0098 0.13709,0.03917 0.0392,0.01958 0.0686,0.04896 0.0881,0.09792 0.0294,0.03917 0.0392,0.07834 0.0392,0.127301 v 0 h -0.2644 z"
+         id="path2038" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 121.17541,96.491942 v 0.264395 0.264395 H 96.831468 v -0.264395 -0.264395 z"
+         id="path2040" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 96.567073,96.756337 c 0,-0.04896 0.0098,-0.08813 0.03917,-0.127301 0.01958,-0.04896 0.04896,-0.07834 0.09792,-0.09792 0.03917,-0.02938 0.07834,-0.03917 0.127301,-0.03917 v 0.264395 z"
+         id="path2042" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 96.567073,96.756337 h 0.264395 0.264395 v 3.887583 h -0.264395 -0.264395 z"
+         id="path2044" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 97.095863,100.64392 c 0,0.049 -0.0098,0.0881 -0.03917,0.1371 -0.01958,0.0392 -0.04896,0.0686 -0.08813,0.0881 -0.04896,0.0294 -0.08813,0.0392 -0.137093,0.0392 -0.04896,0 -0.08813,-0.01 -0.127302,-0.0392 -0.01958,-0.01 -0.03917,-0.0196 -0.05875,-0.0392 l 0.186056,-0.18606 z"
+         id="path2046" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 97.017524,100.45787 -0.186056,0.18605 -0.186056,0.18606 -8.03957,-7.775174 0.186056,-0.186056 0.186055,-0.186056 z"
+         id="path2048" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:4.23333px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial Bold';stroke-width:0.264583"
+       x="98.821877"
+       y="94.05938"
+       id="text3775"
+       inkscape:export-filename="C:\Work\software\CanFlasherBLT\docs\images\xcp_gateway.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan3773"
+         style="font-size:4.23333px;fill:#666666;fill-opacity:1;stroke-width:0.264583"
+         x="98.821877"
+         y="94.05938">XCP on USB</tspan></text>
+    <g
+       id="g2099-6"
+       transform="translate(77.919834,-0.39687501)"
+       inkscape:export-filename="C:\Work\software\CanFlasherBLT\docs\images\xcp_gateway.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <path
+         style="fill:#eeeeee;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 88.791898,92.86875 8.03957,-7.775176 v 3.887588 h 24.343942 v -3.887588 l 8.04936,7.775176 -8.04936,7.77517 V 96.756337 H 96.831468 v 3.887583 z"
+         id="path2008-6" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 88.605842,93.054806 c -0.01958,-0.0098 -0.02938,-0.02938 -0.03917,-0.04896 -0.02938,-0.04896 -0.03917,-0.08813 -0.03917,-0.137094 0,-0.04896 0.0098,-0.08813 0.03917,-0.127302 0.0098,-0.02938 0.01958,-0.04896 0.03917,-0.05875 l 0.186056,0.186056 z"
+         id="path2010-1" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 88.977953,93.054806 -0.186055,-0.186056 -0.186056,-0.186056 8.03957,-7.775176 0.186056,0.186056 0.186056,0.186056 z"
+         id="path2012-2" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 96.645412,84.907518 c 0.01959,-0.01958 0.03917,-0.02938 0.05876,-0.03917 0.03917,-0.02938 0.07834,-0.03917 0.127301,-0.03917 0.04896,0 0.08813,0.0098 0.137094,0.03917 0.03917,0.01959 0.06855,0.04896 0.08813,0.08813 0.02938,0.04896 0.03917,0.08813 0.03917,0.137094 v 0 h -0.264396 z"
+         id="path2014-4" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 96.567073,85.093574 h 0.264395 0.264395 v 3.887588 h -0.264395 -0.264395 z"
+         id="path2016-7" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 96.831468,89.245557 c -0.04896,0 -0.08813,-0.0098 -0.127301,-0.03917 -0.04896,-0.01958 -0.07834,-0.04896 -0.09792,-0.08813 -0.02938,-0.04896 -0.03917,-0.08813 -0.03917,-0.137094 h 0.264395 z"
+         id="path2018-6" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 96.831468,89.245557 v -0.264395 -0.264395 h 24.343942 v 0.264395 0.264395 z"
+         id="path2020-9" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 121.4398,88.981162 c 0,0.04896 -0.01,0.08813 -0.0392,0.137094 -0.0196,0.03917 -0.049,0.06855 -0.0881,0.08813 -0.049,0.02938 -0.0881,0.03917 -0.13709,0.03917 V 88.98116 Z"
+         id="path2022-7" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 121.4398,88.981162 h -0.26439 -0.2644 v -3.887588 h 0.2644 0.26439 z"
+         id="path2024-3" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 120.91101,85.093574 c 0,-0.04896 0.01,-0.08813 0.0392,-0.127301 0.0196,-0.04896 0.049,-0.07834 0.0979,-0.09792 0.0392,-0.02938 0.0783,-0.03917 0.12731,-0.03917 0.049,0 0.0881,0.0098 0.13709,0.03917 0.01,0.0098 0.0294,0.01959 0.049,0.03917 l -0.18606,0.186056 z"
+         id="path2026-3" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 120.98935,85.27963 0.18606,-0.186056 0.18605,-0.186056 8.04936,7.775176 -0.18605,0.186056 -0.18606,0.186056 z"
+         id="path2028-7" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 129.41082,92.682694 c 0.0196,0.0098 0.0294,0.02938 0.0392,0.05875 0.0294,0.03917 0.0392,0.07834 0.0392,0.127301 0,0.04896 -0.01,0.08813 -0.0392,0.137094 -0.01,0.01958 -0.0196,0.03917 -0.0392,0.04896 l -0.18605,-0.186056 z"
+         id="path2030-0" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 129.03871,92.682694 0.18606,0.186056 0.18605,0.186056 -8.04936,7.775174 -0.18605,-0.18606 -0.18606,-0.18605 z"
+         id="path2032-4" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 121.36146,100.82998 c -0.0196,0.0196 -0.0392,0.0294 -0.049,0.0392 -0.049,0.0294 -0.0881,0.0392 -0.13709,0.0392 -0.049,0 -0.0881,-0.01 -0.1273,-0.0392 -0.049,-0.0196 -0.0783,-0.049 -0.0979,-0.0881 -0.0294,-0.049 -0.0392,-0.0881 -0.0392,-0.13709 h 0.26439 z"
+         id="path2034-6" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 121.4398,100.64392 h -0.26439 -0.2644 v -3.887583 h 0.2644 0.26439 z"
+         id="path2036-9" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 121.17541,96.491942 c 0.049,0 0.0881,0.0098 0.13709,0.03917 0.0392,0.01958 0.0686,0.04896 0.0881,0.09792 0.0294,0.03917 0.0392,0.07834 0.0392,0.127301 v 0 h -0.2644 z"
+         id="path2038-5" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 121.17541,96.491942 v 0.264395 0.264395 H 96.831468 v -0.264395 -0.264395 z"
+         id="path2040-9" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 96.567073,96.756337 c 0,-0.04896 0.0098,-0.08813 0.03917,-0.127301 0.01958,-0.04896 0.04896,-0.07834 0.09792,-0.09792 0.03917,-0.02938 0.07834,-0.03917 0.127301,-0.03917 v 0.264395 z"
+         id="path2042-4" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 96.567073,96.756337 h 0.264395 0.264395 v 3.887583 h -0.264395 -0.264395 z"
+         id="path2044-4" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 97.095863,100.64392 c 0,0.049 -0.0098,0.0881 -0.03917,0.1371 -0.01958,0.0392 -0.04896,0.0686 -0.08813,0.0881 -0.04896,0.0294 -0.08813,0.0392 -0.137093,0.0392 -0.04896,0 -0.08813,-0.01 -0.127302,-0.0392 -0.01958,-0.01 -0.03917,-0.0196 -0.05875,-0.0392 l 0.186056,-0.18606 z"
+         id="path2046-8" />
+      <path
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+         d="m 97.017524,100.45787 -0.186056,0.18605 -0.186056,0.18606 -8.03957,-7.775174 0.186056,-0.186056 0.186055,-0.186056 z"
+         id="path2048-3" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:4.23333px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial Bold';stroke-width:0.264583"
+       x="174.62436"
+       y="94.05938"
+       id="text3775-2"
+       inkscape:export-filename="C:\Work\software\CanFlasherBLT\docs\images\xcp_gateway.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan3773-5"
+         style="font-size:4.23333px;fill:#666666;fill-opacity:1;stroke-width:0.264583"
+         x="174.62436"
+         y="94.05938">XCP on CAN</tspan></text>
+  </g>
+</svg>
