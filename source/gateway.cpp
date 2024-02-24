@@ -181,7 +181,7 @@ void Gateway::onUsbDataReceived(uint8_t const t_Data[], uint32_t t_Len)
           // Is this our own node ID?
           if (targetNodeId == m_OwnNodeId)
           {
-            // Host is attempting to connect directly to use. Activate our own
+            // Host is attempting to connect directly to us. Activate our own
             // bootloader. Note that this function does not return.
             m_Boot.activateLoader();
           }
