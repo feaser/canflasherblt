@@ -1,0 +1,91 @@
+{
+  "name": "CanFlasherBLT",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  // Run in privileged mode, needed for access to USB devices.
+  "privileged": true,
+  // Configure tool-specific properties.
+  "customizations": {
+    // Configure properties specific to VS Code.
+    "vscode": {
+      // Add the IDs of extensions you want installed when the container is created.
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.cpptools-themes",
+        "marus25.cortex-debug",
+        "ms-vscode.cmake-tools",
+        "twxs.cmake",
+        "jgclark.vscode-todo-highlight"
+      ],
+      // Add preferred user settings.
+      "settings": {
+        "cmake.preferredGenerators": ["Unix Makefiles"], 
+        "cmake.buildBeforeRun": true,
+        "cmake.options.statusBarVisibility": "visible",
+        "cmake.options.advanced": {
+          "build": {
+            "statusBarVisibility": "visible"
+          },
+          "launch": {
+            "statusBarVisibility": "hidden"
+          },
+          "debug": {
+            "statusBarVisibility": "hidden"
+          }
+        },        
+        "editor.fontSize": 12,
+        "editor.rulers": [89],
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.fontFamily": "'Hack', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+        "editor.minimap.enabled": false,
+        "editor.guides.indentation": false,
+        "editor.formatOnType": true,
+        "C_Cpp.inlayHints.referenceOperator.showSpace": true,
+        "C_Cpp.autoAddFileAssociations": false,
+        "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+        "C_Cpp.commentContinuationPatterns": [
+          "/*",
+          "/**"
+        ],
+        "todohighlight.include": [
+          "**/*.c",
+          "**/*.h",
+          "**/*.cpp",
+          "**/*.hpp"
+        ],
+        "todohighlight.exclude": [
+          "**/dist/**",
+          "**/build/**",
+          "**/.vscode/**",
+          "**/.github/**",
+          "**/*.min.*",
+          "**/*.map"
+        ],
+        "todohighlight.keywords": [
+          "TODO",
+          "FIXME"
+        ]
+      }
+    }
+  },
+
+  // Bind /dev/bus/usb for access to USB devices such as an ST-Link. You can test if it
+  // works by running something like openocd -f board/st_nucleo_f0.cfg from the 
+  // container's terminal. Note that this only works if you also set "privileged" to
+  // true. It also assumes that you already setup the udev rules on the host OS such that
+  // you have permissions to access the USB device(s) you intend to access from the
+  // container. If not, then you can try connecting using "remoteUser": "root".
+  "mounts": ["type=bind,source=/dev/bus/usb,target=/dev/bus/usb"]
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [3333, 4444, 6666, 50000,  50001, 50002],
+
+  // Use 'postCreateCommand' to run commands after the container is created.
+  // "postCreateCommand": "arm-none-eabi-gcc -v",
+
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "root"
+}

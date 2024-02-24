@@ -1,12 +1,4 @@
 {
-  "cmake.statusbar.advanced": {
-    "debug" : {
-      "visibility": "hidden"
-              },    
-    "launch" : {
-      "visibility": "hidden"
-               },
-  },
   "cmake.buildBeforeRun": true,
   "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
 }
