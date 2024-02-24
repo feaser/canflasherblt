@@ -30,7 +30,7 @@ To build the CanFlasherBLT image from its source code, run these commands:
 
 ```
 cd build
-cmake ..
+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ..
 make
 ```
 
