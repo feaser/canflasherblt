@@ -5,4 +5,4 @@ theme: readthedocs
 nav:
   - Home: 'index.md'
   - Getting started: 'gettingstarted.md'
-  - Building: 'building.md'
+  - Building the image: 'building.md'

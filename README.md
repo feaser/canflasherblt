@@ -1,7 +1,15 @@
 # CanFlasherBLT
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Firmware for a generic USB-to-CAN interface for performing firmware updates on CAN nodes, running the OpenBLT bootloader.
+CanFlasherBLT is a ready-made firmware for a low-cost [Olimexino STM32F3](https://www.olimex.com/Products/Duino/STM32/OLIMEXINO-STM32F3/) board. Once flashed onto the board, you can use this board instead of a conventional (and more expensive) USB-CAN PC adapter, for performing firmware updates on CAN nodes, running the OpenBLT bootloader.
+
+![](docs/images/canflasherblt_logo_sm.png)
+
+## Getting started
+
+To get started with CanFlasherBLT refer to the getting started section of the online user manual:
+
+* https://feaser.github.io/canflasherblt
 
 ## Development
 

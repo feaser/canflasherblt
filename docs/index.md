@@ -4,7 +4,7 @@ Using the OpenBLT bootloader for updating the firmware on your microcontroller v
 
 ![](images/system_setup.png)
 
-CanFlasherBLT consist of ready-made firmware for the low-cost ($15-$20) [Olimexino-STM32F3](https://www.olimex.com/Products/Duino/STM32/OLIMEXINO-STM32F3/) board. You simply connect one side of the Olimexino-STM32F3 board to your PC with a USB cable, and the other side to your CAN bus. You can then use it with the usual OpenBLT PC tools such as [MicroBoot](https://www.feaser.com/openblt/doku.php?id=manual:microboot) and [BootCommander](https://www.feaser.com/openblt/doku.php?id=manual:bootcommander) to perform a firmware update, assuming that your microcontroller runs the OpenBLT bootloader on your microcontroller,
+CanFlasherBLT consist of ready-made firmware for the low-cost ($15-$20) [Olimexino STM32F3](https://www.olimex.com/Products/Duino/STM32/OLIMEXINO-STM32F3/) board. You simply connect one side of the Olimexino STM32F3 board to your PC with a USB cable, and the other side to your CAN bus. You can then use it with the usual OpenBLT PC tools such as [MicroBoot](https://www.feaser.com/openblt/doku.php?id=manual:microboot) and [BootCommander](https://www.feaser.com/openblt/doku.php?id=manual:bootcommander) to perform a firmware update, assuming that your microcontroller runs the OpenBLT bootloader on your microcontroller,
 
 ## How it works
 
