@@ -1,10 +1,10 @@
 # Introduction to CanFlasherBLT
 
-Using the OpenBLT bootloader for updating the firmware on your microcontroller via a Controller Area Network (CAN) bus? Wouldn't it be great if you and your customers could use a dedicated low-cost USB-CAN PC adapter, instead of a conventional (read: much more expensive) USB-CAN PC adapter? Then look no further: CanFlasherBLT is here.
+Using the OpenBLT bootloader for updating the firmware on your microcontroller via a CAN bus? Wouldn't it be great if you and your customers could use a dedicated low-cost USB-CAN PC adapter, instead of a conventional (read: much more expensive) USB-CAN PC adapter? Then look no further: CanFlasherBLT is here.
 
 ![](images/system_setup.png)
 
-CanFlasherBLT consist of ready-made firmware for the low-cost ($15-$20) [Olimexino-STM32F3](https://www.olimex.com/Products/Duino/STM32/OLIMEXINO-STM32F3/) board. You simply connect one side of the Olimexino-STM32F3 board to your PC with a USB cable, and the other side to your CAN bus. You can then use the usual OpenBLT PC tools such as [MicroBoot](https://www.feaser.com/openblt/doku.php?id=manual:microboot) and [BootCommander](https://www.feaser.com/openblt/doku.php?id=manual:bootcommander) to perform a firmware update, assuming that your microcontroller runs the OpenBLT bootloader on your microcontroller,
+CanFlasherBLT consist of ready-made firmware for the low-cost ($15-$20) [Olimexino-STM32F3](https://www.olimex.com/Products/Duino/STM32/OLIMEXINO-STM32F3/) board. You simply connect one side of the Olimexino-STM32F3 board to your PC with a USB cable, and the other side to your CAN bus. You can then use it with the usual OpenBLT PC tools such as [MicroBoot](https://www.feaser.com/openblt/doku.php?id=manual:microboot) and [BootCommander](https://www.feaser.com/openblt/doku.php?id=manual:bootcommander) to perform a firmware update, assuming that your microcontroller runs the OpenBLT bootloader on your microcontroller,
 
 ## How it works
 
@@ -22,8 +22,8 @@ In contrast to a conventional USB-CAN PC adapter, CanFlasherBLT supports automat
 
 By design, CanFlasherBLT has two known limitations:
 
-1. Is it not a fully functional USB-CAN PC adapter. It's merely a USB-CAN XCP gateway used for the sole purpose for performing firmware updates on CAN-nodes running the OpenBLT bootloader.
-2. As shown in the previous illustration, you can no longer configure the CAN baudrate and CAN identifiers in MicroBoot, once you select `XCP on USB`. The configuration values are not hardcoded into the CanFlasherBLT firmware. You can of course change them, but it involves rebuilding and reflashing the CanFlasherBLT firmware.
+1. Is it not a fully functional USB-CAN PC adapter. It's merely a USB-CAN XCP gateway used for the sole purpose for performing firmware updates on CAN nodes running the OpenBLT bootloader.
+2. As shown in the previous illustration, you can no longer configure the CAN baudrate and CAN identifiers in MicroBoot, once you select `XCP on USB`. The configuration values are now hardcoded into the CanFlasherBLT firmware. You can of course change them, but it involves [rebuilding](building.md) and [reflashing](gettingstarted.md) the CanFlasherBLT firmware.
 
 ## Try it out
 

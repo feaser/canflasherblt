@@ -6,7 +6,7 @@ This section focuses on getting your Olimexino STM32F3 board prepared, such that
 * A [USB cable](https://www.olimex.com/Products/Components/Cables/USB-CABLE-A-MICRO-1.8M/) for connecting the board to your PC.
 * The [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html) tool installed on your PC.
 
-Regarding the board, make sure you order the Olimexino STM32F3 type. Not the Olimexino GD32F3 and also not the older Olimexino STM32. It needs to be one with the STM32F303RCT6 microcontroller.
+Regarding the board, make sure you order the Olimexino STM32F3 type. Not the Olimexino GD32F3 and also not the older Olimexino STM32. It needs to be the one with the STM32F303RCT6 microcontroller.
 
 ## Download the prebuilt firmware image
 
@@ -23,7 +23,7 @@ Perform the following steps to flash the previously downloaded prebuilt firmware
 
 ![](images/board_buttons.png)
 
-* Start the STM32CubeProgrammer tool on your PC. Select USB mode from the dropdown list, followed by clicking the "Connect"-button:
+* Start the STM32CubeProgrammer tool on your PC. Select USB mode from the dropdown list (1), followed by clicking the "Connect"-button (2):
 
 ![](images/cubeprog_usb_connect.png)
 
@@ -31,7 +31,7 @@ Perform the following steps to flash the previously downloaded prebuilt firmware
 
 ![](images/cubeprog_program_srec.png)
 
-* To complete the firmware programming, close the STM32CubeProgrammer tool and briefly press the "Reset"-button on the board on more time. 
+* To complete the firmware programming, close the STM32CubeProgrammer tool and briefly press the "Reset"-button on the board one more time. 
 
 ## Check in the device manager
 
@@ -51,9 +51,9 @@ The same method works for the command-line BootCommander tool. In this case you 
 
 ## Start the firmware update
 
-To try out a firmware update using the CanFlasherBLT board, connect it to the CAN bus. This assumes the presence of another CAN node that runs the OpenBLT bootloader and on which you would like to perform a firmware update.
+To try out a firmware update using the CanFlasherBLT device, connect it to the CAN bus. This assumes the presence of another CAN node that runs the OpenBLT bootloader and on which you would like to perform a firmware update.
 
-The Olimexino STM32F3 board features an on-board CAN transceiver. This means all you have to do is connect the CAN-HI and CAN-LO connector pins on the board to your CAN bus:
+The Olimexino STM32F3 board features an on-board CAN transceiver. All you have to do is connect the CAN-HI and CAN-LO connector pins on the board to your CAN bus:
 
 ![](images/board_can_pins.png)
 
@@ -69,7 +69,7 @@ As mentioned in the [introduction](index.md), one shortcoming of the CanFlasherB
 * CAN transmit identifier: 667h (11-bit)
 * CAN receive identifier: 7E1h (11-bit)
 
-You can still change these CAN communication settings. The only downside is that you need to change this inside the CanFlasherBLT source code. Afterwards, you need to rebuild the CanFlasherBLT image from source code and flash it again on the Olimexino STM32F3 board. Refer to this [Building](building.md) section for detailed instructions on how to rebuilt the CanFlasherBLT image from source code. 
+You can still change these CAN communication settings. The only downside is that you need to change this inside the CanFlasherBLT source code. Afterwards, you need to rebuild the CanFlasherBLT image from source code and flash it again on the Olimexino STM32F3 board. Refer to the [Building](building.md) section for detailed instructions on how to rebuilt the CanFlasherBLT image from source code. 
 
 One way of changing the CAN communication settings is by editing the `source\gateway.hpp` file and changing the values in one of the `Gateway` class constructors:
 
