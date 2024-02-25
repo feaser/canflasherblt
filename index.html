@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="User Manual for CanFlasherBLT" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>CanFlasherBLT User Manual</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Home";
+        var mkdocs_page_input_path = "index.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> CanFlasherBLT User Manual
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href=".">Home</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#how-it-works">How it works</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#known-limitations">Known limitations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#try-it-out">Try it out</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="gettingstarted/">Getting started</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="building/">Building the image</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">CanFlasherBLT User Manual</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Home</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/feaser/canflasherblt/edit/master/docs/index.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="introduction-to-canflasherblt">Introduction to CanFlasherBLT</h1>
+<p>Using the OpenBLT bootloader for updating the firmware on your microcontroller via a CAN bus? Wouldn't it be great if you and your customers could use a dedicated low-cost USB-CAN PC adapter, instead of a conventional (read: much more expensive) USB-CAN PC adapter? Then look no further: CanFlasherBLT is here.</p>
+<p><img alt="" src="images/system_setup.png" /></p>
+<p>CanFlasherBLT consist of ready-made firmware for the low-cost ($15-$20) <a href="https://www.olimex.com/Products/Duino/STM32/OLIMEXINO-STM32F3/">Olimexino STM32F3</a> board. You simply connect one side of the Olimexino STM32F3 board to your PC with a USB cable, and the other side to your CAN bus. You can then use it with the usual OpenBLT PC tools such as <a href="https://www.feaser.com/openblt/doku.php?id=manual:microboot">MicroBoot</a> and <a href="https://www.feaser.com/openblt/doku.php?id=manual:bootcommander">BootCommander</a> to perform a firmware update, assuming that your microcontroller runs the OpenBLT bootloader on your microcontroller,</p>
+<h2 id="how-it-works">How it works</h2>
+<p>The OpenBLT bootloader communicates using the <a href="https://www.feaser.com/openblt/doku.php?id=manual:design#communication_sequence">XCP protocol</a> during a firmware update. An ideal communication protocol not only for data acquisition and calibration, but also for bootloader purposes. Under the hood, CanFlasherBLT essentially implements a USB to CAN gateway for the XCP protocol:</p>
+<p><img alt="" src="images/xcp_gateway.png" /></p>
+<p>From an end-user perspective, you simply reconfigure the OpenBLT PC tools for firmware updates via USB, instead of CAN. This means that during the firmware update, the PC thinks it's talking via USB with OpenBLT on the microcontroller. CanFlasherBLT translates all USB XCP packets to CAN XCP packets unidirectionally. </p>
+<p><img alt="" src="images/microboot_settings.png" /></p>
+<p>In contrast to a conventional USB-CAN PC adapter, CanFlasherBLT supports automatic USB driver installation on Windows 10 and higher. Making it even more user-friendly for the end-user. Note that CanFlasherBLT works on <a href="https://www.feaser.com/openblt/doku.php?id=manual:demos:usb_driver_install#usb_driver_installation_on_linux">Linux </a> as well.</p>
+<h2 id="known-limitations">Known limitations</h2>
+<p>By design, CanFlasherBLT has two known limitations:</p>
+<ol>
+<li>Is it not a fully functional USB-CAN PC adapter. It's merely a USB-CAN XCP gateway used for the sole purpose for performing firmware updates on CAN nodes running the OpenBLT bootloader.</li>
+<li>As shown in the previous illustration, you can no longer configure the CAN baudrate and CAN identifiers in MicroBoot, once you select <code>XCP on USB</code>. The configuration values are now hardcoded into the CanFlasherBLT firmware. You can of course change them, but it involves <a href="building/">rebuilding</a> and <a href="gettingstarted/">reflashing</a> the CanFlasherBLT firmware.</li>
+</ol>
+<h2 id="try-it-out">Try it out</h2>
+<p>If you'd like to take CanFlasherBLT for a spin, continue reading in the <a href="gettingstarted/">getting started</a> section. </p>
+<p>Curious about the CanFlasherBLT source code? You can find it in the project's <a href="https://github.com/feaser/canflasherblt">GitHub repository</a>. It's MIT licensed, meaning that you can pretty much do whatever you want with it. As long as you leave the copyright and permission notice in tact. The source code contains a clear abstraction layer for all the board specifics. This makes it fairly straightforward to port it to different hardware.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="gettingstarted/" class="btn btn-neutral float-right" title="Getting started">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/feaser/canflasherblt" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+      <span><a href="gettingstarted/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.5.3
+Build Date UTC : 2024-02-25 14:11:47.809515+00:00
+-->

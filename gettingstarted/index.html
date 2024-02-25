@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Getting started - CanFlasherBLT User Manual</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Getting started";
+        var mkdocs_page_input_path = "gettingstarted.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> CanFlasherBLT User Manual
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Getting started</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#download-the-prebuilt-firmware-image">Download the prebuilt firmware image</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#flash-the-firmware-image">Flash the firmware image</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#check-in-the-device-manager">Check in the device manager</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#reconfigure-microboot-or-bootcommander">Reconfigure MicroBoot or BootCommander</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#start-the-firmware-update">Start the firmware update</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#changing-can-communication-settings">Changing CAN communication settings</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../building/">Building the image</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">CanFlasherBLT User Manual</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Getting started</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/feaser/canflasherblt/edit/master/docs/gettingstarted.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="getting-started">Getting started</h1>
+<p>This section focuses on getting your Olimexino STM32F3 board prepared, such that it serves its purpose as a CanFlasherBLT device. You'll need the following items:</p>
+<ul>
+<li>An Olimex <a href="https://www.olimex.com/Products/Duino/STM32/OLIMEXINO-STM32F3/">Olimexino STM3F3</a> board. </li>
+<li>A <a href="https://www.olimex.com/Products/Components/Cables/USB-CABLE-A-MICRO-1.8M/">USB cable</a> for connecting the board to your PC.</li>
+<li>The <a href="https://www.st.com/en/development-tools/stm32cubeprog.html">STM32CubeProgrammer</a> tool installed on your PC.</li>
+</ul>
+<p>Regarding the board, make sure you order the Olimexino STM32F3 type. Not the Olimexino GD32F3 and also not the older Olimexino STM32. It needs to be the one with the STM32F303RCT6 microcontroller.</p>
+<h2 id="download-the-prebuilt-firmware-image">Download the prebuilt firmware image</h2>
+<p>As a first step, head over to the <a href="https://github.com/feaser/canflasherblt/releases">Releases section</a> of the project's GitHub repository and download the prebuilt binary of the latest release. It's this file:</p>
+<ul>
+<li><code>CanFlasherBLT_Olimexino_STM32F3.srec</code> </li>
+</ul>
+<h2 id="flash-the-firmware-image">Flash the firmware image</h2>
+<p>Perform the following steps to flash the previously downloaded prebuilt firmware file into the flash memory of the on-board STM32F303RCT6 microcontroller:</p>
+<ul>
+<li>Connect the USB cable to the Olimexino STM32F3 board and insert the other end of the USB cable into a USB slot of your PC.</li>
+<li>While keeping the "Boot"-button pressed, briefly press the "Reset"-button. This activates the STM32F3's internal USB bootloader:</li>
+</ul>
+<p><img alt="" src="../images/board_buttons.png" /></p>
+<ul>
+<li>Start the STM32CubeProgrammer tool on your PC. Select USB mode from the dropdown list (1), followed by clicking the "Connect"-button (2):</li>
+</ul>
+<p><img alt="" src="../images/cubeprog_usb_connect.png" /></p>
+<ul>
+<li>Go to the "Erase and Programming" section (1), click the "Browse"-button (2), select the <code>CanFlasherBLT_Olimexino_STM32F3.srec</code>  file (3) and click the "Start Programming"-button (4):</li>
+</ul>
+<p><img alt="" src="../images/cubeprog_program_srec.png" /></p>
+<ul>
+<li>To complete the firmware programming, close the STM32CubeProgrammer tool and briefly press the "Reset"-button on the board one more time. </li>
+</ul>
+<h2 id="check-in-the-device-manager">Check in the device manager</h2>
+<p>As a quick verification of the CanFlasherBLT firmware programming, open up the Device Manager in Windows. Check that you see an entry called "WinUSB Bulk Device":</p>
+<p><img alt="" src="../images/device_manager_check.png" /></p>
+<p>If it doesn't show up, try removing the USB cable from your PC and plug it back in afterwards.</p>
+<h2 id="reconfigure-microboot-or-bootcommander">Reconfigure MicroBoot or BootCommander</h2>
+<p>In the MicroBoot settings, change "XCP on CAN" to "XCP on USB". During the next firmware update, MicroBoot will talk to the CanFlasherBLT device and thinks it is updating that one via USB. While in fact, the CanFlasherBLT firmware is passing all XCP requests and response packets to and from the CAN bus:</p>
+<p><img alt="" src="../images/microboot_settings.png" /></p>
+<p>The same method works for the command-line BootCommander tool. In this case you would just use the <code>-t=xcp_usb</code> parameter, instead of <code>-t=xcp_can</code>.</p>
+<h2 id="start-the-firmware-update">Start the firmware update</h2>
+<p>To try out a firmware update using the CanFlasherBLT device, connect it to the CAN bus. This assumes the presence of another CAN node that runs the OpenBLT bootloader and on which you would like to perform a firmware update.</p>
+<p>The Olimexino STM32F3 board features an on-board CAN transceiver. All you have to do is connect the CAN-HI and CAN-LO connector pins on the board to your CAN bus:</p>
+<p><img alt="" src="../images/board_can_pins.png" /></p>
+<p>Next, start the firmware update as usual with MicroBoot (or BootCommander):</p>
+<p><img alt="" src="../images/microboot_firmware_update.png" /></p>
+<h2 id="changing-can-communication-settings">Changing CAN communication settings</h2>
+<p>As mentioned in the <a href="../">introduction</a>, one shortcoming of the CanFlasherBLT solution is that you can no longer specify the CAN communication settings from within MicroBoot / BootCommander. It always uses these default settings:</p>
+<ul>
+<li>CAN baudrate: 500 kbits/sec.</li>
+<li>CAN transmit identifier: 667h (11-bit)</li>
+<li>CAN receive identifier: 7E1h (11-bit)</li>
+</ul>
+<p>You can still change these CAN communication settings. The only downside is that you need to change this inside the CanFlasherBLT source code. Afterwards, you need to rebuild the CanFlasherBLT image from source code and flash it again on the Olimexino STM32F3 board. Refer to the <a href="../building/">Building</a> section for detailed instructions on how to rebuilt the CanFlasherBLT image from source code. </p>
+<p>One way of changing the CAN communication settings is by editing the <code>source\gateway.hpp</code> file and changing the values in one of the <code>Gateway</code> class constructors:</p>
+<p><img alt="" src="../images/change_can_configuration.png" /></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../building/" class="btn btn-neutral float-right" title="Building the image">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/feaser/canflasherblt" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../building/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
