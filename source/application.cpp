@@ -38,6 +38,7 @@
 // Include files
 //***************************************************************************************
 #include "application.hpp"
+#include "version.hpp"
 #include "logger.hpp"
 #include "ticks.hpp"
 
@@ -72,7 +73,7 @@ Application::Application(Board& t_Board)
   // Start the gateway.
   m_Gateway.start();
   // Log info.
-  logger().info("Application started.");
+  logger().info("Application started (v%d.%d.%d).", Version::major, Version::minor, Version::patch);
   // Start the thread.
   Start();
 }
