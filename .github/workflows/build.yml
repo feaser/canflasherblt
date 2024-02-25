@@ -1,0 +1,27 @@
+name: Build
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Install dependencies
+        run: sudo apt-get install binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Generate build environment
+        working-directory: build
+        run: cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ..
+      - name: Clean the build environment
+        working-directory: build
+        run: make clean
+      - name: Build the demo applications
+        working-directory: build
+        run: make all
+
