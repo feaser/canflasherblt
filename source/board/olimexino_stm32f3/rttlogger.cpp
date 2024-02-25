@@ -55,7 +55,7 @@
 ///            Note that this function uses lazy initialization. The first time the
 ///            function is called, the logger object is created and remains valid for the
 ///            lifetime of the program. The benefit of this is that the object only gets
-///            jreated when actually used. Just keep in mind the side-effect that its
+///            created when actually used. Just keep in mind the side-effect that its
 ///            constructor only runs when used for the first time.
 ///
 ///**************************************************************************************
