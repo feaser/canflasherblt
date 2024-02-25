@@ -46,7 +46,7 @@
 
 ///**************************************************************************************
 /// \brief     Global getter for the logger.
-/// \details   This function uses polymorphism to realize the actual hardware abstration
+/// \details   This function uses polymorphism to realize the actual hardware abstraction
 ///            layer for the logger. The application can call logger() to access the
 ///            hardware dependent logger functionality. With other words, this function
 ///            is the one that glues the hardware independent logger interface, to the
