@@ -73,7 +73,8 @@ Application::Application(Board& t_Board)
   // Start the gateway.
   m_Gateway.start();
   // Log info.
-  logger().info("Application started (v%d.%d.%d).", Version::major, Version::minor, Version::patch);
+  logger().info("Application started (v%u.%u.%u).", Version::major, Version::minor, 
+                Version::patch);
   // Start the thread.
   Start();
 }
